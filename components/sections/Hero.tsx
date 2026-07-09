@@ -1,16 +1,29 @@
 'use client'
+import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
 
 export function Hero() {
+  const videoRef = useRef<HTMLVideoElement>(null)
+
+  useEffect(() => {
+    // Retrasar el inicio del video hasta que desaparezca el SplashScreen (2.5s)
+    const timer = setTimeout(() => {
+      if (videoRef.current) {
+        videoRef.current.play().catch(e => console.log("Auto-play prevented", e))
+      }
+    }, 2500)
+    return () => clearTimeout(timer)
+  }, [])
+
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden">
       
       {/* Fondo de video proporcionado por el usuario */}
       <div className="absolute inset-0 z-0">
         <video
-          autoPlay
+          ref={videoRef}
           loop
           muted
           playsInline
