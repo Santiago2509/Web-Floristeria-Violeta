@@ -1,0 +1,86 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-playfair: var(--font-playfair), serif;
+  --font-inter: var(--font-inter), sans-serif;
+
+  --color-bg: var(--theme-bg);
+  --color-bg-section: var(--theme-bg-section);
+  --color-bg-card: var(--theme-bg-card);
+  --color-text: var(--theme-text);
+  --color-text-muted: var(--theme-text-muted);
+  --color-border: var(--theme-border);
+
+  --color-primary: var(--theme-primary);
+  --color-primary-dark: var(--theme-primary-dark);
+  --color-primary-light: var(--theme-primary-light);
+  --color-accent: var(--theme-accent);
+  --color-accent-light: var(--theme-accent-light);
+  --color-green: var(--theme-green);
+  --color-green-light: var(--theme-green-light);
+}
+
+:root {
+  /* MODO CLARO — Basado en la paleta proporcionada */
+  --theme-bg: #FBE4D8;              
+  --theme-bg-section: #FFFFFF;      
+  --theme-bg-card: #FFFFFF;
+  --theme-text: #190019;
+  --theme-text-muted: #522B5B;
+  --theme-border: #DFB6B2;
+  
+  /* Manchas de fondo decorativas */
+  --theme-blob-1: #DFB6B2;                
+  --theme-blob-2: #FBE4D8;                
+  --theme-blob-3: #DFB6B2;                
+  --theme-blob-4: #854F6C;                
+
+  /* Colores primarios */
+  --theme-primary: #854F6C;         
+  --theme-primary-dark: #522B5B;
+  --theme-primary-light: #DFB6B2;
+  --theme-accent: #2B124C;          
+  --theme-accent-light: #522B5B;
+  --theme-green: #854F6C; /* Reemplazado para mantener armonía */
+  --theme-green-light: #DFB6B2;
+}
+
+.dark {
+  /* MODO OSCURO — Basado en la paleta proporcionada */
+  --theme-bg: #190019;              
+  --theme-bg-section: #2B124C;      
+  --theme-bg-card: #2B124C;         
+  --theme-text: #FBE4D8;         
+  --theme-text-muted: #DFB6B2;   
+  --theme-border: #522B5B;       
+
+  /* Manchas de fondo modo oscuro */
+  --theme-blob-1: #522B5B;   
+  --theme-blob-2: #854F6C;   
+  --theme-blob-3: #2B124C;   
+  --theme-blob-4: #522B5B;   
+
+  --theme-primary: #854F6C;         
+  --theme-primary-dark: #522B5B;
+  --theme-primary-light: #DFB6B2;
+  --theme-accent: #DFB6B2;          
+  --theme-accent-light: #854F6C;
+  --theme-green: #854F6C;           
+  --theme-green-light: #522B5B;
+}
+
+@layer base {
+  html {
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+  }
+  
+  body {
+    background-color: var(--theme-bg);
+    color: var(--theme-text);
+    min-height: 100vh;
+    transition: background-color 0.3s ease, color 0.3s ease;
+  }
+}
