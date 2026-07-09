@@ -16,7 +16,7 @@ export function Hero() {
           playsInline
           className="object-cover w-full h-full opacity-100"
         >
-          <source src="/assets/heroprincipal.mp4.mp4" type="video/mp4" />
+          <source src="/assets/heroprincipal.mp4.mov" type="video/mp4" />
         </video>
         {/* Overlays para suavizar los bordes y asegurar legibilidad del texto */}
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--theme-bg)_100%)] opacity-40" />
