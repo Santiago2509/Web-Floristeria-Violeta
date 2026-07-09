@@ -3,6 +3,7 @@ import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { BackgroundBlobs } from '@/components/ui/BackgroundBlobs'
+import { SplashScreen } from '@/components/ui/SplashScreen'
 import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         style={{ backgroundColor: 'var(--theme-bg)', color: 'var(--theme-text)' }}
       >
         <ThemeProvider>
+          <SplashScreen />
           <BackgroundBlobs />
           <Navbar />
           <main className="min-h-screen">{children}</main>

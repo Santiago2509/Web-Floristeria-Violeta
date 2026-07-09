@@ -30,7 +30,7 @@ export function Hero() {
         <motion.h1
           initial={{ opacity: 0, scale: 0.95, filter: 'blur(10px)' }}
           animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
-          transition={{ duration: 1.5, ease: 'easeOut' }}
+          transition={{ duration: 1.5, delay: 2.8, ease: 'easeOut' }}
           className="font-playfair font-medium text-[var(--theme-text)] leading-none mb-4 tracking-widest uppercase z-10"
           style={{ fontSize: 'clamp(4rem, 15vw, 13rem)' }}
         >
@@ -41,7 +41,7 @@ export function Hero() {
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1.2, delay: 0.5, ease: 'easeOut' }}
+          transition={{ duration: 1.2, delay: 3.3, ease: 'easeOut' }}
           className="text-[var(--theme-text)]/80 font-playfair text-xl lg:text-3xl mb-12 max-w-2xl italic font-light z-10"
         >
           Flores que cuentan historias, arreglos que dejan huella.
@@ -51,7 +51,7 @@ export function Hero() {
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, delay: 0.8, ease: 'easeOut' }}
+          transition={{ duration: 1, delay: 3.6, ease: 'easeOut' }}
           className="flex flex-wrap items-center justify-center p-1.5 rounded-full backdrop-blur-xl bg-[var(--theme-bg-card)]/10 border border-[var(--theme-border)]/20 shadow-2xl z-10"
         >
           <Link
