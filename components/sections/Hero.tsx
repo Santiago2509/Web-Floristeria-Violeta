@@ -2,8 +2,9 @@
 import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
+import Image from 'next/image'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
-
+import { mockProductos } from '@/lib/mock-data'
 export function Hero() {
   const videoRef = useRef<HTMLVideoElement>(null)
 
@@ -60,35 +61,38 @@ export function Hero() {
           Flores que cuentan historias, arreglos que dejan huella.
         </motion.p>
 
-        {/* Botonera estilo píldora (inspirada en tu referencia) */}
+        {/* Carrusel (Marquee) de Productos Destacados */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 3.6, ease: 'easeOut' }}
-          className="flex flex-wrap items-center justify-center p-1.5 rounded-full backdrop-blur-xl bg-[var(--theme-bg-card)]/10 border border-[var(--theme-border)]/20 shadow-2xl z-10"
+          className="w-full max-w-6xl mt-4 relative z-10 overflow-hidden"
+          style={{ maskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 10%, black 90%, transparent)' }}
         >
-          <Link
-            href="#catalogo"
-            className="px-8 py-3 rounded-full font-inter font-medium text-[var(--theme-bg)] transition-all duration-300 hover:scale-105"
-            style={{ backgroundColor: 'var(--theme-primary)' }}
-          >
-            Catálogo
-          </Link>
-          
-          <Link
-            href="#arma-tu-ramo"
-            className="px-8 py-3 rounded-full font-inter font-medium text-[var(--theme-text)] transition-all duration-300 hover:bg-[var(--theme-primary)]/10"
-          >
-            Arma tu ramo
-          </Link>
-
-          <a
-            href={generarLinkWhatsApp()}
-            target="_blank"
-            className="px-8 py-3 rounded-full font-inter font-medium text-[var(--theme-text)] transition-all duration-300 hover:bg-[var(--theme-primary)]/10"
-          >
-            Contacto
-          </a>
+          <div className="flex w-max animate-marquee hover:[animation-play-state:paused]">
+            {/* Duplicamos la lista para crear el bucle infinito perfecto */}
+            {[...mockProductos, ...mockProductos].map((producto, index) => (
+              <Link 
+                key={`${producto.id}-${index}`} 
+                href={`/catalogo/${producto.id}`}
+                className="group relative flex-shrink-0 w-28 h-40 mx-3 rounded-2xl overflow-hidden border border-white/20 shadow-xl"
+              >
+                <Image
+                  src={producto.imagen_url}
+                  alt={producto.nombre}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-110"
+                  sizes="112px"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-bg)]/90 via-[var(--theme-bg)]/20 to-transparent" />
+                <div className="absolute bottom-2 left-2 right-2 text-left">
+                  <p className="font-playfair text-[var(--theme-text)] text-[10px] font-medium leading-tight line-clamp-2">
+                    {producto.nombre}
+                  </p>
+                </div>
+              </Link>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>
