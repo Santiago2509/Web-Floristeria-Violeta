@@ -38,7 +38,7 @@ export default function RootLayout({
           <SplashScreen />
           <BackgroundBlobs />
           <Navbar />
-          <main className="min-h-screen">{children}</main>
+          <main className="min-h-screen relative z-10">{children}</main>
           <Footer />
           <WhatsAppButton />
         </ThemeProvider>

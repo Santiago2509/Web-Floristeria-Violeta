@@ -13,7 +13,7 @@ export function FeaturedProducts() {
   if (productos.length === 0) return null
 
   return (
-    <section className="w-full py-24 bg-[var(--theme-bg)] relative z-10" id="catalogo">
+    <section className="w-full py-24 relative z-10" id="catalogo">
       <div className="container mx-auto px-6">
         <div className="text-center mb-16">
           <h2 className="font-playfair text-4xl md:text-5xl text-[var(--theme-text)] mb-4">
@@ -24,8 +24,8 @@ export function FeaturedProducts() {
           </p>
         </div>
 
-        {/* Grid Masonry con CSS Columns */}
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
+        {/* Grid Masonry (2 columnas en celular, 3 en PC) */}
+        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-6 space-y-3 md:space-y-6">
           {productos.map((producto, index) => (
             <ProductoCard 
               key={producto.id}
@@ -35,7 +35,6 @@ export function FeaturedProducts() {
               mostrar_precio={producto.mostrar_precio}
               imagenUrl={producto.imagen_url}
               categoria={producto.categoria}
-              // Pasamos el índice para poder hacer stagger en la animación si es necesario
               index={index}
             />
           ))}

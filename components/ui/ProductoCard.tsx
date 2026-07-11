@@ -61,17 +61,17 @@ export function ProductoCard({ id, nombre, precio, mostrar_precio = true, imagen
       </div>
       
       {/* Contenido (Nombre y Precio) */}
-      <div className="p-6 flex flex-col items-center text-center relative z-0">
+      <div className="p-3 md:p-6 flex flex-col items-center text-center relative z-0">
         {categoria && (
-          <span className="inline-block px-3 py-1 text-[10px] font-inter uppercase tracking-widest bg-[var(--theme-primary)]/10 text-[var(--theme-primary)] rounded-full mb-3 border border-[var(--theme-primary)]/20">
+          <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] font-inter uppercase tracking-widest bg-[var(--theme-primary)]/10 text-[var(--theme-primary)] rounded-full mb-2 md:mb-3 border border-[var(--theme-primary)]/20">
             {categoria}
           </span>
         )}
-        <h3 className="font-playfair text-xl md:text-2xl text-[var(--theme-text)] mb-2 line-clamp-2">
+        <h3 className="font-playfair text-sm sm:text-base md:text-2xl text-[var(--theme-text)] mb-1 md:mb-2 line-clamp-2">
           {nombre}
         </h3>
         {mostrar_precio && (
-          <p className="font-inter text-md md:text-lg text-[var(--theme-text-muted)] font-light">
+          <p className="font-inter text-xs sm:text-sm md:text-lg text-[var(--theme-text-muted)] font-light">
             ${precio.toLocaleString('es-CO')}
           </p>
         )}

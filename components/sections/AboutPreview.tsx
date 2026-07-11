@@ -15,17 +15,32 @@ export function AboutPreview() {
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
             transition={{ duration: 0.8, ease: "easeOut" }}
-            className="w-full lg:w-1/2 relative z-30"
+            className="w-full lg:w-1/2 relative z-30 flex justify-center lg:justify-start"
           >
-            <div className="relative aspect-[4/5] w-full max-w-md mx-auto lg:mx-0 rounded-t-full rounded-b-2xl overflow-hidden shadow-2xl lg:-mb-32 lg:translate-y-16 border-4 border-white dark:border-[#121212]">
-              <Image
-                src="https://picsum.photos/seed/historia/800/1000"
-                alt="Nuestra floristería"
-                fill
-                className="object-cover"
-                sizes="(max-width: 1024px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 border-[1px] border-[var(--theme-primary)]/30 rounded-t-full rounded-b-2xl m-4 pointer-events-none" />
+            {/* Contenedor Posicionador Relativo */}
+            <div className="relative aspect-[4/5] w-4/5 max-w-[300px] sm:max-w-sm lg:max-w-md mx-auto lg:mx-0 lg:-mb-32 lg:translate-y-16">
+              
+              {/* La Foto Real (ajustada para quedar estrictamente DENTRO del hueco del marco) */}
+              <div className="absolute top-[15%] left-[12%] right-[12%] bottom-[2%] rounded-t-full rounded-b-2xl overflow-hidden z-0">
+                <Image
+                  src="https://picsum.photos/seed/historia/800/1000"
+                  alt="Nuestra floristería"
+                  fill
+                  className="object-cover"
+                  sizes="(max-width: 1024px) 80vw, 50vw"
+                />
+              </div>
+
+              {/* El Marco Floral (forzado a cubrir todo el contenedor para ser el contorno exterior absoluto) */}
+              <div className="absolute inset-0 z-10 pointer-events-none drop-shadow-[0_20px_25px_rgba(0,0,0,0.4)] scale-[1.15]">
+                <Image
+                  src="/assets/marco_floral.png"
+                  alt="Marco floral decorativo"
+                  fill
+                  className="object-fill"
+                />
+              </div>
+
             </div>
           </motion.div>
 

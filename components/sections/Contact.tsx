@@ -48,7 +48,7 @@ export function Contact() {
             transition={{ duration: 0.8 }}
             className="w-full lg:w-1/2"
           >
-            <div className="bg-[var(--theme-bg)] p-8 md:p-10 rounded-3xl shadow-xl border border-[var(--theme-border)]/20">
+            <div className="bg-white/40 dark:bg-black/40 backdrop-blur-xl p-8 md:p-10 rounded-3xl shadow-xl border border-white/60 dark:border-white/10">
               <h3 className="font-playfair text-2xl text-[var(--theme-text)] mb-6">Envíanos un mensaje</h3>
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
                 
