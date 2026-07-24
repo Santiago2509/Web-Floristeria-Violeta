@@ -15,9 +15,9 @@ export function Contact() {
     setTimeout(() => {
       setIsSubmitting(false)
       setIsSuccess(true)
-      // Reset form (simulado)
-      ;(e.target as HTMLFormElement).reset()
-      
+        // Reset form (simulado)
+        ; (e.target as HTMLFormElement).reset()
+
       // Ocultar mensaje de éxito después de unos segundos
       setTimeout(() => setIsSuccess(false), 5000)
     }, 1500)
@@ -28,7 +28,7 @@ export function Contact() {
   return (
     <section className="w-full py-24 bg-[var(--theme-bg-section)]" id="contacto">
       <div className="container mx-auto px-6 lg:px-12">
-        
+
         <div className="text-center mb-16">
           <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-2 block">
             Contacto
@@ -39,9 +39,9 @@ export function Contact() {
         </div>
 
         <div className="flex flex-col lg:flex-row gap-12 lg:gap-24">
-          
+
           {/* Columna Izquierda: Formulario */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -51,13 +51,13 @@ export function Contact() {
             <div className="bg-white/40 dark:bg-black/40 backdrop-blur-xl p-8 md:p-10 rounded-3xl shadow-xl border border-white/60 dark:border-white/10">
               <h3 className="font-playfair text-2xl text-[var(--theme-text)] mb-6">Envíanos un mensaje</h3>
               <form onSubmit={handleSubmit} className="flex flex-col gap-6">
-                
+
                 <div className="flex flex-col gap-2">
                   <label htmlFor="nombre" className="font-inter text-sm text-[var(--theme-text-muted)]">Nombre completo</label>
-                  <input 
-                    type="text" 
-                    id="nombre" 
-                    required 
+                  <input
+                    type="text"
+                    id="nombre"
+                    required
                     className="w-full bg-transparent border-b border-[var(--theme-border)] py-2 text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors"
                     placeholder="Tu nombre"
                   />
@@ -65,10 +65,10 @@ export function Contact() {
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="correo" className="font-inter text-sm text-[var(--theme-text-muted)]">Correo electrónico</label>
-                  <input 
-                    type="email" 
-                    id="correo" 
-                    required 
+                  <input
+                    type="email"
+                    id="correo"
+                    required
                     className="w-full bg-transparent border-b border-[var(--theme-border)] py-2 text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors"
                     placeholder="tu@correo.com"
                   />
@@ -76,17 +76,17 @@ export function Contact() {
 
                 <div className="flex flex-col gap-2">
                   <label htmlFor="mensaje" className="font-inter text-sm text-[var(--theme-text-muted)]">Mensaje</label>
-                  <textarea 
-                    id="mensaje" 
-                    required 
+                  <textarea
+                    id="mensaje"
+                    required
                     rows={4}
                     className="w-full bg-transparent border-b border-[var(--theme-border)] py-2 text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors resize-none"
                     placeholder="¿En qué te podemos ayudar?"
                   ></textarea>
                 </div>
 
-                <button 
-                  type="submit" 
+                <button
+                  type="submit"
                   disabled={isSubmitting}
                   className="mt-4 flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-[var(--theme-primary)] text-[var(--theme-bg)] font-inter font-medium hover:bg-opacity-90 transition-all disabled:opacity-70"
                 >
@@ -101,7 +101,7 @@ export function Contact() {
                 </button>
 
                 {isSuccess && (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="text-green-600 text-sm text-center font-inter bg-green-50 p-3 rounded-lg"
@@ -114,7 +114,7 @@ export function Contact() {
           </motion.div>
 
           {/* Columna Derecha: Información y Mapa */}
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, margin: "-100px" }}
@@ -179,13 +179,13 @@ export function Contact() {
 
             {/* Mapa (Placeholder embebido) */}
             <div className="w-full h-64 rounded-3xl overflow-hidden bg-gray-200 shadow-inner">
-              <iframe 
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9241103291244!2d-74.0628216!3d4.6432007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3f282470bb%3A0xc316a504ef5f6b3e!2sChapinero%2C%20Bogot%C3%A1!5e0!3m2!1ses-419!2sco!4v1700000000000!5m2!1ses-419!2sco" 
-                width="100%" 
-                height="100%" 
-                style={{ border: 0 }} 
-                allowFullScreen={false} 
-                loading="lazy" 
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9241103291244!2d-74.0628216!3d4.6432007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3f282470bb%3A0xc316a504ef5f6b3e!2sChapinero%2C%20Bogot%C3%A1!5e0!3m2!1ses-419!2sco!4v1700000000000!5m2!1ses-419!2sco"
+                width="100%"
+                height="100%"
+                style={{ border: 0 }}
+                allowFullScreen={false}
+                loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
               ></iframe>
             </div>

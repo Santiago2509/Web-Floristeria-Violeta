@@ -1,4 +1,5 @@
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
+import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
@@ -23,7 +24,7 @@ export default function RootLayout({
   return (
     <html lang="es" className={`${playfair.variable} ${inter.variable}`} suppressHydrationWarning>
       <body 
-        className="antialiased transition-colors duration-300 font-inter"
+        className="antialiased transition-colors duration-300 font-inter overflow-x-hidden relative"
         style={{ backgroundColor: 'var(--theme-bg)', color: 'var(--theme-text)' }}
       >
         <ThemeProvider>
@@ -41,6 +42,7 @@ export default function RootLayout({
           <main className="min-h-screen relative z-10">{children}</main>
           <Footer />
           <WhatsAppButton />
+          <ThemeToggle />
         </ThemeProvider>
       </body>
     </html>

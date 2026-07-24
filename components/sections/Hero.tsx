@@ -21,8 +21,14 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden">
       
-      {/* Fondo de video proporcionado por el usuario */}
-      <div className="absolute inset-0 z-0">
+      {/* Fondo de video proporcionado por el usuario (con máscara de degradado para fundirse con la siguiente sección) */}
+      <div 
+        className="absolute inset-0 z-0"
+        style={{
+          maskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)'
+        }}
+      >
         <video
           ref={videoRef}
           loop

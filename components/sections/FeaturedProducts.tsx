@@ -1,53 +1,44 @@
-import { mockProductos } from '@/lib/mock-data'
 import { ProductoCard } from '@/components/ui/ProductoCard'
-import Link from 'next/link'
+import Image from 'next/image'
+import { getFeaturedProducts } from '@/lib/db'
 
-export function FeaturedProducts() {
-  // Simulando la consulta a Supabase: destacado=true, activo=true, ordenado por 'orden', limite 6
-  const productos = mockProductos
-    .filter(p => p.destacado && p.activo)
-    .sort((a, b) => a.orden - b.orden)
-    .slice(0, 6)
+export async function FeaturedProducts() {
+  const featured = await getFeaturedProducts()
 
-  // Si no hay productos, no renderizamos la sección
-  if (productos.length === 0) return null
+  if (featured.length === 0) return null
 
   return (
-    <section className="w-full py-24 relative z-10" id="catalogo">
+    <section className="w-full py-24 relative bg-[var(--theme-bg)] z-20">
       <div className="container mx-auto px-6">
-        <div className="text-center mb-16">
-          <h2 className="font-playfair text-4xl md:text-5xl text-[var(--theme-text)] mb-4">
-            Selección Violeta
+        <div className="flex flex-col items-center mb-16">
+          <h2 className="font-playfair text-4xl text-[var(--theme-text)] mb-4">
+            Selección Exclusiva
           </h2>
-          <p className="font-inter text-[var(--theme-text-muted)] max-w-2xl mx-auto">
-            Nuestros arreglos florales más solicitados, diseñados con pasión y elegancia para hacer de cada momento algo inolvidable.
-          </p>
+          <div className="w-16 h-[1px] bg-[var(--theme-primary)]" />
         </div>
 
-        {/* Grid Masonry (2 columnas en celular, 3 en PC) */}
-        <div className="columns-2 md:columns-3 lg:columns-4 gap-3 md:gap-6 space-y-3 md:space-y-6">
-          {productos.map((producto, index) => (
-            <ProductoCard 
-              key={producto.id}
-              id={producto.id}
-              nombre={producto.nombre}
-              precio={producto.precio}
-              mostrar_precio={producto.mostrar_precio}
-              imagenUrl={producto.imagen_url}
-              categoria={producto.categoria}
-              index={index}
-            />
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          {featured.map((product, index) => (
+            <div key={product.id} className="group flex flex-col items-center">
+              <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden mb-6 shadow-lg">
+                <Image
+                  src={product.imageUrl}
+                  alt={product.title}
+                  fill
+                  className="object-cover transition-transform duration-700 group-hover:scale-105"
+                />
+              </div>
+              <h3 className="font-playfair text-2xl text-[var(--theme-text)] mb-2">
+                {product.title}
+              </h3>
+              <p className="font-inter text-[var(--theme-primary)] mb-4">
+                ${product.price.toLocaleString('es-CO')}
+              </p>
+              <button className="px-8 py-3 rounded-full border border-[var(--theme-primary)] text-[var(--theme-primary)] font-inter text-sm uppercase tracking-widest transition-all hover:bg-[var(--theme-primary)] hover:text-white">
+                Comprar
+              </button>
+            </div>
           ))}
-        </div>
-
-        <div className="mt-16 text-center">
-          <Link 
-            href="/catalogo"
-            className="inline-block px-10 py-4 rounded-full font-inter font-medium text-[var(--theme-bg)] transition-transform hover:scale-105 shadow-xl hover:shadow-2xl"
-            style={{ backgroundColor: 'var(--theme-primary)' }}
-          >
-            Ver catálogo completo
-          </Link>
         </div>
       </div>
     </section>

@@ -8,8 +8,9 @@ export function ThemeToggle() {
   return (
     <button
       onClick={toggleTheme}
-      className="p-2 rounded-full border border-border 
-                 bg-bg-card text-text hover:border-primary 
+      className="fixed bottom-6 left-6 z-50 p-3 rounded-full border border-[var(--theme-border)]/30 
+                 bg-[var(--theme-bg)]/80 backdrop-blur-md shadow-xl text-[var(--theme-text)] 
+                 hover:scale-110 hover:border-[var(--theme-primary)] 
                  transition-all duration-300"
       aria-label="Cambiar tema"
     >
