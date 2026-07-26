@@ -1,14 +1,14 @@
 'use client'
-import { motion } from 'framer-motion'
+import { motion, Variants } from 'framer-motion'
 import Image from 'next/image'
 
 export function AboutStory() {
-  const containerVars = {
+  const containerVars: Variants = {
     hidden: { opacity: 0 },
     visible: { opacity: 1, transition: { staggerChildren: 0.2, delayChildren: 0.2 } }
   }
 
-  const itemVars = {
+  const itemVars: Variants = {
     hidden: { opacity: 0, y: 20, filter: 'blur(5px)' },
     visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.8, ease: "easeOut" } }
   }

@@ -1,6 +1,6 @@
 'use client'
 import { useRef } from 'react'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, Variants } from 'framer-motion'
 import Image from 'next/image'
 
 const services = [
@@ -22,20 +22,20 @@ const services = [
 ]
 
 const titleText = "Más allá de las flores"
-const containerVars = {
+const containerVars: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.1, delayChildren: 0.3 } }
 }
-const wordVars = {
+const wordVars: Variants = {
   hidden: { opacity: 0, y: 30, filter: 'blur(8px)' },
   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.7, ease: "easeOut" } }
 }
 
-const cardTextContainerVars = {
+const cardTextContainerVars: Variants = {
   hidden: { opacity: 0 },
   visible: { opacity: 1, transition: { staggerChildren: 0.15, delayChildren: 0.3 } }
 }
-const cardItemVars = {
+const cardItemVars: Variants = {
   hidden: { opacity: 0, y: 20, filter: 'blur(5px)' },
   visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.6, ease: "easeOut" } }
 }

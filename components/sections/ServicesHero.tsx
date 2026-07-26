@@ -1,5 +1,5 @@
 'use client'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll, useTransform, Variants } from 'framer-motion'
 import Image from 'next/image'
 import { useRef } from 'react'
 
@@ -18,7 +18,7 @@ export function ServicesHero() {
   const titleText = "Experiencias Inolvidables"
 
   // Variantes para la animación letra por letra
-  const containerVars = {
+  const containerVars: Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -26,7 +26,7 @@ export function ServicesHero() {
     }
   }
 
-  const letterVars = {
+  const letterVars: Variants = {
     hidden: { opacity: 0, y: 50, filter: 'blur(10px)' },
     visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 0.6, ease: "easeOut" } }
   }
