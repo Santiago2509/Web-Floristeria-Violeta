@@ -26,34 +26,11 @@ export function Navbar() {
 
   return (
     <header className="px-6 py-4 border-b border-[var(--theme-border)]/20 flex justify-between items-center bg-[var(--theme-bg)]/80 backdrop-blur-lg fixed w-full top-0 left-0 z-50">
-      <div className="flex items-center w-10">
-        {/* Logo Flotante Gigante (Esquina Izquierda) */}
-        <Link href="/" className="absolute -top-10 -left-10 md:-top-14 md:-left-16 lg:-top-16 lg:-left-20 z-[60] transition-transform hover:scale-105">
-          <div className="relative w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80">
-            <Image 
-              src="/assets/esquina_de_flores.png" 
-              alt="Floristería Violeta Logo" 
-              fill
-              className="object-contain drop-shadow-2xl"
-              priority
-            />
-          </div>
+      <div className="flex items-center">
+        <Link href="/" className="font-playfair text-2xl font-semibold text-[var(--theme-primary)] hover:opacity-80 transition-opacity">
+          Violeta
         </Link>
-        
-        {/* Decoración Flotante (Esquina Derecha) */}
-        <div className="absolute -top-10 -right-10 md:-top-14 md:-right-16 lg:-top-16 lg:-right-20 z-[60] pointer-events-none scale-x-[-1]">
-          <div className="relative w-56 h-56 md:w-72 md:h-72 lg:w-80 lg:h-80">
-            <Image 
-              src="/assets/esquina_de_flores.png" 
-              alt="Decoración floral derecha" 
-              fill
-              className="object-contain drop-shadow-2xl"
-              priority
-            />
-          </div>
-        </div>
       </div>
-      
       {/* Enlaces a los módulos (Versión Escritorio) */}
       <nav className="hidden md:flex items-center gap-6 font-inter text-sm font-medium text-[var(--theme-text)]">
         {navLinks.map((link) => (

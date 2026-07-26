@@ -1,7 +1,6 @@
 import { ContactHero } from '@/components/sections/ContactHero'
 import { ContactFormSection } from '@/components/sections/ContactFormSection'
 import { ContactMap } from '@/components/sections/ContactMap'
-import { Contact as FooterContact } from '@/components/sections/Contact'
 
 export const metadata = {
   title: 'Contacto | Floristería Violeta',
@@ -14,7 +13,6 @@ export default function ContactoPage() {
       <ContactHero />
       <ContactFormSection />
       <ContactMap />
-      <FooterContact />
     </main>
   )
 }

@@ -33,9 +33,9 @@
   --theme-bg: #FCFAFA;              
   --theme-bg-section: #FFFFFF;      
   --theme-bg-card: #FFFFFF;
-  --theme-text: #2C2C2C;            
-  --theme-text-muted: #6B7280;      
-  --theme-border: #E5E7EB;          
+  --theme-text: #2A1B38;            
+  --theme-text-muted: #645670;      
+  --theme-border: #E5E0E8;          
   
   /* Manchas de fondo decorativas (sutiles y cálidas) */
   --theme-blob-1: #F3E8E0;          
@@ -54,23 +54,23 @@
 }
 
 .dark {
-  /* MODO OSCURO — Boutique Minimalista (Oscuro elegante) */
-  --theme-bg: #121212;              
-  --theme-bg-section: #1A1A1A;      
-  --theme-bg-card: #1C1C1C;         
-  --theme-text: #F3F4F6;         
-  --theme-text-muted: #9CA3AF;   
-  --theme-border: #333333;       
+  /* MODO OSCURO — Violeta Profundo (Oscuro elegante) */
+  --theme-bg: #11081a;              
+  --theme-bg-section: #180c25;      
+  --theme-bg-card: #201130;         
+  --theme-text: #F8F4FA;         
+  --theme-text-muted: #BFA8C9;   
+  --theme-border: #3A2352;       
 
   /* Manchas de fondo modo oscuro */
-  --theme-blob-1: #2A171B;          
-  --theme-blob-2: #1E2420;          
-  --theme-blob-3: #1A1A1A;   
-  --theme-blob-4: #2A171B;   
+  --theme-blob-1: #2f1747;          
+  --theme-blob-2: #241238;          
+  --theme-blob-3: #1a0c29;   
+  --theme-blob-4: #2f1747;   
 
-  --theme-primary: #7D3C98;         
-  --theme-primary-dark: #5B2C6F;
-  --theme-primary-light: #9B59B6;
+  --theme-primary: #D7BDE2;         
+  --theme-primary-dark: #A569BD;
+  --theme-primary-light: #F4ECF7;
   --theme-accent: #A3B1A8;          
   --theme-accent-light: #7C9082;
   --theme-green: #A3B1A8;           

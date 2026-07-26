@@ -3,6 +3,8 @@ import { adminAddGalleryImage, adminDeleteGalleryImage } from '@/lib/actions'
 import { Trash2, Plus } from 'lucide-react'
 import Image from 'next/image'
 
+import { ImageUploader } from '@/components/ui/ImageUploader'
+
 export const dynamic = 'force-dynamic'
 
 export default async function AdminGaleriaPage() {
@@ -42,9 +44,8 @@ export default async function AdminGaleriaPage() {
               </div>
 
               <div className="space-y-1">
-                <label className="text-xs text-[var(--theme-text-muted)] font-medium">URL de Imagen (Opcional por ahora)</label>
-                <input name="imageUrl" className="w-full px-4 py-2 rounded-xl bg-[var(--theme-bg)] border border-[var(--theme-border)] focus:outline-none focus:border-[var(--theme-primary)] text-xs" placeholder="https://..." />
-                <p className="text-[10px] text-[var(--theme-text-muted)] mt-1">Si lo dejas vacío, se usará una imagen aleatoria hermosa de arquitectura/flores.</p>
+                <label className="text-xs text-[var(--theme-text-muted)] font-medium">Sube la Fotografía</label>
+                <ImageUploader name="imageUrl" />
               </div>
 
               <button type="submit" className="w-full py-3 mt-2 rounded-xl bg-[var(--theme-primary)] text-white font-medium hover:bg-[var(--theme-primary-dark)] transition-colors shadow-md">
