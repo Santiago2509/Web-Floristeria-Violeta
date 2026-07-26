@@ -5,11 +5,7 @@ import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
 import { BackgroundBlobs } from '@/components/ui/BackgroundBlobs'
 import { SplashScreen } from '@/components/ui/SplashScreen'
-import { Playfair_Display, Inter } from 'next/font/google'
 import './globals.css'
-
-const playfair = Playfair_Display({ subsets: ['latin'], variable: '--font-playfair' })
-const inter = Inter({ subsets: ['latin'], variable: '--font-inter' })
 
 export const metadata = {
   title: 'Floristería Violeta',
@@ -22,7 +18,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="es" className={`${playfair.variable} ${inter.variable}`} suppressHydrationWarning>
+    <html lang="es" suppressHydrationWarning>
       <body 
         className="antialiased transition-colors duration-300 font-inter overflow-x-hidden relative"
         style={{ backgroundColor: 'var(--theme-bg)', color: 'var(--theme-text)' }}
