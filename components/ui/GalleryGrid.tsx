@@ -6,8 +6,9 @@ import { Lightbox } from '@/components/ui/Lightbox'
 
 interface GalleryImage {
   id: string
-  imagen_url: string
-  orden: number
+  imagen_url?: string
+  imageUrl?: string
+  orden?: number
 }
 
 interface GalleryGridProps {
@@ -38,7 +39,7 @@ export function GalleryGrid({ images }: GalleryGridProps) {
             onClick={() => openLightbox(index)}
           >
             <Image
-              src={img.imagen_url}
+              src={img.imageUrl || img.imagen_url || ''}
               alt={`Galería ${index + 1}`}
               fill
               className="object-cover transition-transform duration-700 group-hover:scale-110"

@@ -9,6 +9,7 @@ export async function adminAddProduct(formData: FormData) {
   const price = Number(formData.get('price'))
   const category = formData.get('category') as any
   const imageUrl = formData.get('imageUrl') as string || `https://picsum.photos/seed/${Math.random()}/600/800`
+  const isFeatured = formData.get('isFeatured') === 'on'
 
   await db.addProduct({
     title,
@@ -16,12 +17,13 @@ export async function adminAddProduct(formData: FormData) {
     price,
     category,
     imageUrl,
-    isFeatured: false
+    isFeatured
   })
 
   // Invalidar las páginas para que se actualicen al instante
   revalidatePath('/catalogo')
   revalidatePath('/admin/catalogo')
+  revalidatePath('/')
 }
 
 export async function adminDeleteProduct(id: string) {

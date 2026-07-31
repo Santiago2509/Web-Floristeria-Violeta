@@ -5,7 +5,7 @@ import { X, ChevronLeft, ChevronRight } from 'lucide-react'
 import Image from 'next/image'
 
 interface LightboxProps {
-  images: { id: string; imagen_url: string }[]
+  images: { id: string; imagen_url?: string; imageUrl?: string }[]
   currentIndex: number
   isOpen: boolean
   onClose: () => void
@@ -79,7 +79,7 @@ export function Lightbox({ images, currentIndex, isOpen, onClose, onNavigate }: 
                 onClick={(e) => e.stopPropagation()}
               >
                 <Image
-                  src={images[currentIndex].imagen_url}
+                  src={images[currentIndex].imageUrl || images[currentIndex].imagen_url || ''}
                   alt="Galería"
                   fill
                   className="object-contain"

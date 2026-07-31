@@ -27,6 +27,24 @@
     0% { transform: translateX(0); }
     100% { transform: translateX(-50%); }
   }
+
+  @keyframes float-petal {
+    0% { transform: translateY(-100px) rotate(0deg) translateX(0); }
+    33% { transform: translateY(30vh) rotate(120deg) translateX(20px); }
+    66% { transform: translateY(60vh) rotate(240deg) translateX(-20px); }
+    100% { transform: translateY(110vh) rotate(360deg) translateX(0); }
+  }
+
+  @keyframes spin-slow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+
+  @keyframes breathe {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+    100% { transform: scale(1); }
+  }
 }
 
 :root {
@@ -54,6 +72,9 @@
   --theme-accent-light: #A3B1A8;
   --theme-green: #7C9082;           
   --theme-green-light: #A3B1A8;
+
+  /* Nuevo token para hover */
+  --theme-blush: #F9F0F5;
 }
 
 .dark {
@@ -78,6 +99,9 @@
   --theme-accent-light: #7C9082;
   --theme-green: #A3B1A8;           
   --theme-green-light: #7C9082;
+
+  /* Nuevo token para hover */
+  --theme-blush: #2a1530;
 }
 
 @layer base {

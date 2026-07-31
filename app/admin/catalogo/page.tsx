@@ -58,6 +58,13 @@ export default async function AdminCatalogoPage() {
                 <ImageUploader name="imageUrl" />
               </div>
 
+              <div className="flex items-center gap-2 pt-2 pb-2">
+                <input type="checkbox" id="isFeatured" name="isFeatured" className="w-4 h-4 rounded border-[var(--theme-border)] text-[var(--theme-primary)] focus:ring-[var(--theme-primary)]" />
+                <label htmlFor="isFeatured" className="text-sm text-[var(--theme-text)] font-medium cursor-pointer">
+                  Destacar en la página de inicio
+                </label>
+              </div>
+
               <button type="submit" className="w-full py-3 mt-2 rounded-xl bg-[var(--theme-primary)] text-white font-medium hover:bg-[var(--theme-primary-dark)] transition-colors shadow-md">
                 Crear Producto
               </button>

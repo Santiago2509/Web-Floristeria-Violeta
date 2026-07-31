@@ -1,45 +1,34 @@
-import { ProductoCard } from '@/components/ui/ProductoCard'
-import Image from 'next/image'
-import { getFeaturedProducts } from '@/lib/db'
+import { AnimatedFeaturedGrid } from '@/components/ui/AnimatedFeaturedGrid'
+import { Product } from '@/types'
 
-export async function FeaturedProducts() {
-  const featured = await getFeaturedProducts()
-
-  if (featured.length === 0) return null
-
+export function FeaturedProducts({ featuredProducts: featured }: { featuredProducts: Product[] }) {
   return (
-    <section className="w-full py-24 relative bg-[var(--theme-bg)] z-20">
-      <div className="container mx-auto px-6">
-        <div className="flex flex-col items-center mb-16">
-          <h2 className="font-playfair text-4xl text-[var(--theme-text)] mb-4">
-            Selección Exclusiva
+    <section className="w-full py-24 lg:py-32 relative z-20 overflow-hidden">
+      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+        
+        {/* ENCABEZADO — Limpio y editorial */}
+        <div className="flex flex-col items-center mb-16 text-center">
+          <span className="font-inter text-[10px] uppercase tracking-[0.5em] text-[var(--theme-primary)]/70 mb-5 font-medium">
+            Colección Destacada
+          </span>
+          <h2 className="font-playfair text-5xl md:text-6xl text-[var(--theme-text)] mb-6 leading-[1.1]">
+            Nuestros <span className="italic text-[var(--theme-primary)]">Favoritos</span>
           </h2>
-          <div className="w-16 h-[1px] bg-[var(--theme-primary)]" />
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
-          {featured.map((product, index) => (
-            <div key={product.id} className="group flex flex-col items-center">
-              <div className="relative w-full aspect-[4/5] rounded-[2rem] overflow-hidden mb-6 shadow-lg">
-                <Image
-                  src={product.imageUrl}
-                  alt={product.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-              </div>
-              <h3 className="font-playfair text-2xl text-[var(--theme-text)] mb-2">
-                {product.title}
-              </h3>
-              <p className="font-inter text-[var(--theme-primary)] mb-4">
-                ${product.price.toLocaleString('es-CO')}
-              </p>
-              <button className="px-8 py-3 rounded-full border border-[var(--theme-primary)] text-[var(--theme-primary)] font-inter text-sm uppercase tracking-widest transition-all hover:bg-[var(--theme-primary)] hover:text-white">
-                Comprar
-              </button>
-            </div>
-          ))}
-        </div>
+        {/* CONTENIDO — Productos o Estado Vacío */}
+        {featured.length > 0 ? (
+          <AnimatedFeaturedGrid products={featured} />
+        ) : (
+          <div className="flex flex-col items-center text-center py-20 px-8 rounded-sm bg-[var(--theme-bg-section)]/50 border border-[var(--theme-border)]/20">
+            <p className="font-playfair text-xl text-[var(--theme-text)]/60 italic mb-2">
+              Próximamente...
+            </p>
+            <p className="font-inter text-sm text-[var(--theme-text-muted)] max-w-sm">
+              Estamos preparando nuestra nueva selección de favoritos.
+            </p>
+          </div>
+        )}
       </div>
     </section>
   )

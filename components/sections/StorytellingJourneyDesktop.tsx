@@ -4,7 +4,7 @@ import { useRef } from 'react'
 import Image from 'next/image'
 import { Heart, Star, Clock } from 'lucide-react'
 
-export function StorytellingJourney() {
+export function StorytellingJourneyDesktop() {
   const containerRef = useRef<HTMLDivElement>(null)
   
   // Track scroll of the entire 500vh container

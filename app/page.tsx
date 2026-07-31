@@ -5,16 +5,23 @@ import { AboutPreview } from '@/components/sections/AboutPreview'
 import { ServicesPreview } from '@/components/sections/ServicesPreview'
 import { GalleryPreview } from '@/components/sections/GalleryPreview'
 import { Contact } from '@/components/sections/Contact'
+import { getFeaturedProducts, getGalleryImages } from '@/lib/db'
 
-export default function Home() {
+import { GlobalAurora } from '@/components/ui/GlobalAurora'
+
+export default async function Home() {
+  const featured = await getFeaturedProducts()
+  const gallery = await getGalleryImages()
+
   return (
-    <div className="flex flex-col">
-      <Hero />
-      <FeaturedProducts />
+    <div className="flex flex-col relative">
+      <GlobalAurora />
+      <Hero featuredProducts={featured} />
+      <FeaturedProducts featuredProducts={featured} />
       <MotivationalBanner />
       <AboutPreview />
       <ServicesPreview />
-      <GalleryPreview />
+      <GalleryPreview galleryImages={gallery} />
       <Contact />
     </div>
   );
