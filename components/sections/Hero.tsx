@@ -61,7 +61,7 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
   const titleText = "VIOLETA"
   const titleLetters = titleText.split("")
 
-  const containerVariants = {
+  const containerVariants: import('framer-motion').Variants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
@@ -72,7 +72,7 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
     }
   }
 
-  const letterVariants = {
+  const letterVariants: import('framer-motion').Variants = {
     hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
     visible: { 
       opacity: 1, 
