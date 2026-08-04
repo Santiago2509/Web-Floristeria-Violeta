@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Instagram } from 'lucide-react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 export function Navbar() {
@@ -26,13 +26,13 @@ export function Navbar() {
 
   return (
     <header className="px-6 py-4 border-b border-[var(--theme-border)]/20 flex justify-between items-center bg-[var(--theme-bg)]/80 backdrop-blur-lg fixed w-full top-0 left-0 z-50">
-      <div className="flex items-center">
+      <div className="flex items-center w-24">
         <Link href="/" className="font-playfair text-2xl font-semibold text-[var(--theme-primary)] hover:opacity-80 transition-opacity">
           Violeta
         </Link>
       </div>
       {/* Enlaces a los módulos (Versión Escritorio) */}
-      <nav className="hidden md:flex items-center gap-6 font-inter text-sm font-medium text-[var(--theme-text)]">
+      <nav className="hidden md:flex flex-1 justify-center items-center gap-6 font-inter text-sm font-medium text-[var(--theme-text)]">
         {navLinks.map((link) => (
           <Link key={link.name} href={link.href} className="hover:text-[var(--theme-primary)] transition-colors">
             {link.name}
@@ -56,7 +56,15 @@ export function Navbar() {
         </button>
       </div>
 
-      <div className="flex justify-end w-10 md:w-10 z-[60]">
+      <div className="flex items-center justify-end gap-4 z-[60] w-24 md:w-auto">
+        <Link href="https://www.instagram.com/floristeriavioleta28/" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-[var(--theme-text)] hover:text-[#E1306C] transition-colors">
+          <Instagram className="w-5 h-5" />
+        </Link>
+        <Link href="https://www.tiktok.com/@floristeriavioleta28?_r=1&_t=ZS-98bimC6MqGq" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-[var(--theme-text)] hover:text-[#ff0050] transition-colors">
+          <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
+          </svg>
+        </Link>
         <ThemeToggle />
       </div>
 

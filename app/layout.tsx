@@ -1,5 +1,4 @@
 import { ThemeProvider } from '@/components/ui/ThemeProvider'
-import { ThemeToggle } from '@/components/ui/ThemeToggle'
 import { Navbar } from '@/components/layout/Navbar'
 import { Footer } from '@/components/layout/Footer'
 import { WhatsAppButton } from '@/components/ui/WhatsAppButton'
@@ -40,7 +39,6 @@ export default function RootLayout({
             <main className="min-h-screen relative z-10">{children}</main>
             <Footer />
             <WhatsAppButton />
-            <ThemeToggle />
           </SmoothScroll>
         </ThemeProvider>
       </body>
