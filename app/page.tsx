@@ -8,6 +8,7 @@ import { Contact } from '@/components/sections/Contact'
 import { getFeaturedProducts, getGalleryImages } from '@/lib/db'
 
 import { GlobalAurora } from '@/components/ui/GlobalAurora'
+import { ScrollVine } from '@/components/ui/ScrollVine'
 
 export default async function Home() {
   const featured = await getFeaturedProducts()
@@ -16,6 +17,7 @@ export default async function Home() {
   return (
     <div className="flex flex-col relative">
       <GlobalAurora />
+      <ScrollVine />
       <Hero featuredProducts={featured} />
       <FeaturedProducts featuredProducts={featured} />
       <MotivationalBanner />
