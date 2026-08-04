@@ -1,6 +1,5 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { mockGaleria } from '@/lib/mock-data'
 import { GalleryGrid } from '@/components/ui/GalleryGrid'
 import Link from 'next/link'
 import { GalleryImage } from '@/types'
@@ -9,12 +8,13 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
   const [imagenes, setImagenes] = useState<GalleryImage[]>([])
 
   useEffect(() => {
-    // Tomamos las imágenes de la BD, o el mock si está vacío, y mezclamos (Shuffle)
-    const sourceImages = galleryImages.length > 0 ? galleryImages : mockGaleria
-    const shuffled = [...sourceImages].sort(() => 0.5 - Math.random())
+    if (galleryImages.length === 0) return
+    const shuffled = [...galleryImages].sort(() => 0.5 - Math.random())
     // Seleccionamos 9 fotos
     setImagenes(shuffled.slice(0, 9))
   }, [galleryImages])
+
+  if (galleryImages.length === 0) return null
 
   // Mostrar un esqueleto o no mostrar nada mientras se carga la aleatoriedad (evita hydration mismatch)
   if (imagenes.length === 0) return (

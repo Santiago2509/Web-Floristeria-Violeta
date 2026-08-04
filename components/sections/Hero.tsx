@@ -3,7 +3,6 @@ import { useRef, useEffect } from 'react'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
-import { mockProductos } from '@/lib/mock-data'
 import { Product } from '@/types'
 
 // Componente para los pétalos
@@ -46,7 +45,7 @@ function FloatingPetals() {
 
 export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }) {
   const videoRef = useRef<HTMLVideoElement>(null)
-  const marqueeProducts = featuredProducts.length > 0 ? featuredProducts : mockProductos
+  const marqueeProducts = featuredProducts
 
   useEffect(() => {
     // Iniciar video justo cuando desaparece el SplashScreen (2.5s)
@@ -165,39 +164,41 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
       </div>
 
       {/* Marquee en esquina inferior derecha */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.8, delay: 3.4, ease: [0.16, 1, 0.3, 1] }}
-        className="absolute bottom-10 right-0 w-[400px] sm:w-[500px] z-20 flex flex-col items-end pr-6 lg:pr-12"
-      >
-        <Link href="/catalogo" className="font-inter text-[10px] uppercase tracking-[0.2em] text-white/80 mb-3 hover:text-white transition-colors duration-300 drop-shadow-md">
-          Explora el catálogo →
-        </Link>
-        
-        <div 
-          className="w-full overflow-hidden"
-          style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 100%)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 100%)' }}
+      {marqueeProducts.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: 3.4, ease: [0.16, 1, 0.3, 1] }}
+          className="absolute bottom-10 right-0 w-[400px] sm:w-[500px] z-20 flex flex-col items-end pr-6 lg:pr-12"
         >
-          <div className="flex w-max animate-marquee hover:[animation-play-state:paused] justify-end">
-            {[...marqueeProducts, ...marqueeProducts].map((producto: any, index: number) => (
-              <Link 
-                key={`${producto.id}-${index}`} 
-                href={`/catalogo/${producto.id}`}
-                className="group relative flex-shrink-0 w-[110px] h-[140px] mx-2 rounded-[4px] overflow-hidden border border-white/20 shadow-lg"
-              >
-                <Image
-                  src={producto.imageUrl || producto.imagen_url}
-                  alt={producto.nombre || producto.title}
-                  fill
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                  sizes="110px"
-                />
-              </Link>
-            ))}
+          <Link href="/catalogo" className="font-inter text-[10px] uppercase tracking-[0.2em] text-white/80 mb-3 hover:text-white transition-colors duration-300 drop-shadow-md">
+            Explora el catálogo →
+          </Link>
+          
+          <div 
+            className="w-full overflow-hidden"
+            style={{ maskImage: 'linear-gradient(to right, transparent, black 15%, black 100%)', WebkitMaskImage: 'linear-gradient(to right, transparent, black 15%, black 100%)' }}
+          >
+            <div className="flex w-max animate-marquee hover:[animation-play-state:paused] justify-end">
+              {[...marqueeProducts, ...marqueeProducts].map((producto: any, index: number) => (
+                <Link 
+                  key={`${producto.id}-${index}`} 
+                  href={`/catalogo/${producto.id}`}
+                  className="group relative flex-shrink-0 w-[110px] h-[140px] mx-2 rounded-[4px] overflow-hidden border border-white/20 shadow-lg"
+                >
+                  <Image
+                    src={producto.imageUrl || producto.imagen_url}
+                    alt={producto.nombre || producto.title}
+                    fill
+                    className="object-cover transition-transform duration-700 group-hover:scale-105"
+                    sizes="110px"
+                  />
+                </Link>
+              ))}
+            </div>
           </div>
-        </div>
-      </motion.div>
+        </motion.div>
+      )}
     </section>
   )
 }
