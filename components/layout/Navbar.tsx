@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Menu, X, Instagram } from 'lucide-react'
+import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
 
 export function Navbar() {
@@ -58,7 +58,11 @@ export function Navbar() {
 
       <div className="flex items-center justify-end gap-4 z-[60] w-24 md:w-auto">
         <Link href="https://www.instagram.com/floristeriavioleta28/" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-[var(--theme-text)] hover:text-[#E1306C] transition-colors">
-          <Instagram className="w-5 h-5" />
+          <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
+            <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
+            <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
+            <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
+          </svg>
         </Link>
         <Link href="https://www.tiktok.com/@floristeriavioleta28?_r=1&_t=ZS-98bimC6MqGq" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-[var(--theme-text)] hover:text-[#ff0050] transition-colors">
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
