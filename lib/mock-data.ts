@@ -79,11 +79,13 @@ export const mockProductos: Producto[] = [
   }
 ]
 
-export const mockGaleria = [
-  { id: '1', imagen_url: 'https://picsum.photos/seed/flor1/800/1000', orden: 1 },
-  { id: '2', imagen_url: 'https://picsum.photos/seed/flor2/800/800', orden: 2 },
-  { id: '3', imagen_url: 'https://picsum.photos/seed/flor3/800/1000', orden: 3 },
-  { id: '4', imagen_url: 'https://picsum.photos/seed/flor4/800/800', orden: 4 },
-  { id: '5', imagen_url: 'https://picsum.photos/seed/flor5/800/1000', orden: 5 },
-  { id: '6', imagen_url: 'https://picsum.photos/seed/flor6/800/800', orden: 6 }
+import { GalleryImage } from '@/types'
+
+export const mockGaleria: GalleryImage[] = [
+  { id: '1', imageUrl: 'https://picsum.photos/seed/flor1/800/1000', title: 'Boda', category: 'Eventos', createdAt: '2026-08-01T00:00:00Z' },
+  { id: '2', imageUrl: 'https://picsum.photos/seed/flor2/800/800', title: 'Cumpleaños', category: 'Arreglos', createdAt: '2026-08-01T00:00:00Z' },
+  { id: '3', imageUrl: 'https://picsum.photos/seed/flor3/800/1000', title: 'Aniversario', category: 'Cajas', createdAt: '2026-08-01T00:00:00Z' },
+  { id: '4', imageUrl: 'https://picsum.photos/seed/flor4/800/800', title: 'Grado', category: 'Eventos', createdAt: '2026-08-01T00:00:00Z' },
+  { id: '5', imageUrl: 'https://picsum.photos/seed/flor5/800/1000', title: 'Romance', category: 'Ramos', createdAt: '2026-08-01T00:00:00Z' },
+  { id: '6', imageUrl: 'https://picsum.photos/seed/flor6/800/800', title: 'Primavera', category: 'Arreglos', createdAt: '2026-08-01T00:00:00Z' }
 ]
