@@ -44,18 +44,7 @@ function FloatingPetals() {
 }
 
 export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }) {
-  const videoRef = useRef<HTMLVideoElement>(null)
   const marqueeProducts = featuredProducts
-
-  useEffect(() => {
-    // Iniciar video justo cuando desaparece el SplashScreen (2.5s)
-    const timer = setTimeout(() => {
-      if (videoRef.current) {
-        videoRef.current.play().catch(e => console.log("Auto-play prevented", e))
-      }
-    }, 2500)
-    return () => clearTimeout(timer)
-  }, [])
 
   const titleText = "VIOLETA"
   const titleLetters = titleText.split("")
@@ -93,11 +82,11 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
         }}
       >
         <video
-          ref={videoRef}
           autoPlay
           loop
           muted
           playsInline
+          preload="auto"
           className="object-cover w-full h-full opacity-100"
         >
           <source src="/assets/heroprincipal.mp4" type="video/mp4" />

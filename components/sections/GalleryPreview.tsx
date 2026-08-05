@@ -14,7 +14,24 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
     setImagenes(shuffled.slice(0, 9))
   }, [galleryImages])
 
-  if (galleryImages.length === 0) return null
+  // Mostrar un mensaje de vacío si no hay imágenes
+  if (galleryImages.length === 0) return (
+    <section className="w-full py-24 min-h-[500px]">
+      <div className="container mx-auto px-6">
+        <div className="text-center mb-16">
+          <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-2 block">
+            Inspiración Floral
+          </span>
+          <h2 className="font-playfair text-4xl text-[var(--theme-text)] mb-4">
+            Nuestros Trabajos
+          </h2>
+          <p className="font-inter text-[var(--theme-text-muted)] mt-12 italic">
+            Aún no hay imágenes en la galería. ¡Vuelve pronto!
+          </p>
+        </div>
+      </div>
+    </section>
+  )
 
   // Mostrar un esqueleto o no mostrar nada mientras se carga la aleatoriedad (evita hydration mismatch)
   if (imagenes.length === 0) return (
