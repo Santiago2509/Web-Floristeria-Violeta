@@ -46,17 +46,8 @@ export function Navbar() {
         </Link>
       </nav>
 
-      {/* Botón Hamburguesa (Versión Móvil) */}
-      <div className="md:hidden flex justify-center absolute left-1/2 -translate-x-1/2 z-[70]">
-        <button 
-          onClick={() => setIsOpen(!isOpen)}
-          className="p-2 rounded-full bg-[var(--theme-bg)] backdrop-blur-md border border-[var(--theme-border)]/50 text-[var(--theme-primary)] shadow-lg active:scale-95 transition-transform"
-        >
-          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
-        </button>
-      </div>
-
-      <div className="flex items-center justify-end gap-4 z-[60] w-24 md:w-auto">
+      {/* Botones lado derecho (Redes Sociales, Tema, Menú Hamburguesa) */}
+      <div className="flex items-center justify-end gap-3 md:gap-4 z-[70] w-auto">
         <Link href="https://www.instagram.com/floristeriavioleta28/" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-[var(--theme-text)] hover:text-[#E1306C] transition-colors">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
@@ -70,6 +61,14 @@ export function Navbar() {
           </svg>
         </Link>
         <ThemeToggle />
+        
+        {/* Botón Hamburguesa (Solo Móvil) */}
+        <button 
+          onClick={() => setIsOpen(!isOpen)}
+          className="md:hidden p-2 rounded-full border border-[var(--theme-border)]/30 bg-[var(--theme-bg)]/80 text-[var(--theme-primary)] hover:scale-105 transition-transform"
+        >
+          {isOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
+        </button>
       </div>
 
       {/* Menú Desplegable (Versión Móvil) */}

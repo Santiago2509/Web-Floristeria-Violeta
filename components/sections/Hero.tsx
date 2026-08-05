@@ -61,11 +61,10 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
   }
 
   const letterVariants: import('framer-motion').Variants = {
-    hidden: { opacity: 0, y: 24, filter: 'blur(8px)' },
+    hidden: { opacity: 0, y: 24 },
     visible: { 
       opacity: 1, 
       y: 0, 
-      filter: 'blur(0px)',
       transition: { duration: 0.6, ease: [0.16, 1, 0.3, 1] }
     }
   }
