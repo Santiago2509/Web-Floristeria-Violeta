@@ -3,7 +3,7 @@ import { Product } from '@/types'
 
 export function FeaturedProducts({ featuredProducts: featured }: { featuredProducts: Product[] }) {
   return (
-    <section className="w-full py-24 lg:py-32 relative z-20 overflow-hidden">
+    <section className="w-full pb-24 lg:pb-32 pt-12 lg:pt-16 relative z-20 overflow-hidden">
       <div className="container mx-auto px-6 lg:px-12 relative z-10">
         
         {/* ENCABEZADO — Limpio y editorial */}

@@ -5,6 +5,7 @@ export interface Product {
   price: number
   imageUrl: string
   category: 'Ramos' | 'Cajas' | 'Eventos' | 'Regalos'
+  ocasionSugerida?: string // Ej: "Ideal para cumpleaños" (Fase 3)
   isFeatured: boolean
   createdAt: string
 }

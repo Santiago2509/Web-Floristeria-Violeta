@@ -26,6 +26,7 @@ export async function getProducts(): Promise<Product[]> {
     price: row.price,
     imageUrl: row.image_url,
     category: row.category as any,
+    ocasionSugerida: row.ocasion_sugerida,
     isFeatured: row.is_featured,
     createdAt: row.created_at
   }))
@@ -50,6 +51,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     price: row.price,
     imageUrl: row.image_url,
     category: row.category as any,
+    ocasionSugerida: row.ocasion_sugerida,
     isFeatured: row.is_featured,
     createdAt: row.created_at
   }))
@@ -71,6 +73,7 @@ export async function getProductById(id: string): Promise<Product | null> {
     price: data.price,
     imageUrl: data.image_url,
     category: data.category as any,
+    ocasionSugerida: data.ocasion_sugerida,
     isFeatured: data.is_featured,
     createdAt: data.created_at
   }
@@ -86,6 +89,7 @@ export async function addProduct(product: Omit<Product, 'id' | 'createdAt'>): Pr
         price: product.price,
         category: product.category,
         image_url: product.imageUrl,
+        ocasion_sugerida: product.ocasionSugerida,
         is_featured: product.isFeatured
       }
     ])
@@ -104,6 +108,7 @@ export async function addProduct(product: Omit<Product, 'id' | 'createdAt'>): Pr
     price: data.price,
     imageUrl: data.image_url,
     category: data.category as any,
+    ocasionSugerida: data.ocasion_sugerida,
     isFeatured: data.is_featured,
     createdAt: data.created_at
   }
