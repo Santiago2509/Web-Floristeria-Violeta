@@ -1,5 +1,6 @@
 'use client'
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
+import { useTheme } from '@/components/ui/ThemeProvider'
 import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -44,6 +45,15 @@ function FloatingPetals() {
 }
 
 export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }) {
+  const { theme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+  
+  useEffect(() => {
+    setMounted(true)
+  }, [])
+
+  const isDark = mounted && theme === 'dark'
+
   const marqueeProducts = featuredProducts
 
   const titleText = "VIOLETA"
@@ -108,7 +118,9 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
           className="font-playfair font-medium leading-none mb-4 tracking-widest uppercase z-10 drop-shadow-2xl flex"
           style={{ 
             fontSize: 'clamp(4rem, 15vw, 13rem)',
-            backgroundImage: 'repeating-linear-gradient(to right, #FFFFFF 0%, #D812A5 25%, #7D3C98 50%, #D812A5 75%, #FFFFFF 100%)',
+            backgroundImage: isDark 
+              ? 'repeating-linear-gradient(to right, #FFFFFF 0%, #F3D9EE 25%, #E84393 50%, #F3D9EE 75%, #FFFFFF 100%)'
+              : 'repeating-linear-gradient(to right, #4A235A 0%, #8E44AD 25%, #2E1437 50%, #8E44AD 75%, #4A235A 100%)',
             backgroundSize: '100vw auto',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
@@ -145,9 +157,9 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
           animate={{ opacity: 1, y: 0 }}
           // Tiempo total del stagger: 2.5 + (0.04 * 7) + 0.3 = 3.08s
           transition={{ duration: 0.8, delay: 3.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-white/90 font-playfair text-xl lg:text-3xl mb-12 max-w-2xl italic font-light z-10 drop-shadow-[0_4px_4px_rgba(0,0,0,0.6)]"
+          className="text-white font-inter tracking-[0.35em] uppercase text-base lg:text-xl font-medium mb-12 max-w-2xl z-10 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
         >
-          Flores que cuentan historias...
+          Floristería Premium
         </motion.p>
       </div>
 

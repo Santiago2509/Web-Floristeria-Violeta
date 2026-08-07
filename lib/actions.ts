@@ -10,6 +10,7 @@ export async function adminAddProduct(formData: FormData) {
   const category = formData.get('category') as any
   const imageUrl = formData.get('imageUrl') as string || `https://picsum.photos/seed/${Math.random()}/600/800`
   const isFeatured = formData.get('isFeatured') === 'on'
+  const ocasionSugerida = formData.get('ocasionSugerida') as string || undefined
 
   await db.addProduct({
     title,
@@ -17,6 +18,7 @@ export async function adminAddProduct(formData: FormData) {
     price,
     category,
     imageUrl,
+    ocasionSugerida,
     isFeatured
   })
 
@@ -59,4 +61,14 @@ export async function adminDeleteGalleryImage(id: string) {
   await db.deleteGalleryImage(id)
   revalidatePath('/galeria')
   revalidatePath('/admin/galeria')
+}
+
+export async function adminSaveOccasion(nombre: string) {
+  await db.addSavedOccasion(nombre)
+  revalidatePath('/admin/catalogo')
+}
+
+export async function adminDeleteOccasion(nombre: string) {
+  await db.deleteSavedOccasion(nombre)
+  revalidatePath('/admin/catalogo')
 }

@@ -22,7 +22,7 @@ const values = [
 
 export function AboutValues() {
   return (
-    <section className="w-full py-24 md:py-32 relative bg-white dark:bg-[#0a0a0a] border-t border-[var(--theme-border)]/10 overflow-hidden">
+    <section className="w-full py-24 md:py-32 relative bg-[var(--theme-bg)] dark:bg-[#0a0a0a] border-t border-[var(--theme-border)]/10 overflow-hidden">
       
       {/* Orbes de Luz de Fondo para que el Glassmorphism tenga efecto */}
       <div className="absolute inset-0 pointer-events-none z-0">
@@ -62,12 +62,12 @@ export function AboutValues() {
               whileInView={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
               viewport={{ once: true, margin: "-50px" }}
               transition={{ duration: 0.8, delay: index * 0.2, ease: "easeOut" }}
-              className="flex flex-col items-center text-center p-10 md:p-12 rounded-[2rem] bg-white/40 dark:bg-white/5 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(157,112,168,0.15)] transition-all duration-700 group relative overflow-hidden"
+              className="flex flex-col items-center text-center p-10 md:p-12 rounded-[2rem] bg-[#F8F4EC]/40 dark:bg-white/5 backdrop-blur-xl border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_50px_rgba(157,112,168,0.15)] transition-all duration-700 group relative overflow-hidden"
             >
               {/* Brillo interno de la tarjeta */}
               <div className="absolute inset-0 bg-gradient-to-b from-white/40 to-transparent dark:from-white/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none" />
 
-              <div className="w-24 h-24 rounded-full bg-white/60 dark:bg-black/30 shadow-inner flex items-center justify-center text-[var(--theme-primary)] mb-8 group-hover:-translate-y-2 transition-transform duration-500 relative">
+              <div className="w-24 h-24 rounded-full bg-[#F8F4EC]/60 dark:bg-black/30 shadow-inner flex items-center justify-center text-[var(--theme-primary)] mb-8 group-hover:-translate-y-2 transition-transform duration-500 relative">
                 {/* Glow mágico del ícono en hover */}
                 <div className="absolute inset-0 bg-[var(--theme-primary)] rounded-full blur-xl opacity-0 group-hover:opacity-30 dark:group-hover:opacity-50 transition-opacity duration-700" />
                 <value.icon strokeWidth={1} className="w-10 h-10 relative z-10 transition-transform duration-700 group-hover:scale-110" />

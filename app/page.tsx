@@ -8,16 +8,17 @@ import { Contact } from '@/components/sections/Contact'
 import { getFeaturedProducts, getGalleryImages } from '@/lib/db'
 
 import { GlobalAurora } from '@/components/ui/GlobalAurora'
-import { ScrollVine } from '@/components/ui/ScrollVine'
+import { FloralBackground } from '@/components/ui/floral/FloralBackground'
 
 export default async function Home() {
   const featured = await getFeaturedProducts()
   const gallery = await getGalleryImages()
 
   return (
-    <div className="flex flex-col relative">
+    <div className="flex flex-col relative w-full overflow-hidden">
       <GlobalAurora />
-      <ScrollVine />
+      
+      {/* SECCIONES DE LA PÁGINA */}
       <Hero featuredProducts={featured} />
       <FeaturedProducts featuredProducts={featured} />
       <MotivationalBanner />
@@ -25,6 +26,9 @@ export default async function Home() {
       <ServicesPreview />
       <GalleryPreview galleryImages={gallery} />
       <Contact />
+
+      {/* CAPA DE DECORACIÓN BOTÁNICA CONTINUA */}
+      <FloralBackground />
     </div>
   );
 }

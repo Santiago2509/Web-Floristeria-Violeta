@@ -12,10 +12,11 @@ interface ProductoCardProps {
   mostrar_precio?: boolean;
   imagenUrl: string;
   categoria?: string;
+  ocasionSugerida?: string;
   index?: number;
 }
 
-export function ProductoCard({ id, nombre, precio, mostrar_precio = true, imagenUrl, categoria, index = 0 }: ProductoCardProps) {
+export function ProductoCard({ id, nombre, precio, mostrar_precio = true, imagenUrl, categoria, ocasionSugerida, index = 0 }: ProductoCardProps) {
   const whatsappUrl = generarLinkWhatsApp(`¡Hola! Me encantó el arreglo floral "${nombre}" que vi en su catálogo y me gustaría pedir más información.`)
 
   return (
@@ -27,7 +28,7 @@ export function ProductoCard({ id, nombre, precio, mostrar_precio = true, imagen
       transition={{ duration: 0.6, delay: index * 0.1, ease: "easeOut" }}
       className="mb-6 break-inside-avoid"
     >
-      <div className="group relative flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl bg-white/40 dark:bg-black/40 border border-white/60 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 h-full">
+      <div className="group relative flex flex-col rounded-2xl overflow-hidden backdrop-blur-xl bg-[var(--theme-bg)]/40 dark:bg-black/40 border border-[var(--theme-border)]/40 dark:border-white/10 shadow-lg hover:shadow-2xl hover:-translate-y-1 transition-all duration-500 h-full">
       
       {/* Link invisible que cubre toda la tarjeta para navegar al detalle */}
       <Link href={`/catalogo/${id}`} className="absolute inset-0 z-10">
@@ -63,11 +64,20 @@ export function ProductoCard({ id, nombre, precio, mostrar_precio = true, imagen
       
       {/* Contenido (Nombre y Precio) */}
       <div className="p-3 md:p-6 flex flex-col items-center text-center relative z-0">
-        {categoria && (
-          <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] font-inter uppercase tracking-widest bg-[var(--theme-primary)]/10 text-[var(--theme-primary)] rounded-full mb-2 md:mb-3 border border-[var(--theme-primary)]/20">
-            {categoria}
-          </span>
-        )}
+        <div className="flex flex-wrap justify-center gap-1.5 mb-2 md:mb-3">
+          {categoria && (
+            <span className="inline-block px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] font-inter uppercase tracking-widest bg-[var(--theme-primary)]/10 text-[var(--theme-primary)] rounded-full border border-[var(--theme-primary)]/20">
+              {categoria}
+            </span>
+          )}
+          {ocasionSugerida && (
+            ocasionSugerida.split(',').slice(0, 3).map(tag => (
+              <span key={tag.trim()} className="inline-block px-2 py-0.5 md:px-3 md:py-1 text-[8px] md:text-[10px] font-inter uppercase tracking-widest bg-[var(--theme-border)]/50 text-[var(--theme-text-muted)] rounded-full border border-[var(--theme-border)]">
+                {tag.trim()}
+              </span>
+            ))
+          )}
+        </div>
         <h3 className="font-playfair text-sm sm:text-base md:text-2xl text-[var(--theme-text)] mb-1 md:mb-2 line-clamp-2">
           {nombre}
         </h3>

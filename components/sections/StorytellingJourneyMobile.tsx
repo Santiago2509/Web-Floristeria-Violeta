@@ -132,7 +132,7 @@ export function StorytellingJourneyMobile() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: i * 0.1 }}
-              className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-white/40 dark:bg-black/40 border border-white/60 dark:border-white/10 shadow-lg backdrop-blur-md"
+              className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-[var(--theme-bg)]/60 dark:bg-black/40 border border-[var(--theme-border)]/30 dark:border-white/10 shadow-lg backdrop-blur-md"
             >
               <div className="w-16 h-16 rounded-full bg-[var(--theme-primary)]/10 flex items-center justify-center mb-6 border border-[var(--theme-primary)]/20">
                 <item.icon className="w-8 h-8 text-[var(--theme-primary)]" strokeWidth={1.5} />

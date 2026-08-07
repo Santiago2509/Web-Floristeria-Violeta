@@ -48,9 +48,9 @@
 
 :root {
   /* MODO CLARO — Boutique Minimalista */
-  --theme-bg: #FCFAFA;              
-  --theme-bg-section: #FFFFFF;      
-  --theme-bg-card: #FFFFFF;
+  --theme-bg: #F8F4EC;              
+  --theme-bg-section: #FBF8F3;      
+  --theme-bg-card: #FDF9F3;
   --theme-text: #2A1B38;            
   --theme-text-muted: #645670;      
   --theme-border: #E5E0E8;          

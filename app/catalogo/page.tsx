@@ -36,7 +36,7 @@ export default async function CatalogoPage() {
               const buyLink = generarLinkWhatsApp(`¡Hola! Me interesa comprar el producto: *${product.title}* que vi en el catálogo.`)
               
               return (
-                <div key={product.id} className="group flex flex-col bg-[var(--theme-bg-card)] rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-lg hover:shadow-2xl transition-all duration-500">
+                <div id={`product-${product.id}`} key={product.id} className="group flex flex-col bg-[var(--theme-bg-card)] rounded-3xl overflow-hidden border border-[var(--theme-border)] shadow-lg hover:shadow-2xl transition-all duration-500">
                   <div className="relative aspect-[4/5] w-full overflow-hidden">
                     <Image
                       src={product.imageUrl}
@@ -60,9 +60,20 @@ export default async function CatalogoPage() {
                     </p>
                     
                     <div className="flex items-center justify-between mt-auto">
-                      <span className="font-inter text-xl font-medium text-[var(--theme-text)]">
-                        ${product.price.toLocaleString('es-CO')}
-                      </span>
+                      <div className="flex flex-col gap-1">
+                        <span className="font-inter text-xl font-medium text-[var(--theme-text)]">
+                          ${product.price.toLocaleString('es-CO')}
+                        </span>
+                        {product.ocasionSugerida && (
+                          <div className="flex gap-1 flex-wrap max-w-[200px]">
+                            {product.ocasionSugerida.split(',').slice(0, 3).map(tag => (
+                              <span key={tag.trim()} className="text-[9px] uppercase tracking-wider text-[var(--theme-primary)] bg-[var(--theme-primary)]/10 px-2 py-0.5 rounded-full border border-[var(--theme-primary)]/20">
+                                {tag.trim()}
+                              </span>
+                            ))}
+                          </div>
+                        )}
+                      </div>
                       <a 
                         href={buyLink}
                         target="_blank"

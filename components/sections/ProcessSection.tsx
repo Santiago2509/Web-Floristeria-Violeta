@@ -133,7 +133,7 @@ export function ProcessSection() {
                   hidden: { opacity: 0, scale: 0.5, rotate: -20 },
                   visible: { opacity: 1, scale: 1, rotate: 0, transition: { type: "spring", stiffness: 120, damping: 14 } }
                 }}
-                className="w-24 h-24 rounded-full bg-white/40 dark:bg-black/30 backdrop-blur-md border border-[var(--theme-primary)]/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center text-[var(--theme-primary)] mb-8 mx-auto relative overflow-hidden transition-all duration-500 group-hover:border-[var(--theme-primary)] group-hover:shadow-[0_0_30px_var(--theme-primary)]/30"
+                className="w-24 h-24 rounded-full bg-[var(--theme-bg)]/60 dark:bg-black/30 backdrop-blur-md border border-[var(--theme-primary)]/30 shadow-[0_8px_30px_rgb(0,0,0,0.12)] flex items-center justify-center text-[var(--theme-primary)] mb-8 mx-auto relative overflow-hidden transition-all duration-500 group-hover:border-[var(--theme-primary)] group-hover:shadow-[0_0_30px_var(--theme-primary)]/30"
               >
                 <div 
                   className="absolute inset-0 bg-gradient-to-tr from-[var(--theme-primary)] to-[var(--theme-primary-light)] rounded-full origin-center opacity-0 group-hover:opacity-100 transition-opacity duration-500"

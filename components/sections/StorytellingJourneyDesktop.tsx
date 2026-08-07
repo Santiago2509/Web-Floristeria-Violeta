@@ -284,7 +284,7 @@ export function StorytellingJourneyDesktop() {
                       { icon: Star, t: 'Calidad Premium', d: 'Trabajamos con flores de la más alta calidad, seleccionadas diariamente.' },
                       { icon: Clock, t: 'Puntualidad', d: 'Nos tomamos el tiempo de entrega tan en serio como nuestras flores.' }
                     ].map((item, i) => (
-                      <div key={i} className="flex flex-col items-center p-10 lg:p-14 rounded-[2rem] lg:rounded-[3rem] bg-white/40 dark:bg-black/40 border border-white/60 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-none backdrop-blur-2xl hover:bg-white/60 dark:hover:bg-white/5 transition-all duration-500 group relative overflow-hidden">
+                      <div key={i} className="flex flex-col items-center p-10 lg:p-14 rounded-[2rem] lg:rounded-[3rem] bg-[var(--theme-bg)]/60 dark:bg-black/40 border border-[var(--theme-border)]/30 dark:border-white/10 shadow-[0_8px_30px_rgb(0,0,0,0.08)] dark:shadow-none backdrop-blur-2xl hover:bg-[var(--theme-bg)]/80 dark:hover:bg-white/5 transition-all duration-500 group relative overflow-hidden">
                         {/* Acento superior en la tarjeta */}
                         <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-[var(--theme-primary)]/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                         

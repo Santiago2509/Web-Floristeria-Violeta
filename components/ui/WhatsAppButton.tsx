@@ -32,7 +32,7 @@ export function WhatsAppButton() {
         </svg>
 
         {/* Tooltip elegante - Solo Desktop */}
-        <div className="absolute right-16 px-4 py-2 bg-white dark:bg-[#1a1a1a] text-[var(--theme-text)] text-sm font-inter rounded-xl shadow-lg border border-[var(--theme-border)]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap hidden md:block">
+        <div className="absolute right-16 px-4 py-2 bg-[var(--theme-bg-card)] dark:bg-[#1a1a1a] text-[var(--theme-text)] text-sm font-inter rounded-xl shadow-lg border border-[var(--theme-border)]/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none whitespace-nowrap hidden md:block">
           Chatea con nosotros
         </div>
       </motion.a>

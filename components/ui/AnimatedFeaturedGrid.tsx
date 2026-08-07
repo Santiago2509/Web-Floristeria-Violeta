@@ -60,15 +60,19 @@ function ProductCard({ product, isHero = false }: { product: Product, isHero?: b
             {product.title}
           </h3>
           <div className="flex items-center justify-between w-full">
-            <div className="flex items-center gap-3">
+            <div className="flex flex-wrap items-center gap-1 sm:gap-3">
               <p className="font-inter font-medium text-white/90 text-sm drop-shadow-md">
                 ${product.price.toLocaleString('es-CO')}
               </p>
-              {/* FASE 3: Tag de ocasión sugerida */}
+              {/* FASE 3: Tag de ocasión sugerida (múltiples) */}
               {product.ocasionSugerida && (
-                <span className="bg-white/20 text-white border border-white/30 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] uppercase tracking-wider hidden sm:inline-block">
-                  {product.ocasionSugerida}
-                </span>
+                <div className="hidden sm:flex gap-1.5 flex-wrap">
+                  {product.ocasionSugerida.split(',').slice(0, 3).map(tag => (
+                    <span key={tag.trim()} className="bg-white/20 text-white border border-white/30 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] uppercase tracking-wider">
+                      {tag.trim()}
+                    </span>
+                  ))}
+                </div>
               )}
             </div>
             

@@ -1,14 +1,15 @@
-import { getProducts } from '@/lib/db'
+import { getProducts, getSavedOccasions } from '@/lib/db'
 import { adminAddProduct, adminDeleteProduct, adminToggleFeatured } from '@/lib/actions'
 import { Star, Trash2, Plus } from 'lucide-react'
 import Image from 'next/image'
-
 import { ImageUploader } from '@/components/ui/ImageUploader'
+import { OccasionSelector } from '@/components/admin/OccasionSelector'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminCatalogoPage() {
   const products = await getProducts()
+  const savedOccasions = await getSavedOccasions()
 
   return (
     <div className="font-inter">
@@ -57,6 +58,8 @@ export default async function AdminCatalogoPage() {
                 <label className="text-xs text-[var(--theme-text-muted)] font-medium">Foto del Producto</label>
                 <ImageUploader name="imageUrl" />
               </div>
+
+              <OccasionSelector savedOccasions={savedOccasions} />
 
               <div className="flex items-center gap-2 pt-2 pb-2">
                 <input type="checkbox" id="isFeatured" name="isFeatured" className="w-4 h-4 rounded border-[var(--theme-border)] text-[var(--theme-primary)] focus:ring-[var(--theme-primary)]" />

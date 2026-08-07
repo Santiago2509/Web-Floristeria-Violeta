@@ -213,3 +213,47 @@ export async function deleteGalleryImage(id: string): Promise<boolean> {
   }
   return true
 }
+
+
+// --- OCASIONES GUARDADAS ---
+
+export async function getSavedOccasions(): Promise<string[]> {
+  const { data, error } = await supabase
+    .from('ocasiones_guardadas')
+    .select('nombre')
+    .order('nombre', { ascending: true })
+    
+  if (error) {
+    console.error('Error fetching saved occasions:', error)
+    return []
+  }
+  
+  return data.map(row => row.nombre)
+}
+
+export async function addSavedOccasion(nombre: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('ocasiones_guardadas')
+    .insert([{ nombre }])
+    
+  if (error) {
+    console.error('Error adding saved occasion:', error)
+    return false
+  }
+  
+  return true
+}
+
+export async function deleteSavedOccasion(nombre: string): Promise<boolean> {
+  const { error } = await supabase
+    .from('ocasiones_guardadas')
+    .delete()
+    .eq('nombre', nombre)
+    
+  if (error) {
+    console.error('Error deleting saved occasion:', error)
+    return false
+  }
+  
+  return true
+}
