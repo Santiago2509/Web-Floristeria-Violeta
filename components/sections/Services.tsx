@@ -116,13 +116,12 @@ function ServiceCard({ service, index }: { service: any, index: number }) {
   )
 }
 
-import { ServicesBackgroundVector } from '@/components/ui/ServicesBackgroundVector'
+
 
 export function Services() {
   return (
     <section className="w-full py-24 md:py-32 relative border-t border-[var(--theme-border)]/10 bg-[var(--theme-bg)] overflow-hidden" id="servicios">
-      <ServicesBackgroundVector />
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto relative z-10">
         
         {/* Título Animado Palabra por Palabra */}
         <motion.div 

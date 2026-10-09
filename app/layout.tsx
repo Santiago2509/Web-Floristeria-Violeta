@@ -27,6 +27,16 @@ export const metadata = {
     template: '%s | Floristería Violeta',
   },
   description: 'Las mejores flores para cada ocasión. Ramos, cajas y arreglos florales exclusivos en Colombia.',
+  keywords: ['floristeria', 'flores', 'arreglos florales', 'rosas', 'cajas de rosas', 'regalos', 'Cali', 'Colombia'],
+  authors: [{ name: 'Floristería Violeta' }],
+  robots: {
+    index: true,
+    follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+    },
+  },
   openGraph: {
     title: 'Floristería Violeta',
     description: 'Explora nuestra colección exclusiva de ramos y arreglos florales.',

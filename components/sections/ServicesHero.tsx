@@ -49,7 +49,7 @@ export function ServicesHero() {
       <div className="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-[var(--theme-bg)] via-[var(--theme-bg)]/50 to-transparent z-0 pointer-events-none" />
 
       {/* Content */}
-      <motion.div style={{ opacity }} className="relative z-10 container mx-auto px-6 text-center flex flex-col items-center mt-10">
+      <motion.div style={{ opacity }} className="relative z-10 container mx-auto text-center flex flex-col items-center mt-10">
         <motion.div
           initial={{ opacity: 0, scaleX: 0 }}
           animate={{ opacity: 1, scaleX: 1 }}

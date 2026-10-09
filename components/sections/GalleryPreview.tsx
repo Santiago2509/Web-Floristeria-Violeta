@@ -17,7 +17,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
   // Mostrar un mensaje de vacío si no hay imágenes
   if (galleryImages.length === 0) return (
     <section className="w-full py-24 min-h-[500px]">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <div className="text-center mb-16">
           <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-2 block">
             Inspiración Floral
@@ -36,7 +36,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
   // Mostrar un esqueleto o no mostrar nada mientras se carga la aleatoriedad (evita hydration mismatch)
   if (imagenes.length === 0) return (
     <section className="w-full py-24 min-h-[500px]">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <div className="text-center mb-16">
           <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-2 block">
             Inspiración Floral
@@ -51,7 +51,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
 
   return (
     <section className="w-full py-24 relative z-20">
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         
         {/* ENCABEZADO */}
         <div className="text-center mb-16">

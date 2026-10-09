@@ -27,7 +27,7 @@ export function Contact() {
 
   return (
     <section className="w-full py-24 bg-[var(--theme-bg-section)]" id="contacto">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto">
 
         <div className="text-center mb-16">
           <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-2 block">

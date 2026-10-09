@@ -108,7 +108,7 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
       <FloatingPetals />
 
       {/* Contenido Central */}
-      <div className="container mx-auto px-6 lg:px-12 z-10 relative flex flex-col items-center justify-center flex-grow">
+      <div className="container mx-auto z-10 relative flex flex-col items-center justify-center flex-grow">
         
         {/* Título Kinetic Reveal */}
         <motion.h1

@@ -2,7 +2,6 @@
 import { motion } from 'framer-motion'
 import { MessageCircle, Paintbrush, CalendarHeart } from 'lucide-react'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
-import { LeftFloralVector, RightFloralVector } from '@/components/ui/FloralVectors'
 
 const steps = [
   {
@@ -34,11 +33,8 @@ export function ProcessSection() {
         </svg>
       </div>
 
-      {/* Vectores Decorativos en el fondo */}
-      <LeftFloralVector />
-      <RightFloralVector />
-      
-      <div className="container mx-auto px-6 relative z-10">
+
+      <div className="container mx-auto relative z-10">
         <div className="text-center mb-16 md:mb-24">
           <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-4 block font-semibold">
             Nuestro Proceso

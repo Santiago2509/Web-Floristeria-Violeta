@@ -18,7 +18,7 @@ export function ContactHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-10 container mx-auto px-6 text-center flex flex-col items-center mt-12">
+      <div className="relative z-10 container mx-auto text-center flex flex-col items-center mt-12">
         <motion.div
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}

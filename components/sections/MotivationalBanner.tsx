@@ -29,7 +29,7 @@ export function MotivationalBanner() {
   }, [])
 
   return (
-    <section className="w-full py-32 md:py-40 relative flex items-center justify-center text-center bg-[var(--theme-primary)] dark:bg-[#34164c]">
+    <section className="w-full py-32 md:py-40 relative flex items-center justify-center text-center bg-[var(--theme-primary)] dark:bg-[#34164c] z-30">
       
       {/* ═══════════════════════════════════════════════════
           WAVES (Olas de transición OUTWARDS)
@@ -79,7 +79,7 @@ export function MotivationalBanner() {
       {/* ═══════════════════════════════════════════════════
           CONTENIDO PRINCIPAL
       ═══════════════════════════════════════════════════ */}
-      <div className="container mx-auto px-6 lg:px-12 relative z-20">
+      <div className="container mx-auto relative z-20">
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           whileInView={{ opacity: 1, y: 0 }}

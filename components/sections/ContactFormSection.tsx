@@ -24,7 +24,7 @@ export function ContactFormSection() {
 
   return (
     <section className="w-full py-24 relative bg-[var(--theme-bg)]">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row gap-16 lg:gap-24">
           
           {/* Información de Contacto */}

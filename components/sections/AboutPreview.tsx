@@ -6,7 +6,7 @@ import Link from 'next/link'
 export function AboutPreview() {
   return (
     <section className="w-full pb-24 lg:pb-32 pt-10 relative z-20">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto">
         <div className="flex flex-col lg:flex-row items-center gap-16 lg:gap-20">
           
           {/* Columna Izquierda: Imagen Flotante (Overlap Transition) */}

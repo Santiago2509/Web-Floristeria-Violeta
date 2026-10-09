@@ -16,7 +16,7 @@ export default async function CatalogoPage() {
 
   return (
     <main className="min-h-screen pt-24 md:pt-32 pb-24 bg-[var(--theme-bg)]">
-      <div className="container mx-auto px-6 lg:px-12">
+      <div className="container mx-auto">
         <div className="text-center mb-16">
           <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-4 block font-semibold">
             Nuestras Creaciones

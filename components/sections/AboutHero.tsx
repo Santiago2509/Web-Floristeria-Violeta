@@ -25,7 +25,7 @@ export function AboutHero() {
       </div>
 
       {/* Content */}
-      <div className="relative z-20 container mx-auto px-6 text-center flex flex-col items-center mt-16 md:mt-20">
+      <div className="relative z-20 container mx-auto text-center flex flex-col items-center mt-16 md:mt-20">
 
         
         <motion.h1 

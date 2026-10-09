@@ -15,7 +15,7 @@ export function AboutStory() {
 
   return (
     <section className="w-full py-24 md:py-32 relative bg-[var(--theme-bg)] overflow-hidden">
-      <div className="container mx-auto px-4 md:px-6 relative z-10">
+      <div className="container mx-auto relative z-10">
         
         <div className="flex flex-col lg:flex-row items-center justify-center max-w-6xl mx-auto">
           

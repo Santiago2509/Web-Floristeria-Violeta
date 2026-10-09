@@ -3,10 +3,18 @@ import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 export function SplashScreen() {
-  const [isLoading, setIsLoading] = useState(true)
+  // Mostrar solo una vez por sesión del navegador
+  const [isLoading, setIsLoading] = useState(false)
 
   useEffect(() => {
-    // Ocultar la pantalla después de 2.5 segundos
+    const alreadyShown = sessionStorage.getItem('splash_shown')
+    if (alreadyShown) {
+      setIsLoading(false)
+      return
+    }
+    // Primera visita: mostrar splash y marcar como visto
+    setIsLoading(true)
+    sessionStorage.setItem('splash_shown', '1')
     const timer = setTimeout(() => {
       setIsLoading(false)
     }, 2500)
@@ -75,3 +83,4 @@ export function SplashScreen() {
     </AnimatePresence>
   )
 }
+

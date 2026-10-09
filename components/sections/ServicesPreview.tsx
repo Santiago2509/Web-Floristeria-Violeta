@@ -43,7 +43,7 @@ export function ServicesPreview() {
   return (
     <section className="w-full relative py-24 lg:py-32 z-20">
       
-      <div className="container mx-auto px-6 lg:px-12 relative z-10">
+      <div className="container mx-auto relative z-10">
         
         {/* ENCABEZADO */}
         <div className="text-center mb-16 lg:mb-24">
