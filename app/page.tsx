@@ -1,8 +1,7 @@
-import fs from 'fs'
-import path from 'path'
 import { Hero } from '@/components/sections/Hero'
 import { getFeaturedProducts, getGalleryImages } from '@/lib/db'
 import { GlobalAurora } from '@/components/ui/GlobalAurora'
+import { ScrollVineAnimation } from '@/components/ui/ScrollVineAnimation'
 import dynamic from 'next/dynamic'
 
 // Componentes secundarios cargados dinámicamente para mejorar FCP
@@ -12,29 +11,10 @@ const AboutPreview = dynamic(() => import('@/components/sections/AboutPreview').
 const ServicesPreview = dynamic(() => import('@/components/sections/ServicesPreview').then(mod => mod.ServicesPreview))
 const GalleryPreview = dynamic(() => import('@/components/sections/GalleryPreview').then(mod => mod.GalleryPreview))
 const Contact = dynamic(() => import('@/components/sections/Contact').then(mod => mod.Contact))
-const ScrollSequenceBg = dynamic(() => import('@/components/video/ScrollSequenceBg').then(mod => mod.ScrollSequenceBg))
 
 export default async function Home() {
   const featured = await getFeaturedProducts()
   const gallery = await getGalleryImages()
-
-  // Leer los fotogramas dinámicamente desde la carpeta
-  const framesDir = path.join(
-    process.cwd(),
-    'public',
-    'assets',
-    '_MConverter.eu_Vines_growing_on_violet_gradient_20261008190330'
-  )
-  let frameFiles: string[] = []
-  try {
-    const files = fs.readdirSync(framesDir)
-    frameFiles = files
-      .filter(f => f.endsWith('.png'))
-      .sort((a, b) => a.localeCompare(b))
-      .map(f => `/assets/_MConverter.eu_Vines_growing_on_violet_gradient_20261008190330/${f}`)
-  } catch {
-    // carpeta no encontrada — continúa sin fondo de fotogramas
-  }
 
   return (
     <div className="flex flex-col relative w-full">
@@ -53,9 +33,7 @@ export default async function Home() {
         Las demás secciones van con z-20.
       */}
       <div className="relative w-full">
-        {frameFiles.length > 0 && (
-          <ScrollSequenceBg frames={frameFiles} />
-        )}
+        <ScrollVineAnimation />
 
         {/* AboutPreview: z-30 — el canvas (z-1) nunca la tapa */}
         <div className="relative z-30">

@@ -5,6 +5,7 @@ import { motion } from 'framer-motion'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Product } from '@/types'
+import { AnimatedRose } from '@/components/ui/AnimatedRose'
 
 // Componente para los pétalos
 function FloatingPetals() {
@@ -109,7 +110,16 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
 
       {/* Contenido Central */}
       <div className="container mx-auto z-10 relative flex flex-col items-center justify-center flex-grow">
-        
+        {/* Logo Flor Animada */}
+        <motion.div
+          initial={{ opacity: 0, scale: 0.8 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 1, delay: 0.2 }}
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 translate-y-32 md:translate-y-48"
+        >
+          <AnimatedRose className="drop-shadow-2xl w-[145vw] md:w-[960px] opacity-70" />
+        </motion.div>
+
         {/* Título Kinetic Reveal */}
         <motion.h1
           variants={containerVariants}
@@ -119,8 +129,8 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
           style={{ 
             fontSize: 'clamp(4rem, 15vw, 13rem)',
             backgroundImage: isDark 
-              ? 'repeating-linear-gradient(to right, #FFFFFF 0%, #F3D9EE 25%, #E84393 50%, #F3D9EE 75%, #FFFFFF 100%)'
-              : 'repeating-linear-gradient(to right, #4A235A 0%, #8E44AD 25%, #2E1437 50%, #8E44AD 75%, #4A235A 100%)',
+              ? 'repeating-linear-gradient(to right, #FFFFFF 0%, #E6CCFF 15%, #CC00FF 35%, #7B00FF 50%, #CC00FF 65%, #E6CCFF 85%, #FFFFFF 100%)'
+              : 'repeating-linear-gradient(to right, #4A235A 0%, #7B00FF 25%, #CC00FF 50%, #7B00FF 75%, #4A235A 100%)',
             backgroundSize: '100vw auto',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
@@ -155,11 +165,10 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          // Tiempo total del stagger: 2.5 + (0.04 * 7) + 0.3 = 3.08s
           transition={{ duration: 0.8, delay: 3.1, ease: [0.16, 1, 0.3, 1] }}
-          className="text-white font-inter tracking-[0.35em] uppercase text-base lg:text-xl font-medium mb-12 max-w-2xl z-10 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
+          className="text-white font-inter tracking-[0.35em] uppercase text-base lg:text-xl font-medium mt-4 mb-12 max-w-2xl z-10 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
         >
-          Floristería Premium
+          Floristería
         </motion.p>
       </div>
 

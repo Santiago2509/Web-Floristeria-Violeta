@@ -14,7 +14,7 @@ export async function getProducts(): Promise<Product[]> {
     .order('created_at', { ascending: false })
   
   if (error) {
-    console.error('Error fetching products:', error)
+    console.error('Error fetching products:', JSON.stringify(error, null, 2), error.message)
     return []
   }
   
