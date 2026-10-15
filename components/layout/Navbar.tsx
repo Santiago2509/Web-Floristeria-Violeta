@@ -17,6 +17,7 @@ export function Navbar() {
   }, [])
 
   const navLinks = [
+    { name: 'Inicio', href: '/' },
     { name: 'Catálogo', href: '/catalogo' },
     { name: 'Servicios', href: '/servicios' },
     { name: 'Galería', href: '/galeria' },

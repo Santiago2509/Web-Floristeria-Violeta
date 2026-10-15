@@ -1,7 +1,17 @@
 'use client'
 
-import { useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { useState, useEffect, useRef, useMemo } from 'react'
+import { motion, AnimatePresence, useInView } from 'framer-motion'
+
+// Tiempo que se muestra cada categoría antes de deslizar a la siguiente
+const AUTOPLAY_MS = 5000
+
+// Variantes del deslizante (dirección según avance/retroceso)
+const slideVariants = {
+  enter: (dir: number) => ({ opacity: 0, x: dir > 0 ? 80 : -80 }),
+  center: { opacity: 1, x: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] as const } },
+  exit: (dir: number) => ({ opacity: 0, x: dir > 0 ? -80 : 80, transition: { duration: 0.35, ease: [0.4, 0, 1, 1] as const } }),
+}
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/types'
@@ -162,14 +172,43 @@ function BentoChunk({ products, showCTA, isFirstChunk }: { products: Product[], 
 export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
   const categories = ['Todos', 'Ramos', 'Cajas', 'Eventos', 'Regalos']
   const [activeCategory, setActiveCategory] = useState('Todos')
+  const [direction, setDirection] = useState(1)
+
+  // Autoplay: corre solo hasta que el cliente interactúe
+  const [autoPlay, setAutoPlay] = useState(true)
+  const [isHovering, setIsHovering] = useState(false)
+  const rootRef = useRef<HTMLDivElement>(null)
+  const inView = useInView(rootRef, { amount: 0.3 })
+
+  // Solo rotamos por categorías que tengan productos (Todos siempre)
+  const rotatingCategories = useMemo(
+    () => categories.filter(c => c === 'Todos' || products.some(p => p.category?.toLowerCase() === c.toLowerCase())),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [products]
+  )
+
+  const isRunning = autoPlay && !isHovering && inView && rotatingCategories.length > 1
+
+  useEffect(() => {
+    if (!isRunning) return
+    const t = setTimeout(() => {
+      const idx = rotatingCategories.indexOf(activeCategory)
+      const next = rotatingCategories[(idx + 1) % rotatingCategories.length]
+      setDirection(1)
+      setActiveCategory(next)
+      setVisibleCount(4)
+    }, AUTOPLAY_MS)
+    return () => clearTimeout(t)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRunning, activeCategory, rotatingCategories])
   
   // FASE 4: Estado para controlar cuántos chunks se muestran
   const [visibleCount, setVisibleCount] = useState(4)
 
-  // Filtrado de productos
+  // Filtrado de productos (tolerante a mayúsculas/minúsculas)
   const filteredProducts = activeCategory === 'Todos' 
     ? products 
-    : products.filter(p => p.category === activeCategory)
+    : products.filter(p => p.category?.toLowerCase() === activeCategory.toLowerCase())
 
   // Dividimos los productos visibles en chunks de 4
   const displayProducts = filteredProducts.slice(0, visibleCount)
@@ -182,6 +221,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
   const hasMore = visibleCount < filteredProducts.length
 
   const handleToggleMore = () => {
+    setAutoPlay(false)
     if (hasMore) {
       setVisibleCount(prev => prev + 4)
     } else {
@@ -194,38 +234,64 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
   }
 
   const handleCategoryChange = (cat: string) => {
+    setAutoPlay(false) // El cliente eligió: detenemos la animación
+    setDirection(categories.indexOf(cat) >= categories.indexOf(activeCategory) ? 1 : -1)
     setActiveCategory(cat)
     setVisibleCount(4) // Reset al cambiar filtro
   }
 
   return (
-    <div className="flex flex-col relative z-10" id="nuestros-favoritos">
+    <div
+      ref={rootRef}
+      className="flex flex-col relative z-10"
+      id="nuestros-favoritos"
+      onMouseEnter={() => setIsHovering(true)}
+      onMouseLeave={() => setIsHovering(false)}
+      onTouchStart={() => setAutoPlay(false)}
+    >
       
       {/* FASE 1: Chips de Filtro */}
       <div className="flex flex-wrap justify-center gap-3 mb-10">
-        {categories.map((cat) => (
-          <button
-            key={cat}
-            onClick={() => setActiveCategory(cat)}
-            className={`px-5 py-2 rounded-full font-inter text-[10px] uppercase tracking-widest transition-all duration-300 border ${
-              activeCategory === cat
-                ? 'bg-[var(--theme-primary)] border-[var(--theme-primary)] text-white shadow-md'
-                : 'bg-transparent border-[var(--theme-border)] text-[var(--theme-text-muted)] hover:border-[var(--theme-primary)]/50'
-            }`}
-          >
-            {cat}
-          </button>
-        ))}
+        {categories.map((cat) => {
+          const isActive = activeCategory === cat
+          return (
+            <button
+              key={cat}
+              id={`featured-filter-${cat.toLowerCase()}`}
+              onClick={() => handleCategoryChange(cat)}
+              className={`relative overflow-hidden px-5 py-2 rounded-full font-inter text-[10px] uppercase tracking-widest transition-all duration-300 border ${
+                isActive
+                  ? 'bg-[var(--theme-primary)] border-[var(--theme-primary)] text-white shadow-md'
+                  : 'bg-transparent border-[var(--theme-border)] text-[var(--theme-text-muted)] hover:border-[var(--theme-primary)]/50'
+              }`}
+            >
+              <span className="relative z-10">{cat}</span>
+              {/* Barra de progreso del autoplay */}
+              {isActive && isRunning && (
+                <motion.span
+                  key={`progress-${cat}`}
+                  className="absolute left-0 bottom-0 h-[2px] bg-white/80"
+                  initial={{ width: '0%' }}
+                  animate={{ width: '100%' }}
+                  transition={{ duration: AUTOPLAY_MS / 1000, ease: 'linear' }}
+                />
+              )}
+            </button>
+          )
+        })}
       </div>
 
       {/* Grid Animado con Layout */}
-      <AnimatePresence mode="popLayout">
+      <div className="w-full overflow-hidden">
+      <AnimatePresence mode="wait" custom={direction}>
         {displayProducts.length > 0 ? (
           <motion.div 
             key={activeCategory} // Forzamos re-animación de todo el grid al cambiar filtro
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
+            custom={direction}
+            variants={slideVariants}
+            initial="enter"
+            animate="center"
+            exit="exit"
             className="w-full flex flex-col"
           >
             {chunks.map((chunk, index) => (
@@ -254,6 +320,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
           </motion.div>
         )}
       </AnimatePresence>
+      </div>
 
       {/* FASE 2: Barra de Confianza */}
       <div className="mt-12 w-full border-t border-[var(--theme-border)]/50 pt-8">

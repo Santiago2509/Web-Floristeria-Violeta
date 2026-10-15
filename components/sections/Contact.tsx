@@ -130,8 +130,8 @@ export function Contact() {
                 <div>
                   <h4 className="font-playfair text-lg text-[var(--theme-text)] mb-1">Visítanos</h4>
                   <p className="font-inter text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                    Calle de las Flores #123<br />
-                    Ciudad, País
+                    Cra. 5 # 10-38, Centro Histórico<br />
+                    Cali, Colombia
                   </p>
                 </div>
               </div>
@@ -177,16 +177,17 @@ export function Contact() {
               </div>
             </div>
 
-            {/* Mapa (Placeholder embebido) */}
+            {/* Mapa de Cali Centro embebido */}
             <div className="w-full h-64 rounded-3xl overflow-hidden bg-gray-200 shadow-inner">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3976.9241103291244!2d-74.0628216!3d4.6432007!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e3f9a3f282470bb%3A0xc316a504ef5f6b3e!2sChapinero%2C%20Bogot%C3%A1!5e0!3m2!1ses-419!2sco!4v1700000000000!5m2!1ses-419!2sco"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.5802111535496!2d-76.533221!3d3.451632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6639b70b4a9%3A0xc3b832b84cf21d2!2sCentro%2C%20Cali%2C%20Valle%20del%20Cauca!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
                 allowFullScreen={false}
                 loading="lazy"
                 referrerPolicy="no-referrer-when-downgrade"
+                title="Ubicación Floristería Violeta en Centro de Cali"
               ></iframe>
             </div>
 

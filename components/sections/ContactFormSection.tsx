@@ -66,7 +66,7 @@ export function ContactFormSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Nuestra Boutique</h4>
-                  <p className="text-[var(--theme-text-muted)]">Zona T, Calle 85 #12-34<br/>Bogotá, Colombia</p>
+                  <p className="text-[var(--theme-text-muted)]">Cra. 5 # 10-38, Centro Histórico<br/>Cali, Valle del Cauca, Colombia</p>
                 </div>
               </div>
               
