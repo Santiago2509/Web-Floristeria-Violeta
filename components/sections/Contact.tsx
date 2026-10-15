@@ -142,9 +142,9 @@ export function Contact() {
                   <Phone className="w-6 h-6" />
                 </div>
                 <div>
-                  <h4 className="font-playfair text-lg text-[var(--theme-text)] mb-1">Llámanos</h4>
+                  <h4 className="font-playfair text-lg text-[var(--theme-text)] mb-1">Llámanos / WhatsApp</h4>
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="font-inter text-[var(--theme-text-muted)] text-sm hover:text-[var(--theme-primary)] transition-colors">
-                    +57 300 123 4567
+                    +57 321 507 9305
                   </a>
                 </div>
               </div>

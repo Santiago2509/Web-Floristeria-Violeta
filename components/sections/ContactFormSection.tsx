@@ -9,7 +9,7 @@ export function ContactFormSection() {
   const [message, setMessage] = useState('')
 
   // Número de la floristería (formato internacional sin el +)
-  const phoneNumber = '573001234567'
+  const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573215079305'
 
   const handleWhatsAppSend = (e: React.FormEvent) => {
     e.preventDefault()
@@ -48,7 +48,7 @@ export function ContactFormSection() {
             <div className="space-y-8 font-inter text-[var(--theme-text)]">
               {/* Botón Llamada Directa (Especial para emergencias móviles) */}
               <a 
-                href="tel:+573001234567"
+                href="tel:+573215079305"
                 className="flex items-center gap-4 p-4 rounded-2xl bg-[var(--theme-text)] text-[var(--theme-bg)] hover:bg-[var(--theme-primary)] transition-colors group shadow-lg"
               >
                 <div className="p-3 rounded-full bg-[var(--theme-bg)]/20 text-[var(--theme-bg)] group-hover:scale-110 transition-transform">
@@ -56,7 +56,7 @@ export function ContactFormSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg">Llamar Ahora</h4>
-                  <p className="text-[var(--theme-bg)]/80 text-sm">Respuesta inmediata</p>
+                  <p className="text-[var(--theme-bg)]/80 text-sm">+57 321 507 9305</p>
                 </div>
               </a>
 
