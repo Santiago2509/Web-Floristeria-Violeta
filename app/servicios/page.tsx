@@ -4,7 +4,7 @@ import { ProcessSection } from '@/components/sections/ProcessSection'
 
 export const metadata = {
   title: 'Servicios | Floristería Violeta',
-  description: 'Descubre nuestros servicios de Domicilios Express, Decoración de Eventos y Regalos Personalizados.',
+  description: 'Descubre nuestros servicios de Domicilios Express, Momentos Especiales y Regalos Personalizados.',
 }
 
 export default function ServiciosPage() {

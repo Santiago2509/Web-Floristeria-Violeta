@@ -10,9 +10,9 @@ const services = [
     image: '/assets/servicio_delivery.png',
   },
   {
-    title: 'Decoración de Eventos',
-    description: 'Transformamos espacios ordinarios en escenarios mágicos e inolvidables. Diseñamos atmósferas florales exclusivas y hechas a la medida para bodas, galas y celebraciones íntimas de alto perfil.',
-    image: '/assets/servicio_eventos.png',
+    title: 'Momentos Especiales',
+    description: 'Arreglos pensados para celebrar aniversarios, cumpleaños, declaraciones de amor y fechas memorables. Diseñamos composiciones florales cargadas de emoción y hechas a la medida de tu sorpresa.',
+    image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1200&auto=format&fit=crop',
   },
   {
     title: 'Regalos Personalizados',

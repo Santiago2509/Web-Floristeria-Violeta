@@ -1,7 +1,7 @@
 'use client'
 import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Truck, Sparkles, Gift } from 'lucide-react'
+import { Truck, Heart, Gift } from 'lucide-react'
 import Link from 'next/link'
 import Image from 'next/image'
 
@@ -15,10 +15,10 @@ const services = [
   },
   {
     id: '02',
-    title: 'Decoración de Eventos',
-    description: 'Transformamos espacios ordinarios en escenarios mágicos e inolvidables para tu día especial.',
-    image: '/assets/servicio_eventos.png',
-    icon: Sparkles
+    title: 'Momentos Especiales',
+    description: 'Arreglos pensados para celebrar aniversarios, cumpleaños, declaraciones de amor o fechas inolvidables.',
+    image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1200&auto=format&fit=crop',
+    icon: Heart
   },
   {
     id: '03',

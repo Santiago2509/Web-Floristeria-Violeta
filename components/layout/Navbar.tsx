@@ -26,37 +26,37 @@ export function Navbar() {
   ]
 
   return (
-    <header className="px-6 py-4 border-b border-white/10 dark:border-white/5 flex justify-between items-center bg-white/5 dark:bg-black/10 backdrop-blur-xl fixed w-full top-0 left-0 z-50 transition-colors duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.1)]">
+    <header className="px-6 py-4 border-b border-white/25 dark:border-white/5 flex justify-between items-center bg-white/15 dark:bg-black/10 backdrop-blur-xl fixed w-full top-0 left-0 z-50 transition-colors duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.05)]">
       <div className="flex items-center w-24">
-        <Link href="/" className="font-playfair text-2xl font-semibold text-white mix-blend-difference hover:opacity-80 transition-opacity">
+        <Link href="/" className="font-playfair text-2xl font-semibold text-[#3B1254] dark:text-white hover:opacity-80 transition-opacity">
           Violeta
         </Link>
       </div>
       {/* Enlaces a los módulos (Versión Escritorio) */}
       <nav className="hidden md:flex flex-1 justify-center items-center gap-6 font-inter text-sm font-medium">
         {navLinks.map((link) => (
-          <Link key={link.name} href={link.href} className="text-white mix-blend-difference hover:opacity-70 transition-opacity">
+          <Link key={link.name} href={link.href} className="text-[#3B1254] dark:text-white hover:text-[var(--theme-primary)] dark:hover:opacity-70 transition-colors">
             {link.name}
           </Link>
         ))}
         
-        <span className="text-white/30 mix-blend-difference">|</span>
+        <span className="text-[#3B1254]/30 dark:text-white/30">|</span>
         
-        <Link href="/admin" className="text-white mix-blend-difference hover:opacity-70 transition-opacity">
+        <Link href="/admin" className="text-[#3B1254] dark:text-white hover:text-[var(--theme-primary)] dark:hover:opacity-70 transition-colors">
           Admin
         </Link>
       </nav>
 
       {/* Botones lado derecho (Redes Sociales, Tema, Menú Hamburguesa) */}
       <div className="flex items-center justify-end gap-3 md:gap-4 z-[70] w-auto">
-        <Link href="https://www.instagram.com/floristeriavioleta28/" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-white mix-blend-difference hover:opacity-70 transition-opacity">
+        <Link href="https://www.instagram.com/floristeriavioleta28/" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-[#3B1254] dark:text-white hover:opacity-70 transition-opacity">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
           </svg>
         </Link>
-        <Link href="https://www.tiktok.com/@floristeriavioleta28?_r=1&_t=ZS-98bimC6MqGq" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-white mix-blend-difference hover:opacity-70 transition-opacity">
+        <Link href="https://www.tiktok.com/@floristeriavioleta28?_r=1&_t=ZS-98bimC6MqGq" target="_blank" rel="noopener noreferrer" className="hidden sm:block text-[#3B1254] dark:text-white hover:opacity-70 transition-opacity">
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
           </svg>
