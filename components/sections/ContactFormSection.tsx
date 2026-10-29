@@ -2,24 +2,18 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, MessageCircle, AlertCircle } from 'lucide-react'
+import { siteConfig } from '@/lib/site-config'
+import { generarLinkWhatsApp } from '@/lib/whatsapp'
 
 export function ContactFormSection() {
   const [name, setName] = useState('')
   const [urgency, setUrgency] = useState('Lo antes posible (Hoy)')
   const [message, setMessage] = useState('')
 
-  // Número de la floristería (formato internacional sin el +)
-  const phoneNumber = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '573215079305'
-
   const handleWhatsAppSend = (e: React.FormEvent) => {
     e.preventDefault()
-    
-    // Construimos el mensaje predeterminado
-    const text = `¡Hola Violeta! 🌸%0A%0ASoy *${name}*.%0A*Urgencia:* ${urgency}%0A%0A*Detalle de lo que busco:*%0A${message}%0A%0A¡Quedo atento/a para gestionar el pedido!`
-    
-    // Redirigimos a WhatsApp
-    const whatsappUrl = `https://wa.me/${phoneNumber}?text=${text}`
-    window.open(whatsappUrl, '_blank')
+    const text = `¡Hola Violeta! 🌸\n\nSoy *${name}*.\n*Urgencia:* ${urgency}\n\n*Detalle de lo que busco:*\n${message}\n\n¡Quedo atento/a para gestionar el pedido!`
+    window.open(generarLinkWhatsApp(text), '_blank', 'noopener,noreferrer')
   }
 
   return (
@@ -48,7 +42,7 @@ export function ContactFormSection() {
             <div className="space-y-8 font-inter text-[var(--theme-text)]">
               {/* Botón Llamada Directa (Especial para emergencias móviles) */}
               <a 
-                href="tel:+573215079305"
+                href={siteConfig.phoneHref}
                 className="flex items-center gap-4 p-4 rounded-2xl bg-[var(--theme-text)] text-[var(--theme-bg)] hover:bg-[var(--theme-primary)] transition-colors group shadow-lg"
               >
                 <div className="p-3 rounded-full bg-[var(--theme-bg)]/20 text-[var(--theme-bg)] group-hover:scale-110 transition-transform">
@@ -56,7 +50,7 @@ export function ContactFormSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg">Llamar Ahora</h4>
-                  <p className="text-[var(--theme-bg)]/80 text-sm">+57 321 507 9305</p>
+                  <p className="text-[var(--theme-bg)]/80 text-sm">{siteConfig.phoneDisplay}</p>
                 </div>
               </a>
 
@@ -66,7 +60,7 @@ export function ContactFormSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Nuestra Boutique</h4>
-                  <p className="text-[var(--theme-text-muted)]">Cra. 5 # 10-38, Centro Histórico<br/>Cali, Valle del Cauca, Colombia</p>
+                  <p className="text-[var(--theme-text-muted)]">{siteConfig.address.street}<br/>{siteConfig.address.city}</p>
                 </div>
               </div>
               
@@ -76,7 +70,11 @@ export function ContactFormSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Horario de Atención</h4>
-                  <p className="text-[var(--theme-text-muted)]">Lunes - Sábado: 8:00 AM - 7:00 PM<br/>Domingos: 9:00 AM - 2:00 PM</p>
+                  <p className="text-[var(--theme-text-muted)]">
+                    {siteConfig.hours.map((h) => (
+                      <span key={h.days} className="block">{h.days}: {h.time}</span>
+                    ))}
+                  </p>
                 </div>
               </div>
 
@@ -86,7 +84,7 @@ export function ContactFormSection() {
                 </div>
                 <div>
                   <h4 className="font-semibold text-lg mb-1">Consultas no urgentes</h4>
-                  <p className="text-[var(--theme-text-muted)]">hola@floristeriavioleta.com</p>
+                  <a href={`mailto:${siteConfig.email}`} className="text-[var(--theme-text-muted)] hover:text-[var(--theme-primary)] transition-colors">{siteConfig.email}</a>
                 </div>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import { Product, GalleryImage } from '@/types'
 import { supabase } from './supabase'
+import { supabaseAdmin } from './supabase-admin'
 
 // ============================================================================
 // CAPA DE ACCESO A DATOS CONECTADA A SUPABASE
@@ -80,7 +81,7 @@ export async function getProductById(id: string): Promise<Product | null> {
 }
 
 export async function addProduct(product: Omit<Product, 'id' | 'createdAt'>): Promise<Product | null> {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('products')
     .insert([
       {
@@ -115,7 +116,7 @@ export async function addProduct(product: Omit<Product, 'id' | 'createdAt'>): Pr
 }
 
 export async function deleteProduct(id: string): Promise<boolean> {
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from('products')
     .delete()
     .eq('id', id)
@@ -129,7 +130,7 @@ export async function deleteProduct(id: string): Promise<boolean> {
 
 export async function toggleProductFeatured(id: string): Promise<boolean> {
   // Primero obtenemos el estado actual
-  const { data: current } = await supabase
+  const { data: current } = await supabaseAdmin
     .from('products')
     .select('is_featured')
     .eq('id', id)
@@ -138,7 +139,7 @@ export async function toggleProductFeatured(id: string): Promise<boolean> {
   if (!current) return false
   
   // Luego lo invertimos
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from('products')
     .update({ is_featured: !current.is_featured })
     .eq('id', id)
@@ -175,7 +176,7 @@ export async function getGalleryImages(): Promise<GalleryImage[]> {
 }
 
 export async function addGalleryImage(image: Omit<GalleryImage, 'id' | 'createdAt'>): Promise<GalleryImage | null> {
-  const { data, error } = await supabase
+  const { data, error } = await supabaseAdmin
     .from('gallery')
     .insert([
       {
@@ -202,7 +203,7 @@ export async function addGalleryImage(image: Omit<GalleryImage, 'id' | 'createdA
 }
 
 export async function deleteGalleryImage(id: string): Promise<boolean> {
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from('gallery')
     .delete()
     .eq('id', id)
@@ -232,7 +233,7 @@ export async function getSavedOccasions(): Promise<string[]> {
 }
 
 export async function addSavedOccasion(nombre: string): Promise<boolean> {
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from('ocasiones_guardadas')
     .insert([{ nombre }])
     
@@ -245,7 +246,7 @@ export async function addSavedOccasion(nombre: string): Promise<boolean> {
 }
 
 export async function deleteSavedOccasion(nombre: string): Promise<boolean> {
-  const { error } = await supabase
+  const { error } = await supabaseAdmin
     .from('ocasiones_guardadas')
     .delete()
     .eq('nombre', nombre)

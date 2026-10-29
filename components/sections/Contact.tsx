@@ -1,26 +1,18 @@
 'use client'
-import { useState } from 'react'
 import { motion } from 'framer-motion'
 import { MapPin, Phone, Mail, Clock, Send } from 'lucide-react'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
+import { siteConfig } from '@/lib/site-config'
 
 export function Contact() {
-  const [isSubmitting, setIsSubmitting] = useState(false)
-  const [isSuccess, setIsSuccess] = useState(false)
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+  // El mensaje se envía por WhatsApp (canal principal de pedidos de la tienda)
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    setIsSubmitting(true)
-    // Simulación de envío a Supabase
-    setTimeout(() => {
-      setIsSubmitting(false)
-      setIsSuccess(true)
-        // Reset form (simulado)
-        ; (e.target as HTMLFormElement).reset()
-
-      // Ocultar mensaje de éxito después de unos segundos
-      setTimeout(() => setIsSuccess(false), 5000)
-    }, 1500)
+    const data = new FormData(e.currentTarget)
+    const nombre = String(data.get('nombre') ?? '').trim()
+    const mensaje = String(data.get('mensaje') ?? '').trim()
+    const texto = `¡Hola Violeta! 🌸\n\nSoy ${nombre}.\n\n${mensaje}`
+    window.open(generarLinkWhatsApp(texto), '_blank', 'noopener,noreferrer')
   }
 
   const whatsappUrl = generarLinkWhatsApp('¡Hola! Me gustaría contactarme con ustedes.')
@@ -57,6 +49,7 @@ export function Contact() {
                   <input
                     type="text"
                     id="nombre"
+                    name="nombre"
                     required
                     className="w-full bg-transparent border-b border-[var(--theme-border)] py-2 text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors"
                     placeholder="Tu nombre"
@@ -64,20 +57,10 @@ export function Contact() {
                 </div>
 
                 <div className="flex flex-col gap-2">
-                  <label htmlFor="correo" className="font-inter text-sm text-[var(--theme-text-muted)]">Correo electrónico</label>
-                  <input
-                    type="email"
-                    id="correo"
-                    required
-                    className="w-full bg-transparent border-b border-[var(--theme-border)] py-2 text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors"
-                    placeholder="tu@correo.com"
-                  />
-                </div>
-
-                <div className="flex flex-col gap-2">
                   <label htmlFor="mensaje" className="font-inter text-sm text-[var(--theme-text-muted)]">Mensaje</label>
                   <textarea
                     id="mensaje"
+                    name="mensaje"
                     required
                     rows={4}
                     className="w-full bg-transparent border-b border-[var(--theme-border)] py-2 text-[var(--theme-text)] focus:outline-none focus:border-[var(--theme-primary)] transition-colors resize-none"
@@ -87,28 +70,14 @@ export function Contact() {
 
                 <button
                   type="submit"
-                  disabled={isSubmitting}
-                  className="mt-4 flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-[var(--theme-primary)] text-[var(--theme-bg)] font-inter font-medium hover:bg-opacity-90 transition-all disabled:opacity-70"
+                  className="mt-4 flex items-center justify-center gap-2 w-full py-4 rounded-xl bg-[var(--theme-primary)] text-[var(--theme-bg)] font-inter font-medium hover:bg-opacity-90 transition-all"
                 >
-                  {isSubmitting ? (
-                    <span className="animate-pulse">Enviando...</span>
-                  ) : (
-                    <>
-                      <span>Enviar Mensaje</span>
-                      <Send className="w-4 h-4" />
-                    </>
-                  )}
+                  <span>Enviar por WhatsApp</span>
+                  <Send className="w-4 h-4" />
                 </button>
-
-                {isSuccess && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="text-green-600 text-sm text-center font-inter bg-green-50 p-3 rounded-lg"
-                  >
-                    ¡Mensaje enviado con éxito! Te contactaremos pronto.
-                  </motion.div>
-                )}
+                <p className="font-inter text-xs text-center text-[var(--theme-text-muted)] -mt-2">
+                  Se abrirá WhatsApp con tu mensaje listo para enviar.
+                </p>
               </form>
             </div>
           </motion.div>
@@ -130,8 +99,8 @@ export function Contact() {
                 <div>
                   <h4 className="font-playfair text-lg text-[var(--theme-text)] mb-1">Visítanos</h4>
                   <p className="font-inter text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                    Cra. 5 # 10-38, Centro Histórico<br />
-                    Cali, Colombia
+                    {siteConfig.address.street}<br />
+                    {siteConfig.address.city}
                   </p>
                 </div>
               </div>
@@ -144,7 +113,7 @@ export function Contact() {
                 <div>
                   <h4 className="font-playfair text-lg text-[var(--theme-text)] mb-1">Llámanos / WhatsApp</h4>
                   <a href={whatsappUrl} target="_blank" rel="noopener noreferrer" className="font-inter text-[var(--theme-text-muted)] text-sm hover:text-[var(--theme-primary)] transition-colors">
-                    +57 321 507 9305
+                    {siteConfig.phoneDisplay}
                   </a>
                 </div>
               </div>
@@ -156,8 +125,8 @@ export function Contact() {
                 </div>
                 <div>
                   <h4 className="font-playfair text-lg text-[var(--theme-text)] mb-1">Escríbenos</h4>
-                  <a href="mailto:hola@violeta.com" className="font-inter text-[var(--theme-text-muted)] text-sm hover:text-[var(--theme-primary)] transition-colors">
-                    hola@violeta.com
+                  <a href={`mailto:${siteConfig.email}`} className="font-inter text-[var(--theme-text-muted)] text-sm hover:text-[var(--theme-primary)] transition-colors">
+                    {siteConfig.email}
                   </a>
                 </div>
               </div>
@@ -170,8 +139,9 @@ export function Contact() {
                 <div>
                   <h4 className="font-playfair text-lg text-[var(--theme-text)] mb-1">Horario</h4>
                   <p className="font-inter text-[var(--theme-text-muted)] text-sm leading-relaxed">
-                    Lunes a Sábado<br />
-                    9:00 AM - 7:00 PM
+                    {siteConfig.hours.map((h) => (
+                      <span key={h.days} className="block">{h.days}: {h.time}</span>
+                    ))}
                   </p>
                 </div>
               </div>
@@ -180,7 +150,7 @@ export function Contact() {
             {/* Mapa de Cali Centro embebido */}
             <div className="w-full h-64 rounded-3xl overflow-hidden bg-gray-200 shadow-inner">
               <iframe
-                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3982.5802111535496!2d-76.533221!3d3.451632!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8e30a6639b70b4a9%3A0xc3b832b84cf21d2!2sCentro%2C%20Cali%2C%20Valle%20del%20Cauca!5e0!3m2!1ses!2sco!4v1700000000000!5m2!1ses!2sco"
+                src={siteConfig.mapEmbedUrl}
                 width="100%"
                 height="100%"
                 style={{ border: 0 }}
