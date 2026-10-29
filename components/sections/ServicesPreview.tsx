@@ -10,21 +10,21 @@ const services = [
     id: '01',
     title: 'Domicilios Express',
     description: 'Entregamos tus emociones directamente en la puerta, con cuidado y puntualidad impecable.',
-    image: '/assets/servicio_delivery.png',
+    image: '/assets/servicio_delivery.webp',
     icon: Truck
   },
   {
     id: '02',
     title: 'Momentos Especiales',
     description: 'Arreglos pensados para celebrar aniversarios, cumpleaños, declaraciones de amor o fechas inolvidables.',
-    image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1200&auto=format&fit=crop',
+    image: '/assets/servicio_eventos.webp',
     icon: Heart
   },
   {
     id: '03',
     title: 'Regalos Personalizados',
     description: 'Acompaña tus flores con detalles únicos pensados especialmente para robar sonrisas.',
-    image: '/assets/servicio_regalos.png',
+    image: '/assets/servicio_regalos.webp',
     icon: Gift
   }
 ]

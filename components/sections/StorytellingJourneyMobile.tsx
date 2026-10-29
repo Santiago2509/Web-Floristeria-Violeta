@@ -8,7 +8,7 @@ export function StorytellingJourneyMobile() {
     <div className="w-full bg-[var(--theme-bg)] pb-20 overflow-hidden">
       {/* HERO SECTION - MOBILE */}
       <section className="relative h-[80vh] w-full mb-16">
-        <Image src="/assets/about_hero_bg_colombia_v2.png" alt="Hero" fill className="object-cover" priority />
+        <Image src="/assets/about_hero_bg_colombia_v2.webp" alt="Hero" fill className="object-cover" priority />
         <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
         <div className="absolute inset-0 flex flex-col items-center justify-center text-white pt-20 px-6 text-center">
           <motion.span 
@@ -39,7 +39,7 @@ export function StorytellingJourneyMobile() {
              viewport={{ once: true }}
              className="relative h-[400px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 dark:border-white/10"
            >
-             <Image src="/assets/about_story_img.png" alt="Taller" fill className="object-cover" />
+             <Image src="/assets/about_story_img.webp" alt="Taller" fill className="object-cover" />
              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
              <div className="absolute bottom-6 left-6 text-white">
                 <h3 className="font-playfair text-5xl mb-1 drop-shadow-lg">01</h3>
@@ -97,11 +97,11 @@ export function StorytellingJourneyMobile() {
           className="relative h-[400px] w-full rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl border-[4px] border-white/30 dark:border-white/10"
           style={{ clipPath: 'inset(0px round 10rem 10rem 2rem 2rem)' }}
         >
-           <Image src="/assets/hero_bg.png" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
+           <Image src="/assets/hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
            <div className="absolute inset-0 bg-black/20" />
            {/* Imagen secundaria insertada estilo revista */}
            <div className="absolute w-[70%] h-[40%] left-1/2 -translate-x-1/2 bottom-8 rounded-xl overflow-hidden border-2 border-white/50 shadow-2xl">
-               <Image src="/assets/about_story_img.png" alt="Flor 2" fill className="object-cover" />
+               <Image src="/assets/about_story_img.webp" alt="Flor 2" fill className="object-cover" />
            </div>
         </motion.div>
       </section>

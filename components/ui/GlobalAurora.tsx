@@ -1,8 +1,10 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
+import { useCalmMotion } from './useCalmMotion'
 
 export function GlobalAurora() {
+  const calm = useCalmMotion()
   const [mounted, setMounted] = useState(false)
 
   useEffect(() => {
@@ -18,7 +20,7 @@ export function GlobalAurora() {
 
       {/* Blob 1 — Púrpura profundo principal */}
       <motion.div
-        animate={{
+        animate={calm ? undefined : {
           x: ["-20vw", "30vw", "-10vw", "-20vw"],
           y: ["-10vh", "40vh", "10vh", "-10vh"],
           scale: [1, 1.3, 0.95, 1],
@@ -33,7 +35,7 @@ export function GlobalAurora() {
 
       {/* Blob 2 — Magenta/Fucsia vibrante */}
       <motion.div
-        animate={{
+        animate={calm ? undefined : {
           x: ["30vw", "-20vw", "40vw", "30vw"],
           y: ["20vh", "-10vh", "30vh", "20vh"],
           scale: [0.8, 1.2, 1, 0.8],
@@ -48,7 +50,7 @@ export function GlobalAurora() {
 
       {/* Blob 3 — Violeta medio profundo */}
       <motion.div
-        animate={{
+        animate={calm ? undefined : {
           x: ["-10vw", "40vw", "-30vw", "-10vw"],
           y: ["50vh", "-20vh", "40vh", "50vh"],
           scale: [1, 1.4, 0.85, 1],
@@ -63,7 +65,7 @@ export function GlobalAurora() {
 
       {/* Blob 4 — Acento brillante violeta eléctrico */}
       <motion.div
-        animate={{
+        animate={calm ? undefined : {
           x: ["40vw", "-40vw", "10vw", "40vw"],
           y: ["-20vh", "50vh", "-10vh", "-20vh"],
           scale: [1.1, 0.75, 1.3, 1.1],
@@ -78,7 +80,7 @@ export function GlobalAurora() {
 
       {/* Blob 5 — Glow central brillante (simula el resplandor del centro de los frames) */}
       <motion.div
-        animate={{
+        animate={calm ? undefined : {
           scale: [1, 1.2, 0.9, 1],
           opacity: [0.5, 0.8, 0.4, 0.5],
         }}

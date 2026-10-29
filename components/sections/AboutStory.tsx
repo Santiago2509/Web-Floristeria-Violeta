@@ -64,7 +64,7 @@ export function AboutStory() {
             className="w-full lg:w-[45%] relative z-10 h-[500px] md:h-[600px] lg:h-[750px] rounded-t-full rounded-b-[2rem] overflow-hidden shadow-[0_20px_40px_rgba(0,0,0,0.1)] group order-1 lg:order-2"
           >
             <Image
-              src="/assets/about_story_img.png"
+              src="/assets/about_story_img.webp"
               alt="Florista trabajando en un arreglo"
               fill
               className="object-cover transition-transform duration-[20s] ease-linear group-hover:scale-105"

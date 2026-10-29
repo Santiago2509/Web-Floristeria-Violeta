@@ -68,7 +68,7 @@ export function StorytellingJourneyDesktop() {
             style={{ x: leftDoorX, clipPath: 'inset(0 50% 0 0)', opacity: doorsOpacity, scale: doorsScale }} 
             className="absolute inset-0"
           >
-             <Image src="/assets/about_hero_bg_colombia_v2.png" alt="Hero" fill className="object-cover" priority />
+             <Image src="/assets/about_hero_bg_colombia_v2.webp" alt="Hero" fill className="object-cover" priority />
              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
              <div className="absolute inset-0 flex flex-col items-center justify-center text-white pt-20">
                 <span className="font-inter uppercase tracking-[0.4em] text-sm md:text-base mb-6 opacity-80">El Comienzo</span>
@@ -81,7 +81,7 @@ export function StorytellingJourneyDesktop() {
             style={{ x: rightDoorX, clipPath: 'inset(0 0 0 50%)', opacity: doorsOpacity, scale: doorsScale }} 
             className="absolute inset-0"
           >
-             <Image src="/assets/about_hero_bg_colombia_v2.png" alt="Hero" fill className="object-cover" priority />
+             <Image src="/assets/about_hero_bg_colombia_v2.webp" alt="Hero" fill className="object-cover" priority />
              <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
              <div className="absolute inset-0 flex flex-col items-center justify-center text-white pt-20">
                 <span className="font-inter uppercase tracking-[0.4em] text-sm md:text-base mb-6 opacity-80">El Comienzo</span>
@@ -184,7 +184,7 @@ export function StorytellingJourneyDesktop() {
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute inset-0 rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-white/20 dark:border-white/10"
                 >
-                  <Image src="/assets/about_story_img.png" alt="Taller" fill className="object-cover" />
+                  <Image src="/assets/about_story_img.webp" alt="Taller" fill className="object-cover" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-8 left-8 lg:bottom-12 lg:left-12 text-white">
                      <h3 className="font-playfair text-5xl lg:text-7xl mb-2 drop-shadow-lg">01</h3>
@@ -248,12 +248,12 @@ export function StorytellingJourneyDesktop() {
                     className="relative w-[80%] h-[90%] lg:h-[100%] rounded-t-[15rem] rounded-b-[2rem] overflow-hidden border-[6px] border-white/30 dark:border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] z-10"
                     style={{ clipPath: 'inset(0px round 15rem 15rem 2rem 2rem)' }}
                   >
-                      <Image src="/assets/hero_bg.png" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
+                      <Image src="/assets/hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
                       <div className="absolute inset-0 bg-black/20" />
                       
                       {/* Imagen secundaria insertada estilo revista */}
                       <div className="absolute w-[60%] h-[40%] left-1/2 -translate-x-1/2 bottom-10 rounded-2xl overflow-hidden border-2 border-white/50 shadow-2xl">
-                          <Image src="/assets/about_story_img.png" alt="Flor 2" fill className="object-cover" />
+                          <Image src="/assets/about_story_img.webp" alt="Flor 2" fill className="object-cover" />
                       </div>
                   </motion.div>
 

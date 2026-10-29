@@ -8,7 +8,7 @@ export function ContactHero() {
       {/* Background Image */}
       <div className="absolute inset-0 z-0">
         <Image
-          src="/assets/contact_hero_bg.png"
+          src="/assets/contact_hero_bg.webp"
           alt="Hablemos de tus ideas"
           fill
           className="object-cover object-center"

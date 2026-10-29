@@ -1,7 +1,7 @@
 'use client'
-import { useRef, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useTheme } from '@/components/ui/ThemeProvider'
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { Product } from '@/types'
 import { AnimatedRose } from '@/components/ui/AnimatedRose'
 
@@ -46,6 +46,12 @@ function FloatingPetals() {
 export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }) {
   const { theme } = useTheme()
   const [mounted, setMounted] = useState(false)
+  const reduceMotion = useReducedMotion()
+  // Si el splash ya se mostró en esta sesión, el título aparece de inmediato
+  // (antes el Hero quedaba vacío 2,5 s en cada visita)
+  const [introDelay] = useState(() =>
+    typeof window !== 'undefined' && sessionStorage.getItem('splash_shown') ? 0.3 : 2.5
+  )
   
   useEffect(() => {
     setMounted(true)
@@ -63,7 +69,7 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
       opacity: 1,
       transition: {
         staggerChildren: 0.04,
-        delayChildren: 2.5 // Inicia justo al irse el splash screen
+        delayChildren: introDelay // Inicia justo al irse el splash screen
       }
     }
   }
@@ -93,7 +99,9 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
           loop
           muted
           playsInline
-          preload="auto"
+          preload="metadata"
+          poster="/assets/hero_poster.webp"
+          aria-hidden="true"
           className="object-cover w-full h-full opacity-100"
         >
           <source src="/assets/heroprincipal.mp4" type="video/mp4" />
@@ -103,7 +111,7 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-bg)] via-transparent to-transparent opacity-60" />
       </div>
 
-      <FloatingPetals />
+      {!reduceMotion && <FloatingPetals />}
 
       {/* Contenido Central */}
       <div className="container mx-auto z-10 relative flex flex-col items-center justify-center flex-grow">
@@ -114,7 +122,7 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
           transition={{ duration: 1, delay: 0.2 }}
           className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 translate-y-32 md:translate-y-48"
         >
-          <AnimatedRose className="drop-shadow-2xl w-[145vw] md:w-[960px] opacity-70" />
+          <AnimatedRose className="drop-shadow-2xl w-[120vw] md:w-[960px] opacity-40 md:opacity-70" />
         </motion.div>
 
         {/* Título Kinetic Reveal */}
@@ -126,16 +134,16 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
           style={{ 
             fontSize: 'clamp(4rem, 15vw, 13rem)',
             backgroundImage: isDark 
-              ? 'repeating-linear-gradient(to right, #FFFFFF 0%, #E6CCFF 15%, #CC00FF 35%, #7B00FF 50%, #CC00FF 65%, #E6CCFF 85%, #FFFFFF 100%)'
-              : 'repeating-linear-gradient(to right, #4A235A 0%, #7B00FF 25%, #CC00FF 50%, #7B00FF 75%, #4A235A 100%)',
+              ? 'repeating-linear-gradient(to right, #FFFFFF 0%, #F0E2F5 20%, #C39BD3 40%, #A569BD 50%, #C39BD3 60%, #F0E2F5 80%, #FFFFFF 100%)'
+              : 'repeating-linear-gradient(to right, #3B1254 0%, #5B2C6F 25%, #7D3C98 50%, #5B2C6F 75%, #3B1254 100%)',
             backgroundSize: '100vw auto',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
           }}
-          onAnimationStart={(e) => {
+          onAnimationStart={() => {
             // Un pequeño truco para animar el gradiente sin interferir con el stagger
             const el = document.getElementById('hero-title');
-            if(el) {
+            if(el && !reduceMotion) {
               el.animate([
                 { backgroundPosition: '0vw center' },
                 { backgroundPosition: '-100vw center' }
@@ -162,7 +170,7 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 3.1, ease: [0.16, 1, 0.3, 1] }}
+          transition={{ duration: 0.8, delay: introDelay + 0.6, ease: [0.16, 1, 0.3, 1] }}
           className="text-white font-inter tracking-[0.35em] uppercase text-base lg:text-xl font-medium mt-4 mb-12 max-w-2xl z-10 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
         >
           Floristería

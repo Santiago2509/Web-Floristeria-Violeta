@@ -1,13 +1,15 @@
 'use client'
 import { motion } from 'framer-motion'
+import { useCalmMotion } from './useCalmMotion'
 
 export function BackgroundBlobs() {
+  const calm = useCalmMotion()
   return (
     <div className="fixed inset-0 z-0 overflow-hidden pointer-events-none">
 
       {/* Onda de plasma principal superior */}
       <motion.div
-        animate={{ 
+        animate={calm ? undefined : { 
           rotate: [0, 360],
           scale: [1, 1.15, 1],
         }}
@@ -22,7 +24,7 @@ export function BackgroundBlobs() {
 
       {/* Onda de plasma secundaria derecha */}
       <motion.div
-        animate={{ 
+        animate={calm ? undefined : { 
           rotate: [360, 0],
           scale: [1, 1.2, 1],
         }}
@@ -37,7 +39,7 @@ export function BackgroundBlobs() {
 
       {/* Onda de plasma inferior central */}
       <motion.div
-        animate={{ 
+        animate={calm ? undefined : { 
           rotate: [0, 180, 360],
           scale: [1, 1.1, 1],
         }}
@@ -51,9 +53,9 @@ export function BackgroundBlobs() {
       />
 
       {/* Sparkles reducidos a 3 para liberar GPU */}
-      <motion.div animate={{ opacity: [0, 1, 0], scale: [0.8, 1.5, 0.8] }} transition={{ duration: 4, repeat: Infinity, delay: 0 }} className="absolute top-[15%] left-[20%] w-2 h-2 rounded-full bg-white blur-[1px] shadow-[0_0_12px_4px_rgba(255,255,255,1)] dark:opacity-30" />
-      <motion.div animate={{ opacity: [0, 1, 0], scale: [0.8, 1.5, 0.8] }} transition={{ duration: 5, repeat: Infinity, delay: 1 }} className="absolute top-[40%] left-[80%] w-3 h-3 rounded-full bg-white blur-[1px] shadow-[0_0_15px_4px_rgba(255,255,255,1)] dark:opacity-30" />
-      <motion.div animate={{ opacity: [0, 1, 0], scale: [0.8, 1.5, 0.8] }} transition={{ duration: 3.5, repeat: Infinity, delay: 2 }} className="absolute top-[75%] left-[30%] w-2 h-2 rounded-full bg-white blur-[1px] shadow-[0_0_12px_4px_rgba(255,255,255,1)] dark:opacity-30" />
+      <motion.div animate={calm ? undefined : { opacity: [0, 1, 0], scale: [0.8, 1.5, 0.8] }} transition={{ duration: 4, repeat: Infinity, delay: 0 }} className="absolute top-[15%] left-[20%] w-2 h-2 rounded-full bg-white blur-[1px] shadow-[0_0_12px_4px_rgba(255,255,255,1)] dark:opacity-30" />
+      <motion.div animate={calm ? undefined : { opacity: [0, 1, 0], scale: [0.8, 1.5, 0.8] }} transition={{ duration: 5, repeat: Infinity, delay: 1 }} className="absolute top-[40%] left-[80%] w-3 h-3 rounded-full bg-white blur-[1px] shadow-[0_0_15px_4px_rgba(255,255,255,1)] dark:opacity-30" />
+      <motion.div animate={calm ? undefined : { opacity: [0, 1, 0], scale: [0.8, 1.5, 0.8] }} transition={{ duration: 3.5, repeat: Infinity, delay: 2 }} className="absolute top-[75%] left-[30%] w-2 h-2 rounded-full bg-white blur-[1px] shadow-[0_0_12px_4px_rgba(255,255,255,1)] dark:opacity-30" />
 
       {/* Textura sutil modo claro */}
       <div

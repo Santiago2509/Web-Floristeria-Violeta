@@ -13,7 +13,7 @@ export function AboutHero() {
           className="absolute inset-0 w-full h-full"
         >
           <Image
-            src="/assets/about_hero_bg.png"
+            src="/assets/about_hero_bg.webp"
             alt="Interior de Floristería Violeta"
             fill
             className="object-cover object-center"

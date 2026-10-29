@@ -7,17 +7,17 @@ const services = [
   {
     title: 'Domicilios Express',
     description: 'Entregamos tus emociones directamente en la puerta, con cuidado y puntualidad. Cada arreglo floral viaja en condiciones óptimas y en empaques de lujo para garantizar su frescura e impacto al llegar.',
-    image: '/assets/servicio_delivery.png',
+    image: '/assets/servicio_delivery.webp',
   },
   {
     title: 'Momentos Especiales',
     description: 'Arreglos pensados para celebrar aniversarios, cumpleaños, declaraciones de amor y fechas memorables. Diseñamos composiciones florales cargadas de emoción y hechas a la medida de tu sorpresa.',
-    image: 'https://images.unsplash.com/photo-1518895949257-7621c3c786d7?q=80&w=1200&auto=format&fit=crop',
+    image: '/assets/servicio_eventos.webp',
   },
   {
     title: 'Regalos Personalizados',
     description: 'Acompaña tus flores con detalles únicos pensados especialmente para esa persona. Desde finas cajas de lujo hasta dedicatorias escritas a mano, creamos experiencias verdaderamente memorables.',
-    image: '/assets/servicio_regalos.png',
+    image: '/assets/servicio_regalos.webp',
   }
 ]
 

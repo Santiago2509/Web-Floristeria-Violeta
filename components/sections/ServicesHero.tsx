@@ -36,7 +36,7 @@ export function ServicesHero() {
       {/* Background Image con Parallax */}
       <motion.div style={{ y }} className="absolute inset-0 z-0 w-full h-[120%] -top-[10%]">
         <Image
-          src="/assets/services_hero_bg.png"
+          src="/assets/services_hero_bg.webp"
           alt="Flores hermosas de fondo"
           fill
           className="object-cover object-center"
