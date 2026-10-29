@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Términos y Condiciones | Floristería Violeta',
+  title: 'Términos y Condiciones',
   description: 'Términos y condiciones de uso de Floristería Violeta. Conoce las reglas y lineamientos para realizar pedidos.',
 }
 

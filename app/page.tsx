@@ -13,8 +13,7 @@ const GalleryPreview = dynamic(() => import('@/components/sections/GalleryPrevie
 const Contact = dynamic(() => import('@/components/sections/Contact').then(mod => mod.Contact))
 
 export default async function Home() {
-  const featured = await getFeaturedProducts()
-  const gallery = await getGalleryImages()
+  const [featured, gallery] = await Promise.all([getFeaturedProducts(), getGalleryImages()])
 
   return (
     <div className="flex flex-col relative w-full">
@@ -23,7 +22,8 @@ export default async function Home() {
 
       {/* ── PARTE SUPERIOR: Hero + FeaturedProducts + Banner ── */}
       <Hero featuredProducts={featured} />
-      <FeaturedProducts featuredProducts={featured} />
+      {/* Las secciones con contenido de la BD solo se muestran si hay datos */}
+      {featured.length > 0 && <FeaturedProducts featuredProducts={featured} />}
       <MotivationalBanner />
 
       {/* ── PARTE INFERIOR: Fondo de fotogramas comienza aquí ── */}
@@ -43,7 +43,7 @@ export default async function Home() {
         {/* Resto de secciones encima del canvas (z-20) */}
         <div className="relative z-20">
           <ServicesPreview />
-          <GalleryPreview galleryImages={gallery} />
+          {gallery.length > 0 && <GalleryPreview galleryImages={gallery} />}
           <Contact />
         </div>
       </div>

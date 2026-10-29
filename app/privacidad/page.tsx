@@ -1,5 +1,5 @@
 export const metadata = {
-  title: 'Política de Privacidad | Floristería Violeta',
+  title: 'Política de Privacidad',
   description: 'Política de privacidad de Floristería Violeta. Conoce cómo gestionamos y protegemos tus datos personales.',
 }
 

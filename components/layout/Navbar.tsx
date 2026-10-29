@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X } from 'lucide-react'
 import { ThemeToggle } from '@/components/ui/ThemeToggle'
+import { siteConfig } from '@/lib/site-config'
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false)
@@ -42,14 +43,14 @@ export function Navbar() {
 
       {/* Botones lado derecho (Redes Sociales, Tema, Menú Hamburguesa) */}
       <div className="flex items-center justify-end gap-3 md:gap-4 z-[70] w-auto">
-        <Link href="https://www.instagram.com/floristeriavioleta28/" target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hidden sm:block text-[#3B1254] dark:text-white hover:opacity-70 transition-opacity">
+        <Link href={siteConfig.social.instagram} target="_blank" rel="noopener noreferrer" aria-label="Instagram" className="hidden sm:block text-[#3B1254] dark:text-white hover:opacity-70 transition-opacity">
           <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-5 h-5">
             <rect x="2" y="2" width="20" height="20" rx="5" ry="5"></rect>
             <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"></path>
             <line x1="17.5" y1="6.5" x2="17.51" y2="6.5"></line>
           </svg>
         </Link>
-        <Link href="https://www.tiktok.com/@floristeriavioleta28?_r=1&_t=ZS-98bimC6MqGq" target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hidden sm:block text-[#3B1254] dark:text-white hover:opacity-70 transition-opacity">
+        <Link href={siteConfig.social.tiktok} target="_blank" rel="noopener noreferrer" aria-label="TikTok" className="hidden sm:block text-[#3B1254] dark:text-white hover:opacity-70 transition-opacity">
           <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1z" />
           </svg>

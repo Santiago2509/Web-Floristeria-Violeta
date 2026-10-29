@@ -1,5 +1,7 @@
 import { getProductById, getProducts } from '@/lib/db'
 import { notFound } from 'next/navigation'
+import { cache } from 'react'
+import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
 import { ArrowLeft, MessageCircle, ShoppingBag } from 'lucide-react'
@@ -8,10 +10,26 @@ import { Product } from '@/types'
 
 export const dynamic = 'force-dynamic'
 
-export default async function ProductDetailPage({ params }: { params: { id: string } }) {
-  // Wait for params in Next.js 15+ if needed, but in 14 it's okay. Using await for safety in newer versions.
-  const id = params.id
-  const product = await getProductById(id)
+type Props = { params: Promise<{ id: string }> }
+
+// cache(): generateMetadata y la página comparten una sola consulta a la BD
+const getProduct = cache(getProductById)
+
+export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { id } = await params
+  const product = await getProduct(id)
+  if (!product) return { title: 'Producto no encontrado' }
+  return {
+    title: product.title,
+    description: product.description,
+    openGraph: { images: [{ url: product.imageUrl }] },
+  }
+}
+
+export default async function ProductDetailPage({ params }: Props) {
+  // En Next.js 16 `params` es una Promise (el acceso síncrono devolvía undefined)
+  const { id } = await params
+  const product = await getProduct(id)
 
   if (!product) {
     notFound()

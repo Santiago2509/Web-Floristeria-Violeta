@@ -2,7 +2,7 @@ import Image from 'next/image'
 import { getGalleryImages } from '@/lib/db'
 
 export const metadata = {
-  title: 'Galería | Floristería Violeta',
+  title: 'Galería',
   description: 'Inspiración floral. Conoce algunos de nuestros trabajos más hermosos en bodas y eventos.',
 }
 

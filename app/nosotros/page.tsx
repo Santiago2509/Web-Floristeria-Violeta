@@ -1,7 +1,7 @@
 import { StorytellingJourney } from '@/components/sections/StorytellingJourney'
 
 export const metadata = {
-  title: 'Nosotros | Floristería Violeta',
+  title: 'Nosotros',
   description: 'Conoce la historia y la pasión detrás de Floristería Violeta.',
 }
 

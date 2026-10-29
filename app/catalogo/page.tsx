@@ -4,7 +4,7 @@ import { ShoppingBag } from 'lucide-react'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
 
 export const metadata = {
-  title: 'Catálogo | Floristería Violeta',
+  title: 'Catálogo',
   description: 'Explora nuestra colección exclusiva de ramos, cajas y arreglos florales.',
 }
 

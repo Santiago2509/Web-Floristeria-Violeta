@@ -3,7 +3,7 @@ import { ContactFormSection } from '@/components/sections/ContactFormSection'
 import { ContactMap } from '@/components/sections/ContactMap'
 
 export const metadata = {
-  title: 'Contacto | Floristería Violeta',
+  title: 'Contacto',
   description: 'Ponte en contacto con nosotros para hacer realidad tus arreglos florales.',
 }
 
