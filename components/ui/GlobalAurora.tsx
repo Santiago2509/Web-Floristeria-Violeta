@@ -1,17 +1,13 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { motion } from 'framer-motion'
 import { useCalmMotion } from './useCalmMotion'
+import { useHydrated } from './useHydrated'
 
 export function GlobalAurora() {
   const calm = useCalmMotion()
-  const [mounted, setMounted] = useState(false)
+  const hydrated = useHydrated()
 
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  if (!mounted) return null
+  if (!hydrated) return null
 
   return (
     <div className="fixed inset-0 z-[-1] overflow-hidden pointer-events-none">

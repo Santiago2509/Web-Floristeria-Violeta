@@ -1,9 +1,9 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useTheme } from '@/components/ui/ThemeProvider'
 import { motion, useReducedMotion } from 'framer-motion'
-import { Product } from '@/types'
 import { AnimatedRose } from '@/components/ui/AnimatedRose'
+import { useHydrated } from '@/components/ui/useHydrated'
 
 // Componente para los pétalos
 function FloatingPetals() {
@@ -43,22 +43,16 @@ function FloatingPetals() {
   )
 }
 
-export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }) {
+export function Hero() {
   const { theme } = useTheme()
-  const [mounted, setMounted] = useState(false)
   const reduceMotion = useReducedMotion()
+  const hydrated = useHydrated()
   // Si el splash ya se mostró en esta sesión, el título aparece de inmediato
   // (antes el Hero quedaba vacío 2,5 s en cada visita)
   const [introDelay] = useState(() =>
     typeof window !== 'undefined' && sessionStorage.getItem('splash_shown') ? 0.3 : 2.5
   )
-  
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-  const isDark = mounted && theme === 'dark'
-
+  const isDark = theme === 'dark'
 
   const titleText = "VIOLETA"
   const titleLetters = titleText.split("")
@@ -111,7 +105,8 @@ export function Hero({ featuredProducts = [] }: { featuredProducts?: Product[] }
         <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-bg)] via-transparent to-transparent opacity-60" />
       </div>
 
-      {!reduceMotion && <FloatingPetals />}
+      {/* Tras hidratar, para que el HTML del servidor y el del cliente coincidan */}
+      {!(hydrated && reduceMotion) && <FloatingPetals />}
 
       {/* Contenido Central */}
       <div className="container mx-auto z-10 relative flex flex-col items-center justify-center flex-grow">

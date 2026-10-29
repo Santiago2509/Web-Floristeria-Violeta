@@ -106,7 +106,7 @@ export function MotivationalBanner() {
                 transition={{ duration: 0.8, ease: "easeOut" }}
                 className="absolute font-playfair text-3xl md:text-5xl lg:text-6xl text-white italic leading-tight drop-shadow-md px-4"
               >
-                "{FRASES[fraseIndex]}"
+                “{FRASES[fraseIndex]}”
               </motion.h2>
             </AnimatePresence>
           </div>

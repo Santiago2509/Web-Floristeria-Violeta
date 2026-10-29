@@ -1,12 +1,11 @@
-import { getProductById, getProducts } from '@/lib/db'
+import { getProductById } from '@/lib/db'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
 import Link from 'next/link'
-import { ArrowLeft, MessageCircle, ShoppingBag } from 'lucide-react'
+import { ArrowLeft, ShoppingBag } from 'lucide-react'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
-import { Product } from '@/types'
 
 export const dynamic = 'force-dynamic'
 

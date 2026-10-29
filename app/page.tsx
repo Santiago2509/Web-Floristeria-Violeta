@@ -4,6 +4,10 @@ import { GlobalAurora } from '@/components/ui/GlobalAurora'
 import { ScrollVineAnimation } from '@/components/ui/ScrollVineAnimation'
 import dynamic from 'next/dynamic'
 
+function shuffle<T>(items: T[]): T[] {
+  return [...items].sort(() => 0.5 - Math.random())
+}
+
 // Componentes secundarios cargados dinámicamente para mejorar FCP
 const FeaturedProducts = dynamic(() => import('@/components/sections/FeaturedProducts').then(mod => mod.FeaturedProducts))
 const MotivationalBanner = dynamic(() => import('@/components/sections/MotivationalBanner').then(mod => mod.MotivationalBanner))
@@ -21,7 +25,7 @@ export default async function Home() {
       <GlobalAurora />
 
       {/* ── PARTE SUPERIOR: Hero + FeaturedProducts + Banner ── */}
-      <Hero featuredProducts={featured} />
+      <Hero />
       {/* Las secciones con contenido de la BD solo se muestran si hay datos */}
       {featured.length > 0 && <FeaturedProducts featuredProducts={featured} />}
       <MotivationalBanner />
@@ -43,7 +47,7 @@ export default async function Home() {
         {/* Resto de secciones encima del canvas (z-20) */}
         <div className="relative z-20">
           <ServicesPreview />
-          {gallery.length > 0 && <GalleryPreview galleryImages={gallery} />}
+          {gallery.length > 0 && <GalleryPreview galleryImages={shuffle(gallery)} />}
           <Contact />
         </div>
       </div>

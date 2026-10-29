@@ -1,36 +1,58 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Floristería Violeta
 
-## Getting Started
+Sitio web de **Floristería Violeta** (Cali, Colombia): catálogo de arreglos florales, servicios, galería, historia de la tienda y contacto directo por WhatsApp. Incluye un panel de administración para gestionar el catálogo y la galería.
 
-First, run the development server:
+## Tecnologías
+
+- [Next.js 16](https://nextjs.org) (App Router) + React 19 + TypeScript
+- Tailwind CSS 4
+- Framer Motion y Lenis (animaciones y scroll suave)
+- Supabase (base de datos de productos, galería y ocasiones)
+- Cloudinary (subida y alojamiento de fotos)
+
+## Puesta en marcha
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
+pnpm install
+cp .env.example .env.local   # y rellena los valores
 pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abre <http://localhost:3000>.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+| Comando      | Qué hace                         |
+|--------------|----------------------------------|
+| `pnpm dev`   | Servidor de desarrollo           |
+| `pnpm build` | Compilación de producción        |
+| `pnpm start` | Sirve la compilación             |
+| `pnpm lint`  | Revisión de código con ESLint    |
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## Variables de entorno
 
-## Learn More
+Todas están documentadas en [`.env.example`](.env.example). Las imprescindibles son las de Supabase, Cloudinary y las del panel (`ADMIN_PASSWORD`, `ADMIN_SESSION_SECRET`). Si faltan las del panel, `/admin` queda bloqueado.
 
-To learn more about Next.js, take a look at the following resources:
+## Estructura
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```
+app/                 Páginas (inicio, catálogo, servicios, galería, nosotros, contacto…)
+app/admin/login      Acceso al panel
+app/admin/(panel)    Panel de administración (protegido)
+components/layout    Navbar y Footer
+components/sections  Secciones de cada página
+components/ui        Componentes reutilizables y efectos visuales
+lib/site-config.ts   Datos del negocio (teléfono, dirección, horario, redes) — fuente única
+lib/db.ts            Acceso a datos en Supabase
+lib/actions.ts       Server Actions del panel (verifican la sesión)
+lib/auth.ts          Sesión del administrador
+proxy.ts             Protección de las rutas /admin
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Panel de administración
 
-## Deploy on Vercel
+Entra en `/admin` con la contraseña de `ADMIN_PASSWORD`. La sesión dura 7 días y se cierra con «Cerrar sesión».
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+**Seguridad en Supabase:** configura `SUPABASE_SERVICE_ROLE_KEY` y activa Row Level Security en las tablas `products`, `gallery` y `ocasiones_guardadas`, permitiendo a la clave pública (`anon`) **solo lectura**. Así nadie puede modificar datos desde fuera del panel.
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Datos del negocio
+
+Teléfono, correo, dirección, horario, redes y mapa se editan en un único lugar: `lib/site-config.ts`.

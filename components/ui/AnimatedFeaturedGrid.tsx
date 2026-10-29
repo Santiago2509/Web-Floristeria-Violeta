@@ -187,6 +187,9 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
     [products]
   )
 
+  // FASE 4: Estado para controlar cuántos chunks se muestran
+  const [visibleCount, setVisibleCount] = useState(4)
+
   const isRunning = autoPlay && !isHovering && inView && rotatingCategories.length > 1
 
   useEffect(() => {
@@ -199,11 +202,8 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
       setVisibleCount(4)
     }, AUTOPLAY_MS)
     return () => clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isRunning, activeCategory, rotatingCategories])
   
-  // FASE 4: Estado para controlar cuántos chunks se muestran
-  const [visibleCount, setVisibleCount] = useState(4)
 
   // Filtrado de productos (tolerante a mayúsculas/minúsculas)
   const filteredProducts = activeCategory === 'Todos' 

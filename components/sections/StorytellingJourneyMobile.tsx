@@ -85,7 +85,7 @@ export function StorytellingJourneyMobile() {
           </p>
           <div className="p-6 rounded-2xl bg-[var(--theme-primary)]/5 dark:bg-white/5 border border-[var(--theme-primary)]/10 dark:border-white/10 backdrop-blur-md">
             <p className="font-playfair text-lg italic text-[var(--theme-text)]/90">
-              "Las flores son la música del suelo, de los labios de la tierra habladas sin sonido."
+              “Las flores son la música del suelo, de los labios de la tierra habladas sin sonido.”
             </p>
           </div>
         </motion.div>

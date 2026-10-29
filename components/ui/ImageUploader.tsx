@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { CldUploadWidget } from 'next-cloudinary'
+import { CldUploadWidget, type CloudinaryUploadWidgetResults } from 'next-cloudinary'
 import { UploadCloud, CheckCircle2 } from 'lucide-react'
 import Image from 'next/image'
 
@@ -19,8 +19,8 @@ export function ImageUploader({ name }: ImageUploaderProps) {
       
       <CldUploadWidget
         uploadPreset="violeta_preset"
-        onSuccess={(result: any) => {
-          if (result.info && result.info.secure_url) {
+        onSuccess={(result: CloudinaryUploadWidgetResults) => {
+          if (typeof result.info === 'object' && result.info?.secure_url) {
             setImageUrl(result.info.secure_url)
           }
         }}

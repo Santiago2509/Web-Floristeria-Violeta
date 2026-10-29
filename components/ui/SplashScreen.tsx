@@ -1,25 +1,25 @@
 'use client'
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useSyncExternalStore } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
+
+// Se calcula una sola vez por carga de página: ¿es la primera visita de la sesión?
+let firstVisitInSession: boolean | undefined
+const getIsFirstVisit = () => (firstVisitInSession ??= !sessionStorage.getItem('splash_shown'))
+const noopSubscribe = () => () => {}
 
 export function SplashScreen() {
   // Mostrar solo una vez por sesión del navegador
-  const [isLoading, setIsLoading] = useState(false)
+  const isFirstVisit = useSyncExternalStore(noopSubscribe, getIsFirstVisit, () => false)
+  const [finished, setFinished] = useState(false)
+  const isLoading = isFirstVisit && !finished
 
   useEffect(() => {
-    const alreadyShown = sessionStorage.getItem('splash_shown')
-    if (alreadyShown) {
-      setIsLoading(false)
-      return
-    }
-    // Primera visita: mostrar splash y marcar como visto
-    setIsLoading(true)
+    if (!isFirstVisit) return
     sessionStorage.setItem('splash_shown', '1')
-    const timer = setTimeout(() => {
-      setIsLoading(false)
-    }, 2500)
+    const timer = setTimeout(() => setFinished(true), 2500)
     return () => clearTimeout(timer)
-  }, [])
+  }, [isFirstVisit])
+
 
   return (
     <AnimatePresence>

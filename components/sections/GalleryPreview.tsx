@@ -1,18 +1,11 @@
 'use client'
-import { useEffect, useState } from 'react'
 import { GalleryGrid } from '@/components/ui/GalleryGrid'
 import Link from 'next/link'
 import { GalleryImage } from '@/types'
 
 export function GalleryPreview({ galleryImages = [] }: { galleryImages?: GalleryImage[] }) {
-  const [imagenes, setImagenes] = useState<GalleryImage[]>([])
-
-  useEffect(() => {
-    if (galleryImages.length === 0) return
-    const shuffled = [...galleryImages].sort(() => 0.5 - Math.random())
-    // Seleccionamos 9 fotos
-    setImagenes(shuffled.slice(0, 9))
-  }, [galleryImages])
+  // La selección aleatoria se hace en el servidor (app/page.tsx); aquí solo mostramos 9
+  const imagenes = galleryImages.slice(0, 9)
 
   // Mostrar un mensaje de vacío si no hay imágenes
   if (galleryImages.length === 0) return (

@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 import { useReducedMotion } from 'framer-motion'
+import { useHydrated } from './useHydrated'
 
 /**
  * true si conviene desactivar animaciones decorativas continuas:
@@ -9,6 +10,7 @@ import { useReducedMotion } from 'framer-motion'
  */
 export function useCalmMotion(): boolean {
   const reduceMotion = useReducedMotion()
+  const hydrated = useHydrated()
   const [isMobile, setIsMobile] = useState(false)
 
   useEffect(() => {
@@ -19,5 +21,6 @@ export function useCalmMotion(): boolean {
     return () => mq.removeEventListener('change', update)
   }, [])
 
-  return Boolean(reduceMotion) || isMobile
+  // Hasta hidratar devolvemos false para que coincida con el render del servidor
+  return hydrated && (Boolean(reduceMotion) || isMobile)
 }

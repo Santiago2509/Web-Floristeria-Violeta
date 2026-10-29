@@ -1,5 +1,5 @@
 'use client'
-import { createContext, useContext, useEffect, useState } from 'react'
+import { createContext, useContext, useEffect, useSyncExternalStore } from 'react'
 
 type Theme = 'light' | 'dark'
 
@@ -8,29 +8,36 @@ const ThemeContext = createContext<{
   toggleTheme: () => void
 }>({ theme: 'light', toggleTheme: () => {} })
 
+// Pequeño store externo: la preferencia vive en localStorage y en el sistema operativo
+const listeners = new Set<() => void>()
+
+function getTheme(): Theme {
+  const saved = localStorage.getItem('theme')
+  if (saved === 'light' || saved === 'dark') return saved
+  return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function subscribe(callback: () => void) {
+  listeners.add(callback)
+  const mq = window.matchMedia('(prefers-color-scheme: dark)')
+  mq.addEventListener('change', callback)
+  return () => {
+    listeners.delete(callback)
+    mq.removeEventListener('change', callback)
+  }
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
-  const [theme, setTheme] = useState<Theme>('light')
-  const [mounted, setMounted] = useState(false)
+  // En el servidor (y durante la hidratación) el tema es 'light' para evitar desajustes
+  const theme = useSyncExternalStore(subscribe, getTheme, () => 'light' as Theme)
 
   useEffect(() => {
-    setMounted(true)
-    const saved = localStorage.getItem('theme') as Theme
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-    const initial = saved || (prefersDark ? 'dark' : 'light')
-    setTheme(initial)
-    document.documentElement.classList.toggle('dark', initial === 'dark')
-  }, [])
+    document.documentElement.classList.toggle('dark', theme === 'dark')
+  }, [theme])
 
   const toggleTheme = () => {
-    const next = theme === 'light' ? 'dark' : 'light'
-    setTheme(next)
-    localStorage.setItem('theme', next)
-    document.documentElement.classList.toggle('dark', next === 'dark')
-  }
-
-  // Evitar error de hidratación en SSR
-  if (!mounted) {
-    return <>{children}</>
+    localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light')
+    listeners.forEach((listener) => listener())
   }
 
   return (
