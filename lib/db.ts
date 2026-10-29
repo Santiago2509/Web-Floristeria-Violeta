@@ -202,6 +202,22 @@ export async function addGalleryImage(image: Omit<GalleryImage, 'id' | 'createdA
   }
 }
 
+export async function addGalleryImages(images: Omit<GalleryImage, 'id' | 'createdAt'>[]): Promise<boolean> {
+  const { error } = await supabaseAdmin
+    .from('gallery')
+    .insert(images.map(image => ({
+      title: image.title,
+      category: image.category,
+      image_url: image.imageUrl
+    })))
+
+  if (error) {
+    console.error('Error adding gallery images:', error)
+    return false
+  }
+  return true
+}
+
 export async function deleteGalleryImage(id: string): Promise<boolean> {
   const { error } = await supabaseAdmin
     .from('gallery')

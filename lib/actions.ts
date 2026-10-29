@@ -3,6 +3,7 @@
 import { revalidatePath } from 'next/cache'
 import * as db from './db'
 import { requireAdmin } from './auth'
+import { GALLERY_CATEGORIES } from './gallery'
 import type { Product } from '@/types'
 
 const CATEGORIES: Product['category'][] = ['Ramos', 'Cajas', 'Eventos', 'Regalos']
@@ -55,21 +56,37 @@ export async function adminToggleFeatured(id: string) {
   revalidatePath('/')
 }
 
-export async function adminAddGalleryImage(formData: FormData) {
-  await requireAdmin()
-  const title = String(formData.get('title') ?? '').trim()
-  const category = String(formData.get('category') ?? '').trim()
-  if (!title || !category) throw new Error('Datos de la imagen inválidos')
-  const imageUrl = formData.get('imageUrl') as string || `https://picsum.photos/seed/${Math.random()}/800/800`
+const MAX_BATCH = 50
 
-  await db.addGalleryImage({
-    title,
+// Subida múltiple: las fotos ya están en Cloudinary (subidas desde el navegador);
+// aquí solo guardamos sus URLs en la galería.
+export async function adminAddGalleryImages(
+  items: { title: string; imageUrl: string }[],
+  category: string
+): Promise<{ ok: boolean; error?: string }> {
+  await requireAdmin()
+
+  if (!GALLERY_CATEGORIES.includes(category)) return { ok: false, error: 'Categoría inválida.' }
+  if (!Array.isArray(items) || items.length === 0) return { ok: false, error: 'No hay fotos para guardar.' }
+  if (items.length > MAX_BATCH) return { ok: false, error: `Máximo ${MAX_BATCH} fotos por tanda.` }
+
+  const images = items.map(item => ({
+    title: String(item.title ?? '').trim().slice(0, 120),
+    imageUrl: String(item.imageUrl ?? ''),
     category,
-    imageUrl
-  })
+  }))
+  if (images.some(img => !img.title)) return { ok: false, error: 'Todas las fotos necesitan un título.' }
+  if (images.some(img => !img.imageUrl.startsWith('https://res.cloudinary.com/'))) {
+    return { ok: false, error: 'Alguna foto no viene de Cloudinary.' }
+  }
+
+  const ok = await db.addGalleryImages(images)
+  if (!ok) return { ok: false, error: 'No se pudieron guardar las fotos. Inténtalo de nuevo.' }
 
   revalidatePath('/galeria')
   revalidatePath('/admin/galeria')
+  revalidatePath('/') // El Inicio muestra una selección de la galería
+  return { ok: true }
 }
 
 export async function adminDeleteGalleryImage(id: string) {
@@ -77,6 +94,7 @@ export async function adminDeleteGalleryImage(id: string) {
   await db.deleteGalleryImage(id)
   revalidatePath('/galeria')
   revalidatePath('/admin/galeria')
+  revalidatePath('/')
 }
 
 export async function adminSaveOccasion(nombre: string) {
