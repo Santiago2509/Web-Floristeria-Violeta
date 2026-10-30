@@ -1,4 +1,4 @@
-import Image from 'next/image'
+import { GalleryMosaic } from '@/components/gallery/GalleryMosaic'
 import { getGalleryImages } from '@/lib/db'
 
 export const metadata = {
@@ -13,14 +13,16 @@ export default async function GaleriaPage() {
   const images = await getGalleryImages()
 
   return (
-    <main className="min-h-screen pt-24 md:pt-32 pb-24 bg-[var(--theme-bg)]">
+    <main className="min-h-screen pt-28 md:pt-36 pb-24 bg-[var(--theme-bg)]">
       <div className="container mx-auto">
-        <div className="text-center mb-16">
-          <span className="font-inter text-sm uppercase tracking-widest text-[var(--theme-primary)] mb-4 block font-semibold">
-            Inspiración Visual
+        <div className="text-center mb-10 md:mb-14">
+          <span className="inline-flex items-center gap-3 font-inter text-[11px] uppercase tracking-[0.35em] text-[var(--theme-primary)] font-semibold mb-4">
+            <span className="w-8 h-px bg-[var(--theme-primary)]" />
+            Inspiración visual
+            <span className="w-8 h-px bg-[var(--theme-primary)]" />
           </span>
-          <h1 className="font-playfair text-4xl md:text-5xl text-[var(--theme-text)]">
-            Nuestra Galería
+          <h1 className="font-playfair text-5xl md:text-6xl text-[var(--theme-text)] leading-[1.05]">
+            Nuestra <span className="italic text-gradient-violet">galería</span>
           </h1>
         </div>
 
@@ -29,29 +31,7 @@ export default async function GaleriaPage() {
             No hay imágenes en la galería por el momento.
           </div>
         ) : (
-          <div className="columns-1 sm:columns-2 lg:columns-3 gap-6 space-y-6">
-            {images.map((img) => (
-              <div key={img.id} className="relative group break-inside-avoid rounded-2xl overflow-hidden shadow-md hover:shadow-xl transition-shadow duration-300">
-                <Image
-                  src={img.imageUrl}
-                  alt={img.title}
-                  width={600}
-                  height={800} // Altura base, next/image mantendrá la proporción gracias a layout responsivo
-                  className="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700"
-                />
-                
-                {/* Overlay Oscuro al hacer hover */}
-                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex flex-col justify-end p-6">
-                  <span className="font-inter text-xs font-semibold uppercase tracking-widest text-white/80 mb-1">
-                    {img.category}
-                  </span>
-                  <h3 className="font-playfair text-xl text-white">
-                    {img.title}
-                  </h3>
-                </div>
-              </div>
-            ))}
-          </div>
+          <GalleryMosaic images={images} />
         )}
       </div>
     </main>

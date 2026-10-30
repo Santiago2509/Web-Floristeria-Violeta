@@ -35,11 +35,41 @@ export function ContactFormSection() {
             <h2 className="font-playfair text-4xl text-[var(--theme-text)] mb-8">
               Estamos para ti
             </h2>
-            <p className="font-inter text-[var(--theme-text-muted)] mb-12 text-lg">
+            <p className="font-inter text-[var(--theme-text-muted)] mb-8 lg:mb-12 text-lg">
               Sabemos que las emociones no dan espera. Contáctanos directamente por nuestros canales rápidos.
             </p>
 
-            <div className="space-y-8 font-inter text-[var(--theme-text)]">
+            {/* Móvil: accesos rápidos en cuadrícula */}
+            <div className="lg:hidden grid grid-cols-2 gap-3 font-inter">
+              {[
+                { href: siteConfig.phoneHref, icon: Phone, title: 'Llamar', text: siteConfig.phoneDisplay, external: false },
+                { href: generarLinkWhatsApp(), icon: MessageCircle, title: 'WhatsApp', text: 'Respuesta inmediata', external: true },
+                { href: `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${siteConfig.address.street}, ${siteConfig.address.city}`)}`, icon: MapPin, title: 'Cómo llegar', text: 'Centro de Cali', external: true },
+                { href: `mailto:${siteConfig.email}`, icon: Mail, title: 'Correo', text: 'Consultas no urgentes', external: false },
+              ].map(({ href, icon: Icon, title, text, external }, i) => (
+                <a
+                  key={title}
+                  href={href}
+                  {...(external ? { target: '_blank', rel: 'noopener noreferrer' } : {})}
+                  className={`relative overflow-hidden flex flex-col gap-3 p-4 rounded-[1.5rem] border transition-transform active:scale-[0.97] ${i === 0 ? 'bg-plum-gradient border-transparent text-white' : 'bg-[var(--theme-bg-card)] border-[var(--theme-border)] text-[var(--theme-text)]'}`}
+                >
+                  <span className={`w-10 h-10 rounded-full flex items-center justify-center ${i === 0 ? 'bg-white/20' : 'bg-[var(--theme-blush)] text-[var(--theme-primary)]'}`}>
+                    <Icon className="w-5 h-5" />
+                  </span>
+                  <span>
+                    <span className="block font-semibold">{title}</span>
+                    <span className={`block text-xs leading-snug ${i === 0 ? 'text-white/80' : 'text-[var(--theme-text-muted)]'}`}>{text}</span>
+                  </span>
+                </a>
+              ))}
+              <p className="col-span-2 flex items-center gap-2 px-1 pt-1 text-sm text-[var(--theme-text-muted)]">
+                <Clock className="w-4 h-4 text-[var(--theme-primary)] shrink-0" />
+                {siteConfig.hours.map(h => `${h.days}: ${h.time}`).join(' · ')}
+              </p>
+            </div>
+
+            {/* Escritorio: lista completa */}
+            <div className="hidden lg:block space-y-8 font-inter text-[var(--theme-text)]">
               {/* Botón Llamada Directa (Especial para emergencias móviles) */}
               <a 
                 href={siteConfig.phoneHref}

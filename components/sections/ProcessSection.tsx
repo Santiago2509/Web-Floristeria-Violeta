@@ -118,7 +118,8 @@ export function ProcessSection() {
                 hidden: { opacity: 0 },
                 visible: { 
                   opacity: 1, 
-                  transition: { staggerChildren: 0.2, delayChildren: index * 0.3 + 0.2 } 
+                  // En móvil cada paso entra solo en pantalla: sin retraso escalonado (antes el 3.º tardaba y quedaba invisible)
+                  transition: { staggerChildren: 0.2, delayChildren: (typeof window !== 'undefined' && window.innerWidth >= 768 ? index * 0.3 : 0) + 0.2 } 
                 }
               }}
               className="relative z-10 flex flex-col items-center text-center group"

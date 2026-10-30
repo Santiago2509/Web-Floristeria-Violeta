@@ -97,7 +97,7 @@ export function StorytellingJourneyMobile() {
           className="relative h-[400px] w-full rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl border-[4px] border-white/30 dark:border-white/10"
           style={{ clipPath: 'inset(0px round 10rem 10rem 2rem 2rem)' }}
         >
-           <Image src="/assets/hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
+           <Image src="/assets/services_hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
            <div className="absolute inset-0 bg-black/20" />
            {/* Imagen secundaria insertada estilo revista */}
            <div className="absolute w-[70%] h-[40%] left-1/2 -translate-x-1/2 bottom-8 rounded-xl overflow-hidden border-2 border-white/50 shadow-2xl">
@@ -120,25 +120,29 @@ export function StorytellingJourneyMobile() {
           <h2 className="font-playfair text-4xl mb-4 text-transparent bg-clip-text bg-gradient-to-r from-[var(--theme-text)] to-[var(--theme-primary)]">Nuestros Pilares</h2>
         </motion.div>
         
-        <div className="flex flex-col gap-6">
+        <div className="grid grid-cols-2 gap-3">
           {[
-            { icon: Heart, t: 'Pasión Floral', d: 'Cada creación es única, prestando atención a la armonía de colores.' },
-            { icon: Star, t: 'Calidad Premium', d: 'Trabajamos con flores de la más alta calidad, seleccionadas diariamente.' },
+            { icon: Heart, t: 'Pasión Floral', d: 'Cada creación es única, cuidando la armonía de colores.' },
+            { icon: Star, t: 'Calidad Premium', d: 'Flores de la más alta calidad, elegidas cada día.' },
             { icon: Clock, t: 'Puntualidad', d: 'Nos tomamos el tiempo de entrega tan en serio como nuestras flores.' }
           ].map((item, i) => (
-            <motion.div 
+            <motion.div
               key={i}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
+              initial={{ opacity: 0, y: 20, scale: 0.96 }}
+              whileInView={{ opacity: 1, y: 0, scale: 1 }}
               viewport={{ once: true }}
-              transition={{ delay: i * 0.1 }}
-              className="flex flex-col items-center text-center p-8 rounded-[2rem] bg-[var(--theme-bg)]/60 dark:bg-black/40 border border-[var(--theme-border)]/30 dark:border-white/10 shadow-lg backdrop-blur-md"
+              transition={{ delay: i * 0.12 }}
+              className={`relative overflow-hidden rounded-[1.75rem] border border-[var(--theme-border)] bg-[var(--theme-bg-card)] p-5 ${i === 2 ? 'col-span-2 flex items-center gap-4' : 'flex flex-col'}`}
             >
-              <div className="w-16 h-16 rounded-full bg-[var(--theme-primary)]/10 flex items-center justify-center mb-6 border border-[var(--theme-primary)]/20">
-                <item.icon className="w-8 h-8 text-[var(--theme-primary)]" strokeWidth={1.5} />
+              {/* arco decorativo de fondo */}
+              <span className="absolute -right-6 -top-6 w-20 h-24 rounded-b-full bg-[var(--theme-blush)]" />
+              <div className={`relative w-11 h-11 shrink-0 rounded-full bg-plum-gradient flex items-center justify-center ${i === 2 ? '' : 'mb-4'}`}>
+                <item.icon className="w-5 h-5 text-white" strokeWidth={1.8} />
               </div>
-              <h4 className="font-playfair text-2xl mb-3 text-[var(--theme-text)]">{item.t}</h4>
-              <p className="font-inter text-sm text-[var(--theme-text-muted)] leading-relaxed font-light">{item.d}</p>
+              <div className="relative">
+                <h4 className="font-playfair text-xl leading-tight mb-1.5 text-[var(--theme-text)]">{item.t}</h4>
+                <p className="font-inter text-[13px] text-[var(--theme-text-muted)] leading-snug">{item.d}</p>
+              </div>
             </motion.div>
           ))}
         </div>

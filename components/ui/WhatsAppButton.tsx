@@ -1,10 +1,14 @@
 'use client'
 import { motion } from 'framer-motion'
+import { usePathname } from 'next/navigation'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
 
 export function WhatsAppButton() {
+  // En el detalle de producto (móvil) ya hay una barra fija de compra por WhatsApp
+  const onProductPage = /^\/catalogo\/[^/]+/.test(usePathname() ?? '')
+
   return (
-    <div className="fixed bottom-6 right-6 z-50 flex items-center justify-center">
+    <div className={`fixed bottom-6 right-6 z-50 items-center justify-center ${onProductPage ? 'hidden md:flex' : 'flex'} [body.sheet-open_&]:hidden`}>
       <motion.a
         href={generarLinkWhatsApp()}
         target="_blank"

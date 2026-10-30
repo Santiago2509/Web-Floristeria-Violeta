@@ -118,11 +118,36 @@ function ServiceCard({ service, index }: { service: (typeof services)[number], i
 
 import { ServicesBackgroundVector } from '@/components/ui/ServicesBackgroundVector'
 
+// Tarjeta "sticky": cada una se queda fija arriba y la siguiente sube y se apila encima
+function StackedServiceCard({ service, index, isLast }: { service: (typeof services)[number], index: number, isLast: boolean }) {
+  return (
+    <div className={`sticky ${isLast ? '' : 'mb-[38vh]'}`} style={{ top: `${92 + index * 18}px` }}>
+      <motion.article
+        initial={{ opacity: 0, y: 40 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.6, ease: 'easeOut' }}
+        className="rounded-[2rem] overflow-hidden bg-[var(--theme-bg-card)] border border-[var(--theme-border)] shadow-[0_-20px_40px_-30px_rgba(59,7,100,0.45),0_30px_50px_-30px_rgba(59,7,100,0.5)]"
+      >
+        <div className="relative h-52 overflow-hidden">
+          <Image src={service.image} alt={service.title} fill sizes="100vw" className="object-cover" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#1E0B3A]/70 via-transparent to-transparent" />
+          <span className="absolute bottom-3 left-5 font-playfair italic text-5xl text-white/90 leading-none">0{index + 1}</span>
+        </div>
+        <div className="p-6">
+          <h3 className="font-playfair text-2xl text-[var(--theme-text)] mb-2 leading-tight">{service.title}</h3>
+          <p className="font-inter text-sm text-[var(--theme-text-muted)] leading-relaxed">{service.description}</p>
+        </div>
+      </motion.article>
+    </div>
+  )
+}
+
 
 
 export function Services() {
   return (
-    <section className="w-full py-24 md:py-32 relative border-t border-[var(--theme-border)]/10 bg-[var(--theme-bg)] overflow-hidden" id="servicios">
+    <section className="w-full py-24 md:py-32 relative border-t border-[var(--theme-border)]/10 bg-[var(--theme-bg)] overflow-x-clip" id="servicios">
       <ServicesBackgroundVector />
       <div className="container mx-auto relative z-10">
         
@@ -132,7 +157,7 @@ export function Services() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-100px" }}
           transition={{ duration: 0.8 }}
-          className="text-center mb-20 md:mb-32 flex flex-col items-center"
+          className="text-center mb-12 md:mb-32 flex flex-col items-center"
         >
           <span className="font-inter text-xs md:text-sm uppercase tracking-[0.3em] text-[var(--theme-primary)] mb-6 block font-semibold">
             Nuestros Servicios
@@ -151,32 +176,17 @@ export function Services() {
             ))}
           </motion.h2>
 
-          {/* Indicador de Swipe (Solo Móvil) */}
-          <motion.div 
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            transition={{ delay: 1.5, duration: 1 }}
-            className="md:hidden flex items-center justify-center gap-3 mt-6 text-[var(--theme-primary)] font-inter text-sm italic opacity-70"
-          >
-            <motion.span 
-              animate={{ x: [-3, 3, -3] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              ←
-            </motion.span>
-            <span>Desliza para explorar</span>
-            <motion.span 
-              animate={{ x: [3, -3, 3] }}
-              transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
-            >
-              →
-            </motion.span>
-          </motion.div>
         </motion.div>
 
-        {/* Carrusel horizontal en Móvil, Zigzag vertical en Desktop */}
-        <div className="flex flex-row md:flex-col gap-6 md:gap-40 overflow-x-auto md:overflow-visible snap-x snap-mandatory pb-12 md:pb-0 -mx-6 px-6 md:mx-0 md:px-0 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+        {/* Móvil: tarjetas que se apilan al hacer scroll (como un mazo de cartas) */}
+        <div className="md:hidden">
+          {services.map((service, index) => (
+            <StackedServiceCard key={index} service={service} index={index} isLast={index === services.length - 1} />
+          ))}
+        </div>
+
+        {/* Escritorio: zigzag vertical */}
+        <div className="hidden md:flex flex-col gap-40">
           {services.map((service, index) => (
             <ServiceCard key={index} service={service} index={index} />
           ))}

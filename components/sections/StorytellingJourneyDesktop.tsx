@@ -248,7 +248,7 @@ export function StorytellingJourneyDesktop() {
                     className="relative w-[80%] h-[90%] lg:h-[100%] rounded-t-[15rem] rounded-b-[2rem] overflow-hidden border-[6px] border-white/30 dark:border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] z-10"
                     style={{ clipPath: 'inset(0px round 15rem 15rem 2rem 2rem)' }}
                   >
-                      <Image src="/assets/hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
+                      <Image src="/assets/services_hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
                       <div className="absolute inset-0 bg-black/20" />
                       
                       {/* Imagen secundaria insertada estilo revista */}

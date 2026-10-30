@@ -16,9 +16,9 @@ const linkClass = 'hover:text-[var(--theme-primary)] transition-colors'
 
 export function Footer() {
   return (
-    <footer className="w-full pt-16 pb-8 border-t border-[var(--theme-border)]/40 bg-[var(--theme-bg-section)] relative z-20">
+    <footer className="w-full pt-12 sm:pt-16 pb-24 sm:pb-8 border-t border-[var(--theme-border)]/40 bg-[var(--theme-bg-section)] relative z-20">
       <div className="container mx-auto font-inter text-sm text-[var(--theme-text-muted)]">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 sm:gap-10 lg:gap-12">
 
           {/* Marca */}
           <div>
@@ -48,7 +48,7 @@ export function Footer() {
           {/* Navegación */}
           <nav aria-label="Pie de página">
             <p className={headingClass}>Explora</p>
-            <ul className="space-y-3">
+            <ul className="grid grid-cols-2 gap-y-2.5 sm:block sm:space-y-3">
               {navLinks.map((link) => (
                 <li key={link.href}>
                   <Link href={link.href} className={linkClass}>{link.name}</Link>
@@ -57,8 +57,36 @@ export function Footer() {
             </ul>
           </nav>
 
+          {/* Móvil: contacto y horario plegables para no alargar el pie */}
+          <details className="sm:hidden group rounded-2xl border border-[var(--theme-border)] bg-[var(--theme-bg-card)] px-4 py-3">
+            <summary className="flex items-center justify-between cursor-pointer list-none font-medium text-[var(--theme-text)] [&::-webkit-details-marker]:hidden">
+              Contacto y horario
+              <span className="text-[var(--theme-primary)] text-lg leading-none transition-transform group-open:rotate-45">+</span>
+            </summary>
+            <ul className="space-y-3 pt-4">
+              <li className="flex gap-3">
+                <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-[var(--theme-primary)]" aria-hidden="true" />
+                <span>{siteConfig.address.street}, {siteConfig.address.city}</span>
+              </li>
+              <li className="flex gap-3">
+                <Phone className="w-4 h-4 mt-0.5 shrink-0 text-[var(--theme-primary)]" aria-hidden="true" />
+                <a href={siteConfig.phoneHref} className={linkClass}>{siteConfig.phoneDisplay}</a>
+              </li>
+              <li className="flex gap-3">
+                <Mail className="w-4 h-4 mt-0.5 shrink-0 text-[var(--theme-primary)]" aria-hidden="true" />
+                <a href={`mailto:${siteConfig.email}`} className={`${linkClass} break-all`}>{siteConfig.email}</a>
+              </li>
+              {siteConfig.hours.map((h) => (
+                <li key={h.days} className="flex gap-3">
+                  <Clock className="w-4 h-4 mt-0.5 shrink-0 text-[var(--theme-primary)]" aria-hidden="true" />
+                  <span><span className="text-[var(--theme-text)]">{h.days}:</span> {h.time}</span>
+                </li>
+              ))}
+            </ul>
+          </details>
+
           {/* Contacto */}
-          <div>
+          <div className="hidden sm:block">
             <p className={headingClass}>Contacto</p>
             <ul className="space-y-4">
               <li className="flex gap-3">
@@ -77,7 +105,7 @@ export function Footer() {
           </div>
 
           {/* Horario */}
-          <div>
+          <div className="hidden sm:block">
             <p className={headingClass}>Horario</p>
             <ul className="space-y-3">
               {siteConfig.hours.map((h) => (
@@ -90,7 +118,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="mt-14 pt-6 border-t border-[var(--theme-border)]/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
+        <div className="mt-10 sm:mt-14 pt-6 border-t border-[var(--theme-border)]/40 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs">
           <p>&copy; {new Date().getFullYear()} {siteConfig.name}. Todos los derechos reservados.</p>
           <div className="flex gap-6">
             <Link href="/terminos" className={linkClass}>Términos y Condiciones</Link>
