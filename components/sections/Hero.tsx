@@ -4,6 +4,8 @@ import { useTheme } from '@/components/ui/ThemeProvider'
 import { motion, useReducedMotion } from 'framer-motion'
 import { AnimatedRose } from '@/components/ui/AnimatedRose'
 import { useHydrated } from '@/components/ui/useHydrated'
+import Link from 'next/link'
+import { generarLinkWhatsApp } from '@/lib/whatsapp'
 
 // Componente para los pétalos
 function FloatingPetals() {
@@ -80,14 +82,9 @@ export function Hero() {
   return (
     <section className="relative min-h-screen flex flex-col justify-center items-center text-center overflow-hidden">
       
-      {/* Fondo de video */}
-      <div 
-        className="absolute inset-0 z-0"
-        style={{
-          maskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 75%, transparent 100%)'
-        }}
-      >
+      {/* Fondo de video — nítido, sin velos: solo una sombra suave detrás del texto
+          y un fundido corto al final para enlazar con la siguiente sección */}
+      <div className="absolute inset-0 z-0">
         <video
           autoPlay
           loop
@@ -96,13 +93,12 @@ export function Hero() {
           preload="metadata"
           poster="/assets/hero_poster.webp"
           aria-hidden="true"
-          className="object-cover w-full h-full opacity-100"
+          className="object-cover w-full h-full"
         >
           <source src="/assets/heroprincipal.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-black/20" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_0%,_var(--theme-bg)_100%)] opacity-60" />
-        <div className="absolute inset-0 bg-gradient-to-t from-[var(--theme-bg)] via-transparent to-transparent opacity-60" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_52%,rgba(20,6,30,0.28)_0%,transparent_100%)] dark:bg-[radial-gradient(ellipse_60%_50%_at_50%_52%,rgba(10,4,16,0.55)_0%,transparent_100%)]" />
+        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[var(--theme-bg)] to-transparent" />
       </div>
 
       {/* Tras hidratar, para que el HTML del servidor y el del cliente coincidan */}
@@ -115,9 +111,9 @@ export function Hero() {
           initial={{ opacity: 0, scale: 0.8 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.2 }}
-          className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 translate-y-32 md:translate-y-48"
+          className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 translate-y-[13rem] md:translate-y-[15.5rem]"
         >
-          <AnimatedRose className="drop-shadow-2xl w-[120vw] md:w-[960px] opacity-40 md:opacity-70" />
+          <AnimatedRose className="w-[95vw] md:w-[680px] opacity-40 md:opacity-60" />
         </motion.div>
 
         {/* Título Kinetic Reveal */}
@@ -166,10 +162,33 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: introDelay + 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-white font-inter tracking-[0.35em] uppercase text-base lg:text-xl font-medium mt-4 mb-12 max-w-2xl z-10 drop-shadow-[0_4px_6px_rgba(0,0,0,0.8)]"
+          className="text-white font-inter tracking-[0.35em] uppercase text-sm lg:text-lg font-medium mt-2 mb-10 z-10 [text-shadow:0_2px_12px_rgba(20,6,30,0.65)]"
         >
-          Floristería
+          Floristería · Cali
         </motion.p>
+
+        {/* Llamadas a la acción */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8, delay: introDelay + 0.85, ease: [0.16, 1, 0.3, 1] }}
+          className="z-10 flex flex-col sm:flex-row items-center gap-3 sm:gap-4"
+        >
+          <Link
+            href="/catalogo"
+            className="px-8 py-3.5 rounded-full bg-[var(--theme-plum)] text-[var(--theme-on-plum)] font-inter text-sm font-medium tracking-wide shadow-[0_10px_30px_-10px_rgba(42,15,61,0.8)] hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_rgba(42,15,61,0.9)] transition-all"
+          >
+            Ver catálogo
+          </Link>
+          <a
+            href={generarLinkWhatsApp()}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="px-8 py-3.5 rounded-full bg-white/80 dark:bg-white/10 backdrop-blur-md border border-white/70 dark:border-white/25 text-[var(--theme-plum)] dark:text-white font-inter text-sm font-medium tracking-wide hover:bg-white dark:hover:bg-white/20 transition-colors"
+          >
+            Pedir por WhatsApp
+          </a>
+        </motion.div>
       </div>
 
 

@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
+import { ArrowRight, Truck, Flower2, HandHeart } from 'lucide-react'
 
 // Tiempo que se muestra cada categoría antes de deslizar a la siguiente
 const AUTOPLAY_MS = 5000
@@ -37,95 +38,67 @@ const cardVariants = {
 }
 
 function ProductCard({ product, isHero = false }: { product: Product, isHero?: boolean }) {
-  // TODO FUTURO: Implementar un campo "orden" manual en la tabla productos desde el admin.
-  // Por ahora el Hero se selecciona en base a la fecha de creación (más reciente).
-  
   return (
-    <Link 
-      href={`/catalogo#product-${product.id}`} 
-      className="group block relative overflow-hidden rounded-[4px] bg-black/5 h-full w-full"
+    <Link
+      href={`/catalogo/${product.id}`}
+      className="group block relative overflow-hidden rounded-2xl bg-[var(--theme-bg-section)] h-full w-full"
     >
       <Image
         src={product.imageUrl}
         alt={product.title}
         fill
-        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05]"
+        className="object-cover transition-transform duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
         sizes={isHero ? "(min-width: 1024px) 45vw, 100vw" : "(min-width: 1024px) 25vw, 100vw"}
       />
-      
-      {/* Overlay inferior para legibilidad - No depende de ThemeProvider, siempre oscuro */}
-      <div className="absolute bottom-0 left-0 right-0 h-[60%] bg-gradient-to-t from-black/95 via-black/60 to-transparent z-10 pointer-events-none" />
-      
-      {/* Etiqueta de Categoría */}
-      <div className="absolute top-4 left-4 z-20">
-        <span className="bg-black/50 text-white uppercase tracking-widest text-[10px] px-2 py-1 backdrop-blur-sm">
-          {product.category}
-        </span>
-      </div>
 
-      {/* Info del producto animada al Hover */}
-      <div className="absolute bottom-4 left-5 right-5 z-20 flex items-end justify-between">
-        <div className={`transition-all duration-300 w-full ${!isHero ? 'opacity-90 transform translate-y-1 group-hover:translate-y-0 group-hover:opacity-100' : ''}`}>
-          <h3 className={`font-playfair font-medium text-white italic leading-tight mb-2 drop-shadow-md line-clamp-2 ${isHero ? 'text-2xl' : 'text-lg'}`}>
-            {product.title}
-          </h3>
-          <div className="flex items-center justify-between w-full">
-            <div className="flex flex-wrap items-center gap-1 sm:gap-3">
-              <p className="font-inter font-medium text-white/90 text-sm drop-shadow-md">
-                ${product.price.toLocaleString('es-CO')}
-              </p>
-              {/* FASE 3: Tag de ocasión sugerida (múltiples) */}
-              {product.ocasionSugerida && (
-                <div className="hidden sm:flex gap-1.5 flex-wrap">
-                  {product.ocasionSugerida.split(',').slice(0, 3).map(tag => (
-                    <span key={tag.trim()} className="bg-white/20 text-white border border-white/30 backdrop-blur-md px-2 py-0.5 rounded-full text-[9px] uppercase tracking-wider">
-                      {tag.trim()}
-                    </span>
-                  ))}
-                </div>
-              )}
-            </div>
-            
-            {/* Botón Ver Detalle SOLAMENTE en el Hero */}
-            {isHero && (
-              <div className="hidden lg:block opacity-0 transform translate-y-[6px] group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300 ease-out delay-75">
-                <span className="inline-block px-4 py-1.5 border border-white/40 text-white font-inter text-[11px] font-medium tracking-wider uppercase backdrop-blur-md bg-white/10 hover:bg-white hover:text-black transition-colors whitespace-nowrap">
-                  Ver detalle
-                </span>
-              </div>
-            )}
-          </div>
+      {/* Degradado inferior para legibilidad (siempre oscuro, independiente del tema) */}
+      <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-[#1a0826]/90 via-[#1a0826]/40 to-transparent z-10 pointer-events-none" />
+
+      {/* Categoría */}
+      <span className="absolute top-4 left-4 z-20 bg-white/90 text-[#2A0F3D] uppercase tracking-[0.2em] text-[10px] font-semibold px-3 py-1 rounded-full">
+        {product.category}
+      </span>
+
+      {/* Flecha que aparece al pasar el ratón */}
+      <span className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white text-[#2A0F3D] flex items-center justify-center opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+        <ArrowRight className="w-4 h-4 -rotate-45" />
+      </span>
+
+      {/* Información */}
+      <div className={`absolute bottom-0 inset-x-0 z-20 ${isHero ? 'p-6 lg:p-8' : 'p-5'}`}>
+        <h3 className={`font-playfair text-white leading-tight mb-2 line-clamp-2 ${isHero ? 'text-3xl lg:text-4xl' : 'text-xl'}`}>
+          {product.title}
+        </h3>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="font-inter font-semibold text-white text-sm">
+            ${product.price.toLocaleString('es-CO')}
+          </span>
+          {isHero && product.ocasionSugerida && product.ocasionSugerida.split(',').slice(0, 3).map(tag => (
+            <span key={tag.trim()} className="hidden sm:inline-block border border-white/40 text-white/90 px-2.5 py-0.5 rounded-full text-[10px] uppercase tracking-wider">
+              {tag.trim()}
+            </span>
+          ))}
         </div>
       </div>
     </Link>
   )
 }
 
-function CTACard({ bgImageUrl }: { bgImageUrl?: string }) {
-  // Usamos una imagen genérica bonita en caso de que no haya productos de donde heredar
-  const fallbackImage = 'https://images.unsplash.com/photo-1563241527-3004b7be0ffd?q=80&w=600&auto=format&fit=crop'
-  
+function CTACard() {
   return (
-    <Link 
+    <Link
       href="/catalogo"
-      className="group block h-full w-full rounded-[4px] overflow-hidden relative bg-black"
+      className="group h-full w-full rounded-2xl overflow-hidden relative flex flex-col justify-between p-6 bg-[var(--theme-plum)] text-[var(--theme-on-plum)]"
     >
-      <Image
-        src={bgImageUrl || fallbackImage}
-        alt="Ver catálogo"
-        fill
-        className="object-cover transition-transform duration-[600ms] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.05] opacity-50 group-hover:opacity-40"
-        sizes="(min-width: 1024px) 25vw, 100vw"
-      />
-      <div className="absolute inset-0 bg-black/40 group-hover:bg-black/50 transition-colors duration-500" />
-      
-      <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-4 relative z-10">
-        <h3 className="font-playfair font-medium text-3xl text-white italic mb-3 drop-shadow-lg">
-          Descubre más
-        </h3>
-        <span className="font-inter font-medium text-xs tracking-widest uppercase text-white/95 flex items-center drop-shadow-md">
-          Ver catálogo 
-          <span className="ml-2 transform transition-transform duration-300 group-hover:translate-x-1.5">→</span>
+      {/* Arco decorativo */}
+      <span className="absolute -right-10 -bottom-16 w-48 h-56 rounded-t-full border border-white/15 transition-transform duration-700 group-hover:-translate-y-2" />
+      <span className="absolute -right-4 -bottom-16 w-36 h-44 rounded-t-full border border-white/10 transition-transform duration-700 delay-75 group-hover:-translate-y-3" />
+      <span className="font-inter text-[10px] uppercase tracking-[0.3em] text-white/60">Catálogo completo</span>
+      <div className="relative">
+        <h3 className="font-playfair italic text-3xl leading-tight mb-3">Descubre más</h3>
+        <span className="inline-flex items-center gap-2 font-inter text-sm font-medium">
+          Ver catálogo
+          <ArrowRight className="w-4 h-4 transition-transform duration-300 group-hover:translate-x-1.5" />
         </span>
       </div>
     </Link>
@@ -139,7 +112,7 @@ function BentoChunk({ products, showCTA, isFirstChunk }: { products: Product[], 
       initial="hidden"
       whileInView="show"
       viewport={{ once: true, margin: "-100px" }}
-      className={`grid grid-cols-1 lg:grid-cols-[1.4fr_1fr_1fr] gap-[6px] w-full ${!isFirstChunk ? 'mt-[6px]' : ''}`}
+      className={`grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr] gap-3 lg:gap-4 w-full ${!isFirstChunk ? 'mt-3 lg:mt-4' : ''}`}
     >
       {products.map((product, index) => {
         // Si no hay CTA, el último producto (índice 3) ocupa 2 columnas para mantener la simetría del Bento
@@ -151,7 +124,7 @@ function BentoChunk({ products, showCTA, isFirstChunk }: { products: Product[], 
             layout 
             variants={cardVariants} 
             className={`
-              ${index === 0 ? "lg:row-span-2 lg:h-[340px] xl:h-[380px] 2xl:h-[420px] h-[340px]" : "lg:h-[166px] xl:h-[186px] 2xl:h-[210px] h-[200px]"}
+              ${index === 0 ? "sm:col-span-2 lg:col-span-1 lg:row-span-2 h-[380px] lg:h-[520px]" : "h-[240px] lg:h-[252px]"}
               ${isWide ? "lg:col-span-2" : ""}
             `}
           >
@@ -161,8 +134,8 @@ function BentoChunk({ products, showCTA, isFirstChunk }: { products: Product[], 
       })}
       
       {showCTA && (
-        <motion.div layout variants={cardVariants} className="lg:h-[166px] xl:h-[186px] 2xl:h-[210px] h-[166px]">
-          <CTACard bgImageUrl={products[0]?.imageUrl} />
+        <motion.div layout variants={cardVariants} className="h-[200px] lg:h-[252px]">
+          <CTACard />
         </motion.div>
       )}
     </motion.div>
@@ -250,8 +223,9 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
       onTouchStart={() => setAutoPlay(false)}
     >
       
-      {/* FASE 1: Chips de Filtro */}
-      <div className="flex flex-wrap justify-center gap-3 mb-10">
+      {/* Filtros + enlace al catálogo */}
+      <div className="flex flex-wrap items-center justify-between gap-4 mb-8">
+      <div className="flex flex-wrap gap-2">
         {categories.map((cat) => {
           const isActive = activeCategory === cat
           return (
@@ -259,10 +233,10 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
               key={cat}
               id={`featured-filter-${cat.toLowerCase()}`}
               onClick={() => handleCategoryChange(cat)}
-              className={`relative overflow-hidden px-5 py-2 rounded-full font-inter text-[10px] uppercase tracking-widest transition-all duration-300 border ${
+              className={`relative overflow-hidden px-5 py-2.5 rounded-full font-inter text-xs font-medium tracking-wide transition-all duration-300 border ${
                 isActive
-                  ? 'bg-[var(--theme-primary)] border-[var(--theme-primary)] text-white shadow-md'
-                  : 'bg-transparent border-[var(--theme-border)] text-[var(--theme-text-muted)] hover:border-[var(--theme-primary)]/50'
+                  ? 'bg-[var(--theme-plum)] border-[var(--theme-plum)] text-[var(--theme-on-plum)] shadow-md'
+                  : 'bg-[var(--theme-bg-card)] border-[var(--theme-border)] text-[var(--theme-text-muted)] hover:border-[var(--theme-primary)] hover:text-[var(--theme-primary)]'
               }`}
             >
               <span className="relative z-10">{cat}</span>
@@ -279,6 +253,14 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
             </button>
           )
         })}
+      </div>
+        <Link
+          href="/catalogo"
+          className="group inline-flex items-center gap-2 font-inter text-sm font-medium text-[var(--theme-primary)]"
+        >
+          Ver todo el catálogo
+          <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+        </Link>
       </div>
 
       {/* Grid Animado con Layout */}
@@ -309,7 +291,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -10 }}
-            className="flex flex-col items-center justify-center py-24 px-6 border border-[var(--theme-border)]/50 rounded-sm bg-[var(--theme-bg-section)]/30 w-full"
+            className="flex flex-col items-center justify-center py-24 px-6 border border-[var(--theme-border)] rounded-2xl bg-[var(--theme-bg-section)] w-full"
           >
             <p className="font-playfair text-2xl text-[var(--theme-text)] italic mb-2">
               Pronto más opciones en esta categoría
@@ -322,15 +304,23 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
       </AnimatePresence>
       </div>
 
-      {/* FASE 2: Barra de Confianza */}
-      <div className="mt-12 w-full border-t border-[var(--theme-border)]/50 pt-8">
-        <div className="flex flex-col md:flex-row items-center justify-center gap-4 md:gap-6 font-inter text-[10px] sm:text-xs uppercase tracking-widest text-[var(--theme-text-muted)] text-center">
-          <span>+250.000 regalos entregados en Cali</span>
-          <span className="hidden md:inline-block w-1 h-1 rounded-full bg-[var(--theme-text-muted)]/40" />
-          <span>Entrega el mismo día</span>
-          <span className="hidden md:inline-block w-1 h-1 rounded-full bg-[var(--theme-text-muted)]/40" />
-          <span>Diseño 100% artesanal</span>
-        </div>
+      {/* Barra de confianza */}
+      <div className="mt-10 grid grid-cols-1 sm:grid-cols-3 gap-3 lg:gap-4">
+        {[
+          { icon: HandHeart, title: '+250.000 regalos', text: 'entregados en Cali' },
+          { icon: Truck, title: 'Entrega el mismo día', text: 'a domicilio, con cuidado' },
+          { icon: Flower2, title: 'Diseño 100% artesanal', text: 'hecho a mano para ti' },
+        ].map(({ icon: Icon, title, text }) => (
+          <div key={title} className="flex items-center gap-4 rounded-2xl border border-[var(--theme-border)] bg-[var(--theme-bg-card)] px-5 py-4">
+            <span className="w-11 h-11 shrink-0 rounded-full bg-[var(--theme-blush)] text-[var(--theme-primary)] flex items-center justify-center">
+              <Icon className="w-5 h-5" />
+            </span>
+            <p className="font-inter text-sm leading-snug">
+              <span className="block font-semibold text-[var(--theme-text)]">{title}</span>
+              <span className="text-[var(--theme-text-muted)]">{text}</span>
+            </p>
+          </div>
+        ))}
       </div>
 
       {/* FASE 4: Botón Cargar Más */}
@@ -338,7 +328,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
         <div className="mt-10 flex justify-center w-full">
           <button
             onClick={handleToggleMore}
-            className="px-8 py-3 bg-transparent border border-[var(--theme-border)] hover:border-[var(--theme-primary)] text-[var(--theme-text)] font-inter text-xs uppercase tracking-widest transition-all duration-300 hover:shadow-lg rounded-sm"
+            className="px-8 py-3 rounded-full bg-transparent border border-[var(--theme-border)] hover:border-[var(--theme-primary)] hover:text-[var(--theme-primary)] text-[var(--theme-text)] font-inter text-sm font-medium transition-all duration-300"
           >
             {hasMore ? 'Ver más favoritos' : 'Ver menos'}
           </button>

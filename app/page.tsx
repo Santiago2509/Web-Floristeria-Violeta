@@ -1,11 +1,23 @@
 import { Hero } from '@/components/sections/Hero'
 import { getFeaturedProducts, getGalleryImages } from '@/lib/db'
-import { GlobalAurora } from '@/components/ui/GlobalAurora'
 import { ScrollVineAnimation } from '@/components/ui/ScrollVineAnimation'
 import dynamic from 'next/dynamic'
+import type { GalleryImage } from '@/types'
 
 function shuffle<T>(items: T[]): T[] {
   return [...items].sort(() => 0.5 - Math.random())
+}
+
+// Reparte la galería entre "Nuestra Historia" (collage) y "Nuestros Trabajos" (carrusel)
+// para no repetir las mismas fotos cuando hay suficientes.
+const SHOWCASE_COUNT = 10
+function splitGallery(gallery: GalleryImage[]) {
+  const shuffled = shuffle(gallery)
+  const showcase = shuffled.slice(0, SHOWCASE_COUNT)
+  const rest = shuffled.slice(SHOWCASE_COUNT)
+  // El collage necesita al menos 3 fotos; si no sobran, reutiliza las del carrusel
+  const about = (rest.length >= 3 ? rest : [...shuffled].reverse()).map(img => img.imageUrl)
+  return { showcase, about }
 }
 
 // Componentes secundarios cargados dinámicamente para mejorar FCP
@@ -18,11 +30,10 @@ const Contact = dynamic(() => import('@/components/sections/Contact').then(mod =
 
 export default async function Home() {
   const [featured, gallery] = await Promise.all([getFeaturedProducts(), getGalleryImages()])
+  const { showcase, about } = splitGallery(gallery)
 
   return (
     <div className="flex flex-col relative w-full">
-      {/* GlobalAurora — gradiente animado con paleta púrpura/violeta/magenta */}
-      <GlobalAurora />
 
       {/* ── PARTE SUPERIOR: Hero + FeaturedProducts + Banner ── */}
       <Hero />
@@ -30,24 +41,18 @@ export default async function Home() {
       {featured.length > 0 && <FeaturedProducts featuredProducts={featured} />}
       <MotivationalBanner />
 
-      {/* ── PARTE INFERIOR: Fondo de fotogramas comienza aquí ── */}
-      {/*
-        El primer frame es visible inmediatamente después del MotivationalBanner.
-        AboutPreview tiene z-30 para que el canvas nunca lo tape.
-        Las demás secciones van con z-20.
-      */}
+      {/* ── PARTE INFERIOR: la enredadera animada se dibuja detrás de estas secciones ── */}
       <div className="relative w-full">
         <ScrollVineAnimation />
 
-        {/* AboutPreview: z-30 — el canvas (z-1) nunca la tapa */}
         <div className="relative z-30">
-          <AboutPreview />
+          <AboutPreview photos={about} />
         </div>
 
         {/* Resto de secciones encima del canvas (z-20) */}
         <div className="relative z-20">
           <ServicesPreview />
-          {gallery.length > 0 && <GalleryPreview galleryImages={shuffle(gallery)} />}
+          {showcase.length > 0 && <GalleryPreview galleryImages={showcase} />}
           <Contact />
         </div>
       </div>
