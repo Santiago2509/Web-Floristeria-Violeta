@@ -115,6 +115,20 @@
   background-attachment: fixed !important;
 }
 
+/* Colores de las enredaderas florales */
+.floral-vines {
+  --vine-stem: #7C3AED;
+  --vine-stem-end: #A21CAF;
+  --vine-leaf: #6E9B76;
+  --vine-leaf-vein: #4E7A57;
+}
+.dark .floral-vines {
+  --vine-stem: #A78BFA;
+  --vine-stem-end: #F0ABFC;
+  --vine-leaf: #5F8F6A;
+  --vine-leaf-vein: #9CC7A4;
+}
+
 /* Texto con degradado violeta → fucsia para las palabras destacadas */
 .text-gradient-violet {
   background-image: linear-gradient(100deg, var(--theme-primary) 10%, var(--theme-fuchsia) 95%);
@@ -187,4 +201,9 @@
     transition-duration: 0.01ms !important;
     scroll-behavior: auto !important;
   }
+}
+
+/* Giro lento para anillos decorativos (fuera de @theme para que siempre se genere) */
+@keyframes spin-slow-global {
+  to { transform: rotate(360deg); }
 }

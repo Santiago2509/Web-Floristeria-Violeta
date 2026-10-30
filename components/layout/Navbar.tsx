@@ -26,7 +26,7 @@ export function Navbar() {
   ]
 
   return (
-    <header className="px-6 py-4 border-b border-white/25 dark:border-white/5 flex justify-between items-center bg-white/15 dark:bg-black/10 backdrop-blur-xl fixed w-full top-0 left-0 z-50 transition-colors duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.05)]">
+    <header className="px-6 py-4 border-b border-white/25 dark:border-white/5 flex justify-between items-center bg-white/75 dark:bg-[#130A2A]/75 backdrop-blur-xl fixed w-full top-0 left-0 z-50 transition-colors duration-300 shadow-[0_4px_30px_rgba(0,0,0,0.05)]">
       <div className="flex items-center w-24">
         <Link href="/" className="font-playfair text-2xl font-semibold text-[#3B0764] dark:text-white hover:opacity-80 transition-opacity">
           Violeta

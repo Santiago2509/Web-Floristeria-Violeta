@@ -1,6 +1,6 @@
 import { Hero } from '@/components/sections/Hero'
 import { getFeaturedProducts, getGalleryImages } from '@/lib/db'
-import { ScrollVineAnimation } from '@/components/ui/ScrollVineAnimation'
+import { FloralVines } from '@/components/ui/FloralVines'
 import dynamic from 'next/dynamic'
 import type { GalleryImage } from '@/types'
 
@@ -24,6 +24,7 @@ function splitGallery(gallery: GalleryImage[]) {
 const FeaturedProducts = dynamic(() => import('@/components/sections/FeaturedProducts').then(mod => mod.FeaturedProducts))
 const MotivationalBanner = dynamic(() => import('@/components/sections/MotivationalBanner').then(mod => mod.MotivationalBanner))
 const AboutPreview = dynamic(() => import('@/components/sections/AboutPreview').then(mod => mod.AboutPreview))
+const PreservedRoses = dynamic(() => import('@/components/sections/PreservedRoses').then(mod => mod.PreservedRoses))
 const ServicesPreview = dynamic(() => import('@/components/sections/ServicesPreview').then(mod => mod.ServicesPreview))
 const GalleryPreview = dynamic(() => import('@/components/sections/GalleryPreview').then(mod => mod.GalleryPreview))
 const Contact = dynamic(() => import('@/components/sections/Contact').then(mod => mod.Contact))
@@ -34,30 +35,23 @@ export default async function Home() {
 
   return (
     <div className="flex flex-col relative w-full">
-
-      {/* ── PARTE SUPERIOR: Hero + FeaturedProducts + Banner ── */}
       <Hero />
-      {/* Las secciones con contenido de la BD solo se muestran si hay datos */}
-      {featured.length > 0 && <FeaturedProducts featuredProducts={featured} />}
-      <MotivationalBanner />
 
-      {/* ── PARTE INFERIOR: la enredadera animada se dibuja detrás de estas secciones ── */}
+      {/* Desde aquí hasta el final, las enredaderas florales crecen por los márgenes con el scroll */}
       <div className="relative w-full">
-        <ScrollVineAnimation />
+        <FloralVines />
 
-        <div className="relative z-30">
+        <div className="relative z-10">
+          {/* Las secciones con contenido de la BD solo se muestran si hay datos */}
+          {featured.length > 0 && <FeaturedProducts featuredProducts={featured} />}
+          <PreservedRoses />
           <AboutPreview photos={about} />
-        </div>
-
-        {/* Resto de secciones encima del canvas (z-20) */}
-        <div className="relative z-20">
+          <MotivationalBanner />
           <ServicesPreview />
           {showcase.length > 0 && <GalleryPreview galleryImages={showcase} />}
           <Contact />
         </div>
       </div>
-
     </div>
   )
 }
-
