@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion'
 import { MessageCircle, Sparkles, Droplets, Leaf, ChevronLeft, ChevronRight } from 'lucide-react'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
+import { FloralArch } from '@/components/ui/FloralArch'
 
 // ============================================================================
 // COLECCIÓN ETERNA — vitrina de rosas preservadas en piezas de cristal.
@@ -100,10 +101,10 @@ function GlassDome({ piece }: { piece: Piece }) {
       <svg viewBox="0 0 300 470" className="absolute inset-0 w-full h-full overflow-visible" aria-hidden="true">
         <defs>
           <linearGradient id="dome-glass" x1="0" x2="1" y1="0" y2="0">
-            <stop offset="0%" stopColor="#fff" stopOpacity="0.22" />
+            <stop offset="0%" stopColor="var(--v-glass-tint)" stopOpacity="0.22" />
             <stop offset="22%" stopColor="#fff" stopOpacity="0.05" />
             <stop offset="70%" stopColor="#fff" stopOpacity="0.03" />
-            <stop offset="100%" stopColor="#fff" stopOpacity="0.16" />
+            <stop offset="100%" stopColor="var(--v-glass-tint)" stopOpacity="0.16" />
           </linearGradient>
           <linearGradient id="dome-base" x1="0" x2="0" y1="0" y2="1">
             <stop offset="0%" stopColor="#2b2133" />
@@ -111,11 +112,11 @@ function GlassDome({ piece }: { piece: Piece }) {
           </linearGradient>
         </defs>
         {/* cristal */}
-        <path d="M24 418 L24 150 C24 62 86 10 150 10 C214 10 276 62 276 150 L276 418 Z" fill="url(#dome-glass)" stroke="rgba(255,255,255,0.5)" strokeWidth="2" />
+        <path d="M24 418 L24 150 C24 62 86 10 150 10 C214 10 276 62 276 150 L276 418 Z" fill="url(#dome-glass)" stroke="var(--v-glass-edge)" strokeWidth="2" />
         {/* reflejos */}
-        <path d="M50 396 L50 160 C50 100 80 58 116 38" stroke="#fff" strokeOpacity="0.6" strokeWidth="8" strokeLinecap="round" fill="none" />
-        <path d="M70 380 L70 300" stroke="#fff" strokeOpacity="0.35" strokeWidth="4" strokeLinecap="round" />
-        <path d="M256 168 C254 120 236 84 210 62" stroke="#fff" strokeOpacity="0.3" strokeWidth="3" strokeLinecap="round" fill="none" />
+        <path d="M50 396 L50 160 C50 100 80 58 116 38" stroke="var(--v-glass-hi)" strokeOpacity="0.8" strokeWidth="8" strokeLinecap="round" fill="none" />
+        <path d="M70 380 L70 300" stroke="var(--v-glass-hi)" strokeOpacity="0.5" strokeWidth="4" strokeLinecap="round" />
+        <path d="M256 168 C254 120 236 84 210 62" stroke="var(--v-glass-hi)" strokeOpacity="0.45" strokeWidth="3" strokeLinecap="round" fill="none" />
         {/* base de madera */}
         <path d="M10 420 L10 448 C10 462 290 462 290 448 L290 420 Z" fill="url(#dome-base)" />
         <ellipse cx="150" cy="420" rx="140" ry="14" fill="#3a2d44" />
@@ -136,17 +137,17 @@ function PieceView({ piece }: { piece: Piece }) {
 
 export function PreservedRoses() {
   const [active, setActive] = useState(0)
-  const [autoplay, setAutoplay] = useState(true)
+  const [isHovering, setIsHovering] = useState(false)
   const sectionRef = useRef<HTMLElement>(null)
-  const inView = useInView(sectionRef, { amount: 0.35 })
+  const inView = useInView(sectionRef, { amount: 0.2 })
   const piece = PIECES[active]
 
   // Cambio automático de pieza mientras la sección está a la vista
   useEffect(() => {
-    if (!autoplay || !inView) return
+    if (isHovering || !inView) return
     const timer = setTimeout(() => setActive(prev => (prev + 1) % PIECES.length), AUTOPLAY_MS)
     return () => clearTimeout(timer)
-  }, [active, autoplay, inView])
+  }, [active, isHovering, inView])
 
   // Inclinación 3D siguiendo el ratón
   const mx = useMotionValue(0)
@@ -171,46 +172,31 @@ export function PreservedRoses() {
     return () => ro.disconnect()
   }, [])
 
-  const choose = (i: number) => {
-    setAutoplay(false)
-    setActive(i)
-  }
+  const choose = (i: number) => setActive(i)
 
   const whatsappUrl = generarLinkWhatsApp(`¡Hola! Me interesa ${piece.article} ${piece.name} de rosas preservadas. ¿Me cuentan precio y disponibilidad?`)
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden text-white pt-40 pb-40 lg:pt-48 lg:pb-48 z-10">
-      {/* Fondo oscuro que se funde con la página arriba y abajo (sin cortes bruscos) */}
-      <div
-        className="absolute inset-0 pointer-events-none bg-[#12052A]"
-        style={{
-          maskImage: 'linear-gradient(to bottom, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%)',
-          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%)',
-        }}
-      >
-        {/* luz violeta desde arriba y brillo fucsia lateral */}
-        <div className="absolute inset-0 bg-[radial-gradient(900px_520px_at_70%_20%,rgba(124,58,237,0.45),transparent_70%),radial-gradient(700px_500px_at_0%_85%,rgba(192,38,211,0.25),transparent_70%)]" />
-      </div>
-
+    <section ref={sectionRef} className="vitrina relative w-full overflow-x-clip text-[var(--theme-text)] py-20 lg:py-28 z-10">
       <div className="container mx-auto relative grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-x-16 items-center">
 
         {/* Introducción */}
         <div className="lg:col-start-1 lg:row-start-1">
-          <span className="inline-flex items-center gap-3 font-inter text-[11px] uppercase tracking-[0.35em] text-[#E9D5FF] font-semibold mb-5">
-            <span className="w-8 h-px bg-[#E9D5FF]" />
+          <span className="inline-flex items-center gap-3 font-inter text-[11px] uppercase tracking-[0.35em] text-[var(--theme-primary)] font-semibold mb-5">
+            <span className="w-8 h-px bg-[var(--theme-primary)]" />
             Colección eterna
           </span>
           <h2 className="font-playfair text-5xl md:text-6xl lg:text-7xl leading-[1.02] mb-6">
             Rosas que{' '}
-            <span className="italic bg-[linear-gradient(100deg,#F0ABFC,#FDE68A)] bg-clip-text text-transparent pr-[0.08em]">duran años</span>
+            <span className="italic text-gradient-violet">duran años</span>
           </h2>
-          <p className="font-inter text-base lg:text-lg text-white/75 leading-relaxed max-w-lg mb-8">
+          <p className="font-inter text-base lg:text-lg text-[var(--theme-text-muted)] leading-relaxed max-w-lg mb-8">
             Rosas naturales preservadas: conservan su color y su textura por años, sin agua ni cuidados, protegidas en piezas de cristal. Un regalo que no se marchita.
           </p>
           <ul className="flex flex-wrap gap-2">
             {FEATURES.map(({ icon: Icon, text }) => (
-              <li key={text} className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-2 font-inter text-sm text-white/85">
-                <Icon className="w-4 h-4 text-[#F0ABFC]" />
+              <li key={text} className="inline-flex items-center gap-2 rounded-full border border-[var(--theme-border)] bg-[var(--theme-bg-card)] px-4 py-2 font-inter text-sm text-[var(--theme-text)]">
+                <Icon className="w-4 h-4 text-[var(--theme-primary)]" />
                 {text}
               </li>
             ))}
@@ -222,7 +208,8 @@ export function PreservedRoses() {
           ref={stageRef}
           className="relative h-[440px] sm:h-[520px] lg:h-[620px] lg:col-start-2 lg:row-start-1 lg:row-span-2 [perspective:1200px]"
           onPointerMove={handlePointer}
-          onPointerLeave={resetPointer}
+          onPointerEnter={e => e.pointerType === 'mouse' && setIsHovering(true)}
+          onPointerLeave={() => { resetPointer(); setIsHovering(false) }}
         >
           {/* halo del color de la pieza */}
           <motion.div
@@ -231,11 +218,16 @@ export function PreservedRoses() {
             transition={{ duration: 1 }}
           />
           {/* anillos de luz */}
-          <div className="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] rounded-full border border-white/10 pointer-events-none" />
+          <div className="absolute left-1/2 top-[44%] -translate-x-1/2 -translate-y-1/2 w-[300px] h-[300px] sm:w-[400px] sm:h-[400px] rounded-full border border-[var(--v-line)] pointer-events-none" />
           <div
-            className="absolute left-1/2 top-[44%] w-[380px] h-[380px] sm:w-[500px] sm:h-[500px] -ml-[190px] -mt-[190px] sm:-ml-[250px] sm:-mt-[250px] rounded-full border border-dashed border-white/10 pointer-events-none"
+            className="absolute left-1/2 top-[44%] w-[380px] h-[380px] sm:w-[500px] sm:h-[500px] -ml-[190px] -mt-[190px] sm:-ml-[250px] sm:-mt-[250px] rounded-full border border-dashed border-[var(--v-line)] pointer-events-none"
             style={{ animation: 'spin-slow-global 60s linear infinite' }}
           />
+
+          {/* arco de enredadera con violetas que enmarca la pieza */}
+          <div className="absolute inset-x-0 top-[2%] bottom-[9%] flex justify-center pointer-events-none">
+            <FloralArch className="h-full w-auto" />
+          </div>
 
           {/* destellos */}
           {SPARKLES.map((sp, i) => (
@@ -246,14 +238,14 @@ export function PreservedRoses() {
               animate={{ opacity: [0, 1, 0], scale: [0.4, 1, 0.4], rotate: [0, 45, 90] }}
               transition={{ duration: 3.2, repeat: Infinity, delay: sp.d, ease: 'easeInOut' }}
             >
-              <Star size={sp.s} color={i % 3 === 0 ? piece.glow : '#F5E9FF'} />
+              <Star size={sp.s} color={i % 3 === 0 ? piece.glow : 'var(--v-sparkle)'} />
             </motion.span>
           ))}
 
           {/* pedestal de luz */}
           <div className="absolute left-1/2 bottom-[7%] -translate-x-1/2 w-[60%] max-w-[380px] h-[60px] pointer-events-none">
-            <div className="absolute inset-0 rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.05)_55%,transparent_72%)]" />
-            <div className="absolute inset-x-[8%] top-[18%] bottom-[18%] rounded-[50%] border border-white/25" />
+            <div className="absolute inset-0 rounded-[50%] bg-[radial-gradient(ellipse_at_center,var(--v-pedestal)_0%,transparent_72%)]" />
+            <div className="absolute inset-x-[8%] top-[18%] bottom-[18%] rounded-[50%] border border-[var(--v-pedestal-line)]" />
           </div>
 
           {/* Carrusel: la pieza activa al centro (grande), las demás a los lados */}
@@ -276,8 +268,8 @@ export function PreservedRoses() {
                     className="pointer-events-auto origin-bottom"
                     initial={false}
                     animate={{
-                      x: offset * stageWidth * 0.42,
-                      scale: isCenter ? 1 : 0.42,
+                      x: offset * stageWidth * 0.47,
+                      scale: isCenter ? 1 : 0.38,
                       opacity: isCenter ? 1 : 0.55,
                       filter: isCenter ? 'brightness(1) blur(0px)' : 'brightness(0.7) blur(1px)',
                     }}
@@ -312,7 +304,7 @@ export function PreservedRoses() {
                 type="button"
                 aria-label={label}
                 onClick={() => choose((active + step + PIECES.length) % PIECES.length)}
-                className="w-10 h-10 rounded-full border border-white/20 bg-white/5 text-white flex items-center justify-center hover:bg-white/15 transition-colors"
+                className="w-10 h-10 rounded-full border border-[var(--theme-border)] bg-[var(--theme-bg-card)] text-[var(--theme-text)] flex items-center justify-center hover:border-[var(--theme-primary)] hover:text-[var(--theme-primary)] transition-colors"
               >
                 <Icon className="w-5 h-5" />
               </button>
@@ -331,20 +323,20 @@ export function PreservedRoses() {
                   role="tab"
                   aria-selected={isActive}
                   onClick={() => choose(i)}
-                  className={`relative overflow-hidden text-left flex items-center gap-4 rounded-2xl px-5 py-4 border transition-colors duration-300 ${isActive ? 'bg-white/10 border-white/25' : 'bg-transparent border-white/10 hover:bg-white/5'}`}
+                  className={`relative overflow-hidden text-left flex items-center gap-4 rounded-2xl px-5 py-4 border transition-colors duration-300 ${isActive ? 'bg-[var(--theme-bg-card)] border-[var(--theme-primary)]/40 shadow-[0_20px_40px_-30px_rgba(59,7,100,0.55)]' : 'bg-transparent border-[var(--theme-border)] hover:bg-[var(--theme-bg-card)]'}`}
                 >
-                  <span className="relative w-12 h-12 shrink-0 rounded-full bg-white/10 overflow-hidden">
+                  <span className="relative w-12 h-12 shrink-0 rounded-full bg-[var(--theme-blush)] overflow-hidden">
                     <Image src={p.image} alt="" fill sizes="48px" className="object-contain p-1" />
                   </span>
                   <span className="flex-1">
                     <span className="block font-playfair text-xl leading-tight">{p.name}</span>
-                    <span className="block font-inter text-sm text-white/60">{p.tagline}</span>
+                    <span className="block font-inter text-sm text-[var(--theme-text-muted)]">{p.tagline}</span>
                   </span>
                   <span className="w-2.5 h-2.5 rounded-full shrink-0 transition-transform duration-300" style={{ background: p.glow, transform: isActive ? 'scale(1)' : 'scale(0.5)', boxShadow: isActive ? `0 0 14px ${p.glow}` : 'none' }} />
-                  {isActive && autoplay && inView && (
+                  {isActive && !isHovering && inView && (
                     <motion.span
                       key={`progress-${active}`}
-                      className="absolute left-0 bottom-0 h-[2px] bg-white/70"
+                      className="absolute left-0 bottom-0 h-[2px] bg-[var(--theme-primary)]"
                       initial={{ width: '0%' }}
                       animate={{ width: '100%' }}
                       transition={{ duration: AUTOPLAY_MS / 1000, ease: 'linear' }}
@@ -360,7 +352,7 @@ export function PreservedRoses() {
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full whitespace-nowrap bg-white text-[#3B0764] font-inter text-sm font-semibold shadow-[0_10px_30px_-12px_rgba(240,171,252,0.7)] hover:-translate-y-0.5 transition-transform"
+              className="inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full whitespace-nowrap bg-plum-gradient text-[var(--theme-on-plum)] font-inter text-sm font-semibold shadow-[0_14px_30px_-14px_rgba(109,40,217,0.8)] hover:-translate-y-0.5 transition-transform"
             >
               <MessageCircle className="w-5 h-5" />
               Quiero {piece.article} {piece.name}
@@ -369,7 +361,7 @@ export function PreservedRoses() {
               href={generarLinkWhatsApp('¡Hola! ¿Me pueden enviar todos los modelos de rosas preservadas que tienen?')}
               target="_blank"
               rel="noopener noreferrer"
-              className="font-inter text-sm font-medium text-white/80 hover:text-white underline underline-offset-4 decoration-white/30"
+              className="font-inter text-sm font-medium text-[var(--theme-primary)] underline underline-offset-4 decoration-[var(--theme-primary)]/30"
             >
               Ver más modelos por WhatsApp
             </a>

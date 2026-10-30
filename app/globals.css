@@ -129,6 +129,30 @@
   --vine-leaf-vein: #9CC7A4;
 }
 
+/* Vitrina de rosas preservadas y arco floral (colores por tema) */
+.vitrina, .floral-arch {
+  --v-line: rgba(109, 40, 217, 0.16);
+  --v-sparkle: #A78BFA;
+  --v-pedestal: rgba(109, 40, 217, 0.22);
+  --v-pedestal-line: rgba(109, 40, 217, 0.3);
+  --v-glass-edge: rgba(109, 40, 217, 0.4);
+  --v-glass-hi: #FFFFFF;
+  --v-glass-tint: #C4B5FD;
+  --arch-stem: #7C3AED;
+  --arch-leaf: #6E9B76;
+}
+.dark .vitrina, .dark .floral-arch {
+  --v-line: rgba(255, 255, 255, 0.12);
+  --v-sparkle: #F5E9FF;
+  --v-pedestal: rgba(255, 255, 255, 0.2);
+  --v-pedestal-line: rgba(255, 255, 255, 0.25);
+  --v-glass-edge: rgba(255, 255, 255, 0.5);
+  --v-glass-hi: #FFFFFF;
+  --v-glass-tint: #FFFFFF;
+  --arch-stem: #A78BFA;
+  --arch-leaf: #5F8F6A;
+}
+
 /* Texto con degradado violeta → fucsia para las palabras destacadas */
 .text-gradient-violet {
   background-image: linear-gradient(100deg, var(--theme-primary) 10%, var(--theme-fuchsia) 95%);
