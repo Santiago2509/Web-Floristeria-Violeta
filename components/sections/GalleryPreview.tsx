@@ -47,7 +47,13 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
   return (
     <section className="w-full py-20 lg:py-28 relative z-20 overflow-hidden">
       {/* Banda de color suave detrás del carrusel */}
-      <div className="absolute inset-x-0 top-[38%] bottom-[18%] bg-[var(--theme-bg-section)] pointer-events-none" />
+      <div
+        className="absolute inset-x-0 top-[34%] bottom-[14%] bg-[var(--theme-bg-section)] pointer-events-none"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0, #000 90px, #000 calc(100% - 90px), transparent 100%)',
+        }}
+      />
 
       <div className="container mx-auto relative">
 

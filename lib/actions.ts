@@ -4,27 +4,30 @@ import { revalidatePath } from 'next/cache'
 import * as db from './db'
 import { requireAdmin } from './auth'
 import { GALLERY_CATEGORIES } from './gallery'
-import type { Product } from '@/types'
-
-const CATEGORIES: Product['category'][] = ['Ramos', 'Cajas', 'Eventos', 'Regalos']
+import { normalizeCategory } from './catalog'
 
 // Todas las acciones verifican la sesión: las Server Actions son endpoints
 // públicos y se pueden invocar aunque el usuario no vea el panel.
 
-export async function adminAddProduct(formData: FormData) {
+export type ProductFormState = { ok?: boolean; error?: string; message?: string }
+
+export async function adminAddProduct(_prev: ProductFormState, formData: FormData): Promise<ProductFormState> {
   await requireAdmin()
   const title = String(formData.get('title') ?? '').trim()
   const description = String(formData.get('description') ?? '').trim()
   const price = Number(formData.get('price'))
-  const category = formData.get('category') as Product['category']
-  if (!title || !Number.isFinite(price) || price < 0 || !CATEGORIES.includes(category)) {
-    throw new Error('Datos del producto inválidos')
-  }
-  const imageUrl = formData.get('imageUrl') as string || `https://picsum.photos/seed/${Math.random()}/600/800`
-  const isFeatured = formData.get('isFeatured') === 'on'
-  const ocasionSugerida = formData.get('ocasionSugerida') as string || undefined
+  const category = normalizeCategory(String(formData.get('category') ?? ''))
+  const imageUrl = String(formData.get('imageUrl') ?? '')
 
-  await db.addProduct({
+  if (!title) return { error: 'Escribe el nombre del arreglo.' }
+  if (!Number.isFinite(price) || price < 0) return { error: 'El precio no es válido.' }
+  if (!category) return { error: 'Elige o crea una categoría.' }
+  if (!imageUrl) return { error: 'Sube la foto del producto.' }
+
+  const isFeatured = formData.get('isFeatured') === 'on'
+  const ocasionSugerida = String(formData.get('ocasionSugerida') ?? '') || undefined
+
+  const saved = await db.addProduct({
     title,
     description,
     price,
@@ -33,11 +36,13 @@ export async function adminAddProduct(formData: FormData) {
     ocasionSugerida,
     isFeatured
   })
+  if (!saved) return { error: 'No se pudo guardar el producto en la base de datos. Inténtalo de nuevo.' }
 
   // Invalidar las páginas para que se actualicen al instante
   revalidatePath('/catalogo')
   revalidatePath('/admin/catalogo')
   revalidatePath('/')
+  return { ok: true, message: `«${title}» se añadió al catálogo en la categoría ${category}.` }
 }
 
 export async function adminDeleteProduct(id: string) {

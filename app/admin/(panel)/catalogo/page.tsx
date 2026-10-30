@@ -1,15 +1,14 @@
 import { getProducts, getSavedOccasions } from '@/lib/db'
-import { adminAddProduct, adminDeleteProduct, adminToggleFeatured } from '@/lib/actions'
+import { adminDeleteProduct, adminToggleFeatured } from '@/lib/actions'
+import { getCategories } from '@/lib/catalog'
+import { ProductForm } from '@/components/admin/ProductForm'
 import { Star, Trash2, Plus } from 'lucide-react'
 import Image from 'next/image'
-import { ImageUploader } from '@/components/ui/ImageUploader'
-import { OccasionSelector } from '@/components/admin/OccasionSelector'
 
 export const dynamic = 'force-dynamic'
 
 export default async function AdminCatalogoPage() {
-  const products = await getProducts()
-  const savedOccasions = await getSavedOccasions()
+  const [products, savedOccasions] = await Promise.all([getProducts(), getSavedOccasions()])
 
   return (
     <div className="font-inter">
@@ -27,51 +26,7 @@ export default async function AdminCatalogoPage() {
               Nuevo Producto
             </h2>
             
-            <form action={adminAddProduct} className="space-y-4">
-              <div className="space-y-1">
-                <label className="text-xs text-[var(--theme-text-muted)] font-medium">Nombre del Arreglo</label>
-                <input name="title" required className="w-full px-4 py-2 rounded-xl bg-[var(--theme-bg)] border border-[var(--theme-border)] focus:outline-none focus:border-[var(--theme-primary)]" placeholder="Ej. Ramo de Rosas" />
-              </div>
-              
-              <div className="space-y-1">
-                <label className="text-xs text-[var(--theme-text-muted)] font-medium">Descripción</label>
-                <textarea name="description" required rows={2} className="w-full px-4 py-2 rounded-xl bg-[var(--theme-bg)] border border-[var(--theme-border)] focus:outline-none focus:border-[var(--theme-primary)] resize-none" placeholder="Breve descripción..." />
-              </div>
-
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label className="text-xs text-[var(--theme-text-muted)] font-medium">Precio (COP)</label>
-                  <input name="price" type="number" required className="w-full px-4 py-2 rounded-xl bg-[var(--theme-bg)] border border-[var(--theme-border)] focus:outline-none focus:border-[var(--theme-primary)]" placeholder="120000" />
-                </div>
-                <div className="space-y-1">
-                  <label className="text-xs text-[var(--theme-text-muted)] font-medium">Categoría</label>
-                  <select name="category" className="w-full px-4 py-2 rounded-xl bg-[var(--theme-bg)] border border-[var(--theme-border)] focus:outline-none focus:border-[var(--theme-primary)]">
-                    <option>Ramos</option>
-                    <option>Cajas</option>
-                    <option>Eventos</option>
-                    <option>Regalos</option>
-                  </select>
-                </div>
-              </div>
-
-              <div className="space-y-1">
-                <label className="text-xs text-[var(--theme-text-muted)] font-medium">Foto del Producto</label>
-                <ImageUploader name="imageUrl" />
-              </div>
-
-              <OccasionSelector savedOccasions={savedOccasions} />
-
-              <div className="flex items-center gap-2 pt-2 pb-2">
-                <input type="checkbox" id="isFeatured" name="isFeatured" className="w-4 h-4 rounded border-[var(--theme-border)] text-[var(--theme-primary)] focus:ring-[var(--theme-primary)]" />
-                <label htmlFor="isFeatured" className="text-sm text-[var(--theme-text)] font-medium cursor-pointer">
-                  Destacar en la página de inicio
-                </label>
-              </div>
-
-              <button type="submit" className="w-full py-3 mt-2 rounded-xl bg-[var(--theme-primary)] text-white font-medium hover:bg-[var(--theme-primary-dark)] transition-colors shadow-md">
-                Crear Producto
-              </button>
-            </form>
+            <ProductForm categories={getCategories(products)} savedOccasions={savedOccasions} />
           </div>
         </div>
 

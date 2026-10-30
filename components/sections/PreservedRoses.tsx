@@ -1,8 +1,8 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
-import { motion, AnimatePresence, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion'
-import { MessageCircle, Sparkles, Droplets, Leaf } from 'lucide-react'
+import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion'
+import { MessageCircle, Sparkles, Droplets, Leaf, ChevronLeft, ChevronRight } from 'lucide-react'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
 
 // ============================================================================
@@ -60,6 +60,14 @@ const PIECES: Piece[] = [
 ]
 
 const AUTOPLAY_MS = 6000
+
+// Distancia circular con signo entre una pieza y la activa (-1 = a la izquierda)
+function circularOffset(index: number, active: number, total: number) {
+  let offset = index - active
+  if (offset > total / 2) offset -= total
+  if (offset < -total / 2) offset += total
+  return offset
+}
 
 const FEATURES = [
   { icon: Sparkles, text: 'Duran años' },
@@ -152,6 +160,17 @@ export function PreservedRoses() {
   }
   const resetPointer = () => { mx.set(0); my.set(0) }
 
+  // Ancho del escenario para separar las piezas laterales
+  const stageRef = useRef<HTMLDivElement>(null)
+  const [stageWidth, setStageWidth] = useState(600)
+  useEffect(() => {
+    const el = stageRef.current
+    if (!el) return
+    const ro = new ResizeObserver(() => setStageWidth(el.offsetWidth))
+    ro.observe(el)
+    return () => ro.disconnect()
+  }, [])
+
   const choose = (i: number) => {
     setAutoplay(false)
     setActive(i)
@@ -160,9 +179,18 @@ export function PreservedRoses() {
   const whatsappUrl = generarLinkWhatsApp(`¡Hola! Me interesa ${piece.article} ${piece.name} de rosas preservadas. ¿Me cuentan precio y disponibilidad?`)
 
   return (
-    <section ref={sectionRef} className="relative w-full overflow-hidden bg-[#12052A] text-white py-20 lg:py-28 z-10">
-      {/* Fondo: luz violeta desde arriba y brillo fucsia lateral */}
-      <div className="absolute inset-0 bg-[radial-gradient(900px_520px_at_70%_0%,rgba(124,58,237,0.45),transparent_70%),radial-gradient(700px_500px_at_0%_100%,rgba(192,38,211,0.25),transparent_70%)] pointer-events-none" />
+    <section ref={sectionRef} className="relative w-full overflow-hidden text-white pt-40 pb-40 lg:pt-48 lg:pb-48 z-10">
+      {/* Fondo oscuro que se funde con la página arriba y abajo (sin cortes bruscos) */}
+      <div
+        className="absolute inset-0 pointer-events-none bg-[#12052A]"
+        style={{
+          maskImage: 'linear-gradient(to bottom, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%)',
+          WebkitMaskImage: 'linear-gradient(to bottom, transparent 0, #000 180px, #000 calc(100% - 180px), transparent 100%)',
+        }}
+      >
+        {/* luz violeta desde arriba y brillo fucsia lateral */}
+        <div className="absolute inset-0 bg-[radial-gradient(900px_520px_at_70%_20%,rgba(124,58,237,0.45),transparent_70%),radial-gradient(700px_500px_at_0%_85%,rgba(192,38,211,0.25),transparent_70%)]" />
+      </div>
 
       <div className="container mx-auto relative grid lg:grid-cols-[1fr_1.1fr] gap-10 lg:gap-x-16 items-center">
 
@@ -191,7 +219,8 @@ export function PreservedRoses() {
 
         {/* Escenario */}
         <div
-          className="relative h-[420px] sm:h-[500px] lg:h-[600px] lg:col-start-2 lg:row-start-1 lg:row-span-2 [perspective:1200px]"
+          ref={stageRef}
+          className="relative h-[440px] sm:h-[520px] lg:h-[620px] lg:col-start-2 lg:row-start-1 lg:row-span-2 [perspective:1200px]"
           onPointerMove={handlePointer}
           onPointerLeave={resetPointer}
         >
@@ -222,32 +251,72 @@ export function PreservedRoses() {
           ))}
 
           {/* pedestal de luz */}
-          <div className="absolute left-1/2 bottom-[6%] -translate-x-1/2 w-[78%] max-w-[460px] h-[64px] pointer-events-none">
+          <div className="absolute left-1/2 bottom-[7%] -translate-x-1/2 w-[60%] max-w-[380px] h-[60px] pointer-events-none">
             <div className="absolute inset-0 rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(255,255,255,0.22)_0%,rgba(255,255,255,0.05)_55%,transparent_72%)]" />
             <div className="absolute inset-x-[8%] top-[18%] bottom-[18%] rounded-[50%] border border-white/25" />
           </div>
 
-          {/* pieza flotando */}
-          <div className="absolute inset-x-0 top-0 bottom-[11%] flex items-end justify-center">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={piece.id}
-                initial={{ opacity: 0, y: 50, scale: 0.88, rotateY: -30, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, scale: 1, rotateY: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, y: -30, scale: 0.94, rotateY: 25, filter: 'blur(8px)' }}
-                transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                style={{ transformStyle: 'preserve-3d' }}
-              >
-                <motion.div style={{ rotateX, rotateY }}>
+          {/* Carrusel: la pieza activa al centro (grande), las demás a los lados */}
+          <motion.div
+            className="absolute inset-x-0 top-0 bottom-[11%] cursor-grab active:cursor-grabbing touch-pan-y"
+            drag="x"
+            dragConstraints={{ left: 0, right: 0 }}
+            dragElastic={0.12}
+            onDragEnd={(_, info) => {
+              if (info.offset.x < -50) choose((active + 1) % PIECES.length)
+              else if (info.offset.x > 50) choose((active - 1 + PIECES.length) % PIECES.length)
+            }}
+          >
+            {PIECES.map((p, i) => {
+              const offset = circularOffset(i, active, PIECES.length)
+              const isCenter = offset === 0
+              return (
+                <div key={p.id} className="absolute inset-0 flex items-end justify-center pointer-events-none" style={{ zIndex: isCenter ? 3 : 1 }}>
                   <motion.div
-                    animate={{ y: [0, -14, 0] }}
-                    transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
+                    className="pointer-events-auto origin-bottom"
+                    initial={false}
+                    animate={{
+                      x: offset * stageWidth * 0.42,
+                      scale: isCenter ? 1 : 0.42,
+                      opacity: isCenter ? 1 : 0.55,
+                      filter: isCenter ? 'brightness(1) blur(0px)' : 'brightness(0.7) blur(1px)',
+                    }}
+                    transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
+                    onClick={() => !isCenter && choose(i)}
+                    role={isCenter ? undefined : 'button'}
+                    aria-label={isCenter ? undefined : `Ver ${p.name}`}
+                    style={{ cursor: isCenter ? 'inherit' : 'pointer' }}
                   >
-                    <PieceView piece={piece} />
+                    <motion.div style={isCenter ? { rotateX, rotateY } : undefined}>
+                      <motion.div
+                        animate={isCenter ? { y: [0, -14, 0] } : { y: 0 }}
+                        transition={isCenter ? { duration: 5, repeat: Infinity, ease: 'easeInOut' } : { duration: 0.6 }}
+                      >
+                        <PieceView piece={p} />
+                      </motion.div>
+                    </motion.div>
                   </motion.div>
-                </motion.div>
-              </motion.div>
-            </AnimatePresence>
+                </div>
+              )
+            })}
+          </motion.div>
+
+          {/* Flechas */}
+          <div className="absolute inset-x-0 bottom-0 flex justify-center gap-3 z-10">
+            {[
+              { label: 'Pieza anterior', icon: ChevronLeft, step: -1 },
+              { label: 'Pieza siguiente', icon: ChevronRight, step: 1 },
+            ].map(({ label, icon: Icon, step }) => (
+              <button
+                key={label}
+                type="button"
+                aria-label={label}
+                onClick={() => choose((active + step + PIECES.length) % PIECES.length)}
+                className="w-10 h-10 rounded-full border border-white/20 bg-white/5 text-white flex items-center justify-center hover:bg-white/15 transition-colors"
+              >
+                <Icon className="w-5 h-5" />
+              </button>
+            ))}
           </div>
         </div>
 

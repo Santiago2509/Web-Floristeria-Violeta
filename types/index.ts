@@ -4,7 +4,7 @@ export interface Product {
   description: string
   price: number
   imageUrl: string
-  category: 'Ramos' | 'Cajas' | 'Eventos' | 'Regalos'
+  category: string // categorías base en lib/catalog.ts; desde el panel se pueden crear más
   ocasionSugerida?: string // Ej: "Ideal para cumpleaños" (Fase 3)
   isFeatured: boolean
   createdAt: string

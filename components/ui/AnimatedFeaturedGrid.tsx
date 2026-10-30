@@ -16,6 +16,7 @@ const slideVariants = {
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/types'
+import { getUsedCategories, sameCategory } from '@/lib/catalog'
 
 // Variante del contenedor padre para escalonar los hijos
 const containerVariants = {
@@ -143,7 +144,8 @@ function BentoChunk({ products, showCTA, isFirstChunk }: { products: Product[], 
 }
 
 export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
-  const categories = ['Todos', 'Ramos', 'Cajas', 'Eventos', 'Regalos']
+  // Categorías con productos (incluye las creadas desde el panel)
+  const categories = useMemo(() => ['Todos', ...getUsedCategories(products)], [products])
   const [activeCategory, setActiveCategory] = useState('Todos')
   const [direction, setDirection] = useState(1)
 
@@ -153,12 +155,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
   const rootRef = useRef<HTMLDivElement>(null)
   const inView = useInView(rootRef, { amount: 0.3 })
 
-  // Solo rotamos por categorías que tengan productos (Todos siempre)
-  const rotatingCategories = useMemo(
-    () => categories.filter(c => c === 'Todos' || products.some(p => p.category?.toLowerCase() === c.toLowerCase())),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [products]
-  )
+  const rotatingCategories = categories
 
   // FASE 4: Estado para controlar cuántos chunks se muestran
   const [visibleCount, setVisibleCount] = useState(4)
@@ -181,7 +178,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
   // Filtrado de productos (tolerante a mayúsculas/minúsculas)
   const filteredProducts = activeCategory === 'Todos' 
     ? products 
-    : products.filter(p => p.category?.toLowerCase() === activeCategory.toLowerCase())
+    : products.filter(p => sameCategory(p.category ?? '', activeCategory))
 
   // Dividimos los productos visibles en chunks de 4
   const displayProducts = filteredProducts.slice(0, visibleCount)
