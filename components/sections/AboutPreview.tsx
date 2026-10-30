@@ -58,7 +58,7 @@ function RotatingSquareCard({
     <motion.div
       whileHover={{ scale: 1.05, rotate: 0, zIndex: 40 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className={`relative aspect-square rounded-2xl overflow-hidden bg-[var(--theme-bg-section)] border-[6px] border-white dark:border-[var(--theme-bg-card)] shadow-[0_25px_50px_-15px_rgba(42,15,61,0.45)] cursor-pointer ${rotation} ${className}`}
+      className={`relative aspect-square rounded-2xl overflow-hidden bg-[var(--theme-bg-section)] border-[6px] border-white dark:border-[var(--theme-bg-card)] shadow-[0_25px_50px_-15px_rgba(59,7,100,0.45)] cursor-pointer ${rotation} ${className}`}
     >
       <AnimatePresence mode="wait">
         <motion.div
@@ -161,7 +161,7 @@ export function AboutPreview({ photos = [] }: { photos?: string[] }) {
             
             <Link 
               href="/nosotros"
-              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[var(--theme-plum)] text-[var(--theme-on-plum)] font-inter text-sm font-medium tracking-wide hover:-translate-y-0.5 transition-transform"
+              className="inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-plum-gradient text-[var(--theme-on-plum)] font-inter text-sm font-medium tracking-wide hover:-translate-y-0.5 transition-transform"
             >
               Conocer nuestra historia
             </Link>

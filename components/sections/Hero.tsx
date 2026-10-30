@@ -97,7 +97,7 @@ export function Hero() {
         >
           <source src="/assets/heroprincipal.mp4" type="video/mp4" />
         </video>
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_52%,rgba(20,6,30,0.28)_0%,transparent_100%)] dark:bg-[radial-gradient(ellipse_60%_50%_at_50%_52%,rgba(10,4,16,0.55)_0%,transparent_100%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_45%_at_50%_52%,rgba(30,11,58,0.28)_0%,transparent_100%)] dark:bg-[radial-gradient(ellipse_60%_50%_at_50%_52%,rgba(19,10,42,0.5)_0%,transparent_100%)]" />
         <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[var(--theme-bg)] to-transparent" />
       </div>
 
@@ -125,8 +125,8 @@ export function Hero() {
           style={{ 
             fontSize: 'clamp(4rem, 15vw, 13rem)',
             backgroundImage: isDark 
-              ? 'repeating-linear-gradient(to right, #FFFFFF 0%, #F0E2F5 20%, #C39BD3 40%, #A569BD 50%, #C39BD3 60%, #F0E2F5 80%, #FFFFFF 100%)'
-              : 'repeating-linear-gradient(to right, #3B1254 0%, #5B2C6F 25%, #7D3C98 50%, #5B2C6F 75%, #3B1254 100%)',
+              ? 'repeating-linear-gradient(to right, #FFFFFF 0%, #E9D5FF 18%, #C084FC 38%, #F0ABFC 50%, #C084FC 62%, #E9D5FF 82%, #FFFFFF 100%)'
+              : 'repeating-linear-gradient(to right, #3B0764 0%, #6D28D9 22%, #A21CAF 50%, #6D28D9 78%, #3B0764 100%)',
             backgroundSize: '100vw auto',
             WebkitBackgroundClip: 'text',
             WebkitTextFillColor: 'transparent'
@@ -162,7 +162,7 @@ export function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: introDelay + 0.6, ease: [0.16, 1, 0.3, 1] }}
-          className="text-white font-inter tracking-[0.35em] uppercase text-sm lg:text-lg font-medium mt-2 mb-10 z-10 [text-shadow:0_2px_12px_rgba(20,6,30,0.65)]"
+          className="text-white font-inter tracking-[0.35em] uppercase text-sm lg:text-lg font-medium mt-2 mb-10 z-10 [text-shadow:0_2px_12px_rgba(30,11,58,0.65)]"
         >
           Floristería · Cali
         </motion.p>
@@ -176,7 +176,7 @@ export function Hero() {
         >
           <Link
             href="/catalogo"
-            className="px-8 py-3.5 rounded-full bg-[var(--theme-plum)] text-[var(--theme-on-plum)] font-inter text-sm font-medium tracking-wide shadow-[0_10px_30px_-10px_rgba(42,15,61,0.8)] hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_rgba(42,15,61,0.9)] transition-all"
+            className="px-8 py-3.5 rounded-full bg-plum-gradient text-[var(--theme-on-plum)] font-inter text-sm font-medium tracking-wide shadow-[0_10px_30px_-10px_rgba(59,7,100,0.8)] hover:-translate-y-0.5 hover:shadow-[0_14px_34px_-10px_rgba(59,7,100,0.9)] transition-all"
           >
             Ver catálogo
           </Link>

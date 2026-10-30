@@ -52,15 +52,15 @@ function ProductCard({ product, isHero = false }: { product: Product, isHero?: b
       />
 
       {/* Degradado inferior para legibilidad (siempre oscuro, independiente del tema) */}
-      <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-[#1a0826]/90 via-[#1a0826]/40 to-transparent z-10 pointer-events-none" />
+      <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-[#1E0B3A]/90 via-[#1E0B3A]/40 to-transparent z-10 pointer-events-none" />
 
       {/* Categoría */}
-      <span className="absolute top-4 left-4 z-20 bg-white/90 text-[#2A0F3D] uppercase tracking-[0.2em] text-[10px] font-semibold px-3 py-1 rounded-full">
+      <span className="absolute top-4 left-4 z-20 bg-white/90 text-[#3B0764] uppercase tracking-[0.2em] text-[10px] font-semibold px-3 py-1 rounded-full">
         {product.category}
       </span>
 
       {/* Flecha que aparece al pasar el ratón */}
-      <span className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white text-[#2A0F3D] flex items-center justify-center opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+      <span className="absolute top-4 right-4 z-20 w-9 h-9 rounded-full bg-white text-[#3B0764] flex items-center justify-center opacity-0 -translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
         <ArrowRight className="w-4 h-4 -rotate-45" />
       </span>
 
@@ -88,7 +88,7 @@ function CTACard() {
   return (
     <Link
       href="/catalogo"
-      className="group h-full w-full rounded-2xl overflow-hidden relative flex flex-col justify-between p-6 bg-[var(--theme-plum)] text-[var(--theme-on-plum)]"
+      className="group h-full w-full rounded-2xl overflow-hidden relative flex flex-col justify-between p-6 bg-plum-gradient text-[var(--theme-on-plum)]"
     >
       {/* Arco decorativo */}
       <span className="absolute -right-10 -bottom-16 w-48 h-56 rounded-t-full border border-white/15 transition-transform duration-700 group-hover:-translate-y-2" />
@@ -235,7 +235,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
               onClick={() => handleCategoryChange(cat)}
               className={`relative overflow-hidden px-5 py-2.5 rounded-full font-inter text-xs font-medium tracking-wide transition-all duration-300 border ${
                 isActive
-                  ? 'bg-[var(--theme-plum)] border-[var(--theme-plum)] text-[var(--theme-on-plum)] shadow-md'
+                  ? 'bg-plum-gradient border-transparent text-[var(--theme-on-plum)] shadow-md'
                   : 'bg-[var(--theme-bg-card)] border-[var(--theme-border)] text-[var(--theme-text-muted)] hover:border-[var(--theme-primary)] hover:text-[var(--theme-primary)]'
               }`}
             >

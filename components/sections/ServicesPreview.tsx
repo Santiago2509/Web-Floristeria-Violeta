@@ -41,7 +41,7 @@ export function ServicesPreview() {
               Nuestros servicios
             </span>
             <h2 className="font-playfair text-5xl md:text-6xl text-[var(--theme-text)] leading-[1.05]">
-              Más allá de <span className="italic text-[var(--theme-primary)]">las flores</span>
+              Más allá de <span className="italic text-gradient-violet">las flores</span>
             </h2>
           </div>
           <Link
@@ -66,7 +66,7 @@ export function ServicesPreview() {
             >
               <Link href="/servicios" className="block">
                 {/* Foto en arco */}
-                <div className="relative aspect-[4/5] rounded-t-full rounded-b-3xl overflow-hidden bg-[var(--theme-bg-section)] shadow-[0_30px_60px_-30px_rgba(42,15,61,0.55)]">
+                <div className="relative aspect-[4/5] rounded-t-full rounded-b-3xl overflow-hidden bg-[var(--theme-bg-section)] shadow-[0_30px_60px_-30px_rgba(59,7,100,0.55)]">
                   <Image
                     src={service.image}
                     alt={service.title}
@@ -74,7 +74,7 @@ export function ServicesPreview() {
                     sizes="(min-width: 768px) 33vw, 78vw"
                     className="object-cover transition-transform duration-[1.2s] ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:scale-[1.06]"
                   />
-                  <span className="absolute bottom-5 left-5 w-12 h-12 rounded-full bg-white/95 text-[#2A0F3D] flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:-translate-y-1">
+                  <span className="absolute bottom-5 left-5 w-12 h-12 rounded-full bg-white/95 text-[#3B0764] flex items-center justify-center shadow-lg transition-transform duration-500 group-hover:-translate-y-1">
                     <service.icon className="w-5 h-5" />
                   </span>
                 </div>

@@ -59,7 +59,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
             <span className="w-8 h-px bg-[var(--theme-primary)]" />
           </span>
           <h2 className="font-playfair text-5xl md:text-6xl text-[var(--theme-text)] leading-[1.05] mb-5">
-            Nuestros <span className="italic text-[var(--theme-primary)]">trabajos</span>
+            Nuestros <span className="italic text-gradient-violet">trabajos</span>
           </h2>
           <p className="font-inter text-[var(--theme-text-muted)] text-base lg:text-lg leading-relaxed">
             Un vistazo a los arreglos y decoraciones que hemos tenido el honor de crear para nuestros clientes.
@@ -102,7 +102,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
                 transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1] }}
                 style={{ zIndex: 10 - distance }}
               >
-                <div className={`relative w-full h-full rounded-t-full rounded-b-[2rem] overflow-hidden bg-[var(--theme-bg-section)] border-[6px] border-white dark:border-[var(--theme-bg-card)] transition-shadow duration-700 ${isCenter ? 'shadow-[0_40px_80px_-30px_rgba(42,15,61,0.65)]' : 'shadow-[0_20px_40px_-25px_rgba(42,15,61,0.5)]'}`}>
+                <div className={`relative w-full h-full rounded-t-full rounded-b-[2rem] overflow-hidden bg-[var(--theme-bg-section)] border-[6px] border-white dark:border-[var(--theme-bg-card)] transition-shadow duration-700 ${isCenter ? 'shadow-[0_40px_80px_-30px_rgba(59,7,100,0.65)]' : 'shadow-[0_20px_40px_-25px_rgba(59,7,100,0.5)]'}`}>
                   <Image
                     src={img.imageUrl}
                     alt={img.title}
@@ -117,7 +117,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
                     style={{ opacity: Math.min(distance * 0.22, 0.55) }}
                   />
                   {isCenter && (
-                    <span className="absolute top-[18%] left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white/90 text-[#2A0F3D] flex items-center justify-center shadow-lg">
+                    <span className="absolute top-[18%] left-1/2 -translate-x-1/2 w-10 h-10 rounded-full bg-white/90 text-[#3B0764] flex items-center justify-center shadow-lg">
                       <Maximize2 className="w-4 h-4" />
                     </span>
                   )}
@@ -170,7 +170,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
 
           <Link
             href="/galeria"
-            className="mt-10 inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-[var(--theme-plum)] text-[var(--theme-on-plum)] font-inter text-sm font-medium tracking-wide hover:-translate-y-0.5 transition-transform"
+            className="mt-10 inline-flex items-center gap-2 px-8 py-3.5 rounded-full bg-plum-gradient text-[var(--theme-on-plum)] font-inter text-sm font-medium tracking-wide hover:-translate-y-0.5 transition-transform"
           >
             Ver galería completa
             <ArrowRight className="w-4 h-4" />

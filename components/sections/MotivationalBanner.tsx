@@ -37,10 +37,11 @@ export function MotivationalBanner() {
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, margin: "-80px" }}
           transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-          className="relative overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-[var(--theme-plum)] text-[var(--theme-on-plum)] dark:border dark:border-white/10"
+          className="relative overflow-hidden rounded-[2rem] lg:rounded-[2.5rem] bg-plum-gradient text-[var(--theme-on-plum)] dark:border dark:border-white/10"
         >
           {/* Luz suave y arcos decorativos (sin texturas) */}
-          <div className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(201,167,216,0.25)_0%,transparent_70%)] pointer-events-none" />
+          <div className="absolute -top-40 -left-32 w-[520px] h-[520px] rounded-full bg-[radial-gradient(circle,rgba(240,171,252,0.28)_0%,transparent_70%)] pointer-events-none" />
+          <div className="absolute -bottom-48 right-[20%] w-[480px] h-[480px] rounded-full bg-[radial-gradient(circle,rgba(192,38,211,0.35)_0%,transparent_70%)] pointer-events-none" />
 
           <div className="relative grid lg:grid-cols-[1.35fr_1fr] items-center gap-10 lg:gap-6 px-7 py-14 sm:px-12 lg:pl-16 lg:pr-12 lg:py-16">
 
@@ -100,7 +101,7 @@ export function MotivationalBanner() {
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="group inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full whitespace-nowrap bg-white text-[#2A0F3D] font-inter text-sm font-semibold shadow-[0_10px_30px_-12px_rgba(0,0,0,0.6)] hover:-translate-y-0.5 transition-transform"
+                  className="group inline-flex items-center justify-center gap-3 px-7 py-3.5 rounded-full whitespace-nowrap bg-white text-[#3B0764] font-inter text-sm font-semibold shadow-[0_10px_30px_-12px_rgba(0,0,0,0.6)] hover:-translate-y-0.5 transition-transform"
                 >
                   <MessageCircle className="w-5 h-5" />
                   Asesoría gratis por WhatsApp
@@ -124,9 +125,9 @@ export function MotivationalBanner() {
                     className="object-cover"
                   />
                 </div>
-                <div className="absolute -left-8 bottom-10 bg-white text-[#2A0F3D] rounded-2xl px-4 py-3 shadow-xl">
+                <div className="absolute -left-8 bottom-10 bg-white text-[#3B0764] rounded-2xl px-4 py-3 shadow-xl">
                   <p className="font-playfair text-2xl leading-none">100%</p>
-                  <p className="font-inter text-[11px] uppercase tracking-wider text-[#6B5A78] mt-1">hecho a mano</p>
+                  <p className="font-inter text-[11px] uppercase tracking-wider text-[#5B4A78] mt-1">hecho a mano</p>
                 </div>
               </div>
             </div>

@@ -14,7 +14,7 @@ export function FeaturedProducts({ featuredProducts: featured }: { featuredProdu
               Colección destacada
             </span>
             <h2 className="font-playfair text-5xl md:text-6xl lg:text-7xl text-[var(--theme-text)] leading-[1.02]">
-              Nuestros <span className="italic text-[var(--theme-primary)]">favoritos</span>
+              Nuestros <span className="italic text-gradient-violet">favoritos</span>
             </h2>
           </div>
           <p className="font-inter text-base lg:text-lg text-[var(--theme-text-muted)] leading-relaxed max-w-md lg:justify-self-end">

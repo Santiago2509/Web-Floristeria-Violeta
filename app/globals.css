@@ -22,6 +22,7 @@
   --color-green-light: var(--theme-green-light);
   --color-lilac: var(--theme-lilac);
   --color-plum: var(--theme-plum);
+  --color-fuchsia: var(--theme-fuchsia);
   --color-on-plum: var(--theme-on-plum);
 
   /* Contenedor global: máximo 1280px con padding horizontal uniforme */
@@ -56,50 +57,76 @@
 }
 
 :root {
-  /* MODO CLARO — Boutique editorial: marfil limpio + violeta como acento */
-  --theme-bg: #FBF8F4;
-  --theme-bg-section: #F5EFF5;      /* lila muy suave para alternar secciones */
+  /* MODO CLARO — blanco con matiz violeta + violetas saturados */
+  --theme-bg: #FCFAFF;
+  --theme-bg-section: #F3EAFF;      /* lavanda viva para alternar secciones */
   --theme-bg-card: #FFFFFF;
-  --theme-text: #2A1238;
-  --theme-text-muted: #6B5A78;
-  --theme-border: #E7DEEA;
+  --theme-text: #1E0B3A;            /* tinta violeta profunda */
+  --theme-text-muted: #5B4A78;
+  --theme-border: #E6DAF7;
 
-  /* Colores primarios (Violeta Elegante) */
-  --theme-primary: #5B2C6F;
-  --theme-primary-dark: #411F4F;
-  --theme-primary-light: #7D3C98;
-  --theme-lilac: #C9A7D8;           /* acento suave */
-  --theme-plum: #2A0F3D;            /* paneles profundos (cita, destacados) */
-  --theme-on-plum: #F6EEF9;
+  --theme-primary: #6D28D9;         /* violeta eléctrico */
+  --theme-primary-dark: #4C1D95;
+  --theme-primary-light: #8B5CF6;
+  --theme-lilac: #C4B5FD;
+  --theme-fuchsia: #C026D3;         /* acento para degradados */
+  --theme-plum: #3B0764;            /* ultravioleta profundo: botones y paneles */
+  --theme-plum-2: #6D28D9;          /* final del degradado de paneles */
+  --theme-on-plum: #FFFFFF;
   --theme-accent: #7C9082;
   --theme-accent-light: #A3B1A8;
   --theme-green: #7C9082;
   --theme-green-light: #A3B1A8;
 
-  --theme-blush: #F6ECF5;
+  --theme-blush: #F1E8FF;
 }
 
 .dark {
-  /* MODO OSCURO — Berenjena profunda, sin neblina */
-  --theme-bg: #120A1A;
-  --theme-bg-section: #1A0F26;
-  --theme-bg-card: #22142F;
-  --theme-text: #F6F0FA;
-  --theme-text-muted: #BCA8CB;
-  --theme-border: #34224A;
+  /* MODO OSCURO — índigo-violeta profundo (no negro), acentos lila brillantes */
+  --theme-bg: #130A2A;
+  --theme-bg-section: #1C0F3D;
+  --theme-bg-card: #241449;
+  --theme-text: #FAF7FF;
+  --theme-text-muted: #C9BCEB;
+  --theme-border: #3A2670;
 
-  --theme-primary: #D7BDE2;
-  --theme-primary-dark: #A569BD;
-  --theme-primary-light: #F4ECF7;
-  --theme-lilac: #A77BC0;
-  --theme-plum: #2B1640;
-  --theme-on-plum: #F6EEF9;
+  --theme-primary: #C4A1FF;
+  --theme-primary-dark: #9F67FF;
+  --theme-primary-light: #EDE4FF;
+  --theme-lilac: #A78BFA;
+  --theme-fuchsia: #F0ABFC;
+  --theme-plum: #5B21B6;
+  --theme-plum-2: #8B3FF0;
+  --theme-on-plum: #FFFFFF;
   --theme-accent: #A3B1A8;
   --theme-accent-light: #7C9082;
   --theme-green: #A3B1A8;
   --theme-green-light: #7C9082;
 
-  --theme-blush: #2a1530;
+  --theme-blush: #2A1656;
+}
+
+/* Brillo violeta en el fondo del tema oscuro (degradados fijos, sin desenfoques animados) */
+.dark body {
+  background:
+    radial-gradient(1100px 650px at 10% -5%, rgba(124, 58, 237, 0.28), transparent 70%),
+    radial-gradient(900px 600px at 105% 35%, rgba(192, 38, 211, 0.14), transparent 70%),
+    var(--theme-bg) !important;
+  background-attachment: fixed !important;
+}
+
+/* Texto con degradado violeta → fucsia para las palabras destacadas */
+.text-gradient-violet {
+  background-image: linear-gradient(100deg, var(--theme-primary) 10%, var(--theme-fuchsia) 95%);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  padding-right: 0.08em; /* evita que se corte la cursiva */
+}
+
+/* Fondo de paneles destacados (frase, tarjeta "Descubre más") */
+.bg-plum-gradient {
+  background-image: linear-gradient(135deg, var(--theme-plum) 0%, var(--theme-plum-2) 100%);
 }
 
 @layer base {
