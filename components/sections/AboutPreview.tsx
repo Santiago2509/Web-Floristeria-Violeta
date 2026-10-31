@@ -6,7 +6,7 @@ import Link from 'next/link'
 
 // Fotos de respaldo (propias) por si la galería todavía está vacía
 const FALLBACK_PHOTOS = [
-  '/assets/servicio_eventos.webp',
+  '/assets/servicio_momentos.webp',
   '/assets/servicio_regalos.webp',
   '/assets/servicio_delivery.webp',
   '/assets/about_story_img.webp',

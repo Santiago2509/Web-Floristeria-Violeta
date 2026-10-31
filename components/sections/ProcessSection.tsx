@@ -12,7 +12,7 @@ const steps = [
   {
     icon: Paintbrush,
     title: '2. Diseño Floral',
-    description: 'Nuestros floristas artesanos crean tu arreglo o decoran tu espacio con meticulosa atención al detalle.',
+    description: 'Nuestros floristas artesanos diseñan tu arreglo a mano, flor por flor, con meticulosa atención al detalle.',
   },
   {
     icon: CalendarHeart,

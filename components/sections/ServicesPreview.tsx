@@ -16,7 +16,7 @@ const services = [
     id: '02',
     title: 'Momentos Especiales',
     description: 'Arreglos pensados para celebrar aniversarios, cumpleaños, declaraciones de amor o fechas inolvidables.',
-    image: '/assets/servicio_eventos.webp',
+    image: '/assets/servicio_momentos.webp',
     icon: Heart
   },
   {

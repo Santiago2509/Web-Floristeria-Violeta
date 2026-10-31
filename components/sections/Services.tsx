@@ -12,7 +12,7 @@ const services = [
   {
     title: 'Momentos Especiales',
     description: 'Arreglos pensados para celebrar aniversarios, cumpleaños, declaraciones de amor y fechas memorables. Diseñamos composiciones florales cargadas de emoción y hechas a la medida de tu sorpresa.',
-    image: '/assets/servicio_eventos.webp',
+    image: '/assets/servicio_momentos.webp',
   },
   {
     title: 'Regalos Personalizados',

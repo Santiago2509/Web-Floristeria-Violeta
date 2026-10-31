@@ -2,7 +2,7 @@ import type { Product } from '@/types'
 
 // Categorías base del catálogo. Desde el panel se pueden crear más:
 // cualquier categoría usada por algún producto aparece automáticamente en la web.
-export const DEFAULT_CATEGORIES = ['Ramos', 'Cajas', 'Eventos', 'Regalos']
+export const DEFAULT_CATEGORIES = ['Ramos', 'Cajas', 'Regalos', 'Preservadas']
 
 export const MAX_CATEGORY_LENGTH = 40
 

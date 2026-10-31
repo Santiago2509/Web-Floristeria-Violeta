@@ -68,7 +68,7 @@ export function GalleryPreview({ galleryImages = [] }: { galleryImages?: Gallery
             Nuestros <span className="italic text-gradient-violet">trabajos</span>
           </h2>
           <p className="font-inter text-[var(--theme-text-muted)] text-base lg:text-lg leading-relaxed">
-            Un vistazo a los arreglos y decoraciones que hemos tenido el honor de crear para nuestros clientes.
+            Un vistazo a los arreglos y detalles que hemos tenido el honor de crear para nuestros clientes.
           </p>
         </div>
 

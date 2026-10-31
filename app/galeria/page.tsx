@@ -3,7 +3,7 @@ import { getGalleryImages } from '@/lib/db'
 
 export const metadata = {
   title: 'Galería',
-  description: 'Inspiración floral. Conoce algunos de nuestros trabajos más hermosos en bodas y eventos.',
+  description: 'Inspiración floral. Conoce algunos de nuestros ramos, cajas y arreglos más hermosos.',
 }
 
 // Para asegurar que los datos no se queden en caché
