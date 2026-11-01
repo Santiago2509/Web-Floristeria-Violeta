@@ -6,10 +6,11 @@ import { adminSaveOccasion, adminDeleteOccasion } from '@/lib/actions'
 
 interface OccasionSelectorProps {
   savedOccasions: string[]
+  initialSelected?: string[]
 }
 
-export function OccasionSelector({ savedOccasions }: OccasionSelectorProps) {
-  const [selected, setSelected] = useState<string[]>([])
+export function OccasionSelector({ savedOccasions, initialSelected = [] }: OccasionSelectorProps) {
+  const [selected, setSelected] = useState<string[]>(initialSelected)
   const [newTag, setNewTag] = useState('')
   const [isSaving, setIsSaving] = useState(false)
   const [isDeleteMode, setIsDeleteMode] = useState(false)

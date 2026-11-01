@@ -1,5 +1,5 @@
 import { getProductById, getProducts } from '@/lib/db'
-import { getOccasions, sameCategory } from '@/lib/catalog'
+import { getOccasions, inCategory, productCategories } from '@/lib/catalog'
 import { notFound } from 'next/navigation'
 import { cache } from 'react'
 import type { Metadata } from 'next'
@@ -40,7 +40,7 @@ export default async function ProductDetailPage({ params }: Props) {
   const occasions = getOccasions(product).map(o => o.toLowerCase())
   const related = [...others]
     .sort((a, b) => {
-      const score = (p: typeof product) => (sameCategory(p.category, product.category) ? 2 : 0) + (getOccasions(p).some(o => occasions.includes(o.toLowerCase())) ? 1 : 0)
+      const score = (p: typeof product) => (productCategories(product).some(c => inCategory(p, c)) ? 2 : 0) + (getOccasions(p).some(o => occasions.includes(o.toLowerCase())) ? 1 : 0)
       return score(b) - score(a)
     })
     .slice(0, 4)

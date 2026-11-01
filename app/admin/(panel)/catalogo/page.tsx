@@ -2,7 +2,8 @@ import { getProducts, getSavedOccasions } from '@/lib/db'
 import { adminDeleteProduct, adminToggleFeatured } from '@/lib/actions'
 import { getCategories } from '@/lib/catalog'
 import { ProductForm } from '@/components/admin/ProductForm'
-import { Star, Trash2, Plus } from 'lucide-react'
+import { Star, Trash2, Plus, Pencil, FileText } from 'lucide-react'
+import Link from 'next/link'
 import Image from 'next/image'
 
 export const dynamic = 'force-dynamic'
@@ -14,6 +15,13 @@ export default async function AdminCatalogoPage() {
     <div className="font-inter">
       <div className="flex justify-between items-center mb-8">
         <h1 className="font-playfair text-3xl text-[var(--theme-text)]">Gestor de Catálogo</h1>
+        <Link
+          href="/admin/catalogo-pdf"
+          className="inline-flex items-center gap-2 px-4 py-2.5 rounded-xl bg-[var(--theme-primary)] text-white text-sm font-medium hover:bg-[var(--theme-primary-dark)] transition-colors shadow-sm"
+        >
+          <FileText className="w-4 h-4" />
+          Crear catálogo PDF
+        </Link>
       </div>
 
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-8">
@@ -47,13 +55,28 @@ export default async function AdminCatalogoPage() {
                   <div className="flex-1 text-center sm:text-left">
                     <h3 className="font-playfair text-xl text-[var(--theme-text)]">{product.title}</h3>
                     <p className="text-sm text-[var(--theme-text-muted)] mb-2 line-clamp-1">{product.description}</p>
-                    <div className="flex items-center justify-center sm:justify-start gap-4">
-                      <span className="font-semibold text-[var(--theme-primary)]">${product.price.toLocaleString('es-CO')}</span>
-                      <span className="text-xs px-2 py-1 bg-[var(--theme-border)]/50 rounded-full">{product.category}</span>
+                    <div className="flex flex-wrap items-center justify-center sm:justify-start gap-2">
+                      <span className="font-semibold text-[var(--theme-primary)] mr-2">${product.price.toLocaleString('es-CO')}</span>
+                      <span className="inline-flex items-center gap-1 text-xs px-2 py-1 bg-[var(--theme-primary)]/10 text-[var(--theme-primary)] rounded-full font-medium">
+                        <Star className="w-3 h-3" fill="currentColor" />
+                        {product.category}
+                      </span>
+                      {product.extraCategories.map(c => (
+                        <span key={c} className="text-xs px-2 py-1 bg-[var(--theme-border)]/50 rounded-full">{c}</span>
+                      ))}
                     </div>
                   </div>
 
                   <div className="flex items-center gap-2">
+                    {/* Botón Editar */}
+                    <Link
+                      href={`/admin/catalogo/${product.id}`}
+                      title="Editar producto"
+                      className="p-3 rounded-full bg-[var(--theme-bg)] text-[var(--theme-text-muted)] hover:text-[var(--theme-primary)] hover:bg-[var(--theme-primary)]/10 transition-colors"
+                    >
+                      <Pencil className="w-5 h-5" />
+                    </Link>
+
                     {/* Botón Destacar */}
                     <form action={async () => {
                       'use server'

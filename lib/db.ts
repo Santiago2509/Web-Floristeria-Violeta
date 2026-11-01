@@ -8,6 +8,24 @@ import { supabaseAdmin } from './supabase-admin'
 
 // --- PRODUCTOS ---
 
+// Fila de Supabase -> Product. `categorias_extra` es opcional (columna añadida después)
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+function toProduct(row: any): Product {
+  return {
+    id: row.id,
+    title: row.title,
+    description: row.description,
+    price: row.price,
+    imageUrl: row.image_url,
+    category: row.category,
+    extraCategories: String(row.categorias_extra ?? '').split(',').map((c: string) => c.trim()).filter(Boolean),
+    ocasionSugerida: row.ocasion_sugerida,
+    isFeatured: row.is_featured,
+    createdAt: row.created_at
+  }
+}
+
+
 export async function getProducts(): Promise<Product[]> {
   const { data, error } = await supabase
     .from('products')
@@ -20,17 +38,7 @@ export async function getProducts(): Promise<Product[]> {
   }
   
   // Mapeamos los campos de la BD a nuestros tipos en TypeScript
-  return data.map(row => ({
-    id: row.id,
-    title: row.title,
-    description: row.description,
-    price: row.price,
-    imageUrl: row.image_url,
-    category: row.category,
-    ocasionSugerida: row.ocasion_sugerida,
-    isFeatured: row.is_featured,
-    createdAt: row.created_at
-  }))
+  return data.map(toProduct)
 }
 
 export async function getFeaturedProducts(): Promise<Product[]> {
@@ -45,17 +53,7 @@ export async function getFeaturedProducts(): Promise<Product[]> {
     return []
   }
   
-  return data.map(row => ({
-    id: row.id,
-    title: row.title,
-    description: row.description,
-    price: row.price,
-    imageUrl: row.image_url,
-    category: row.category,
-    ocasionSugerida: row.ocasion_sugerida,
-    isFeatured: row.is_featured,
-    createdAt: row.created_at
-  }))
+  return data.map(toProduct)
 }
 
 export async function getProductById(id: string): Promise<Product | null> {
@@ -67,17 +65,7 @@ export async function getProductById(id: string): Promise<Product | null> {
   
   if (error || !data) return null
   
-  return {
-    id: data.id,
-    title: data.title,
-    description: data.description,
-    price: data.price,
-    imageUrl: data.image_url,
-    category: data.category,
-    ocasionSugerida: data.ocasion_sugerida,
-    isFeatured: data.is_featured,
-    createdAt: data.created_at
-  }
+  return toProduct(data)
 }
 
 export async function addProduct(product: Omit<Product, 'id' | 'createdAt'>): Promise<Product | null> {
@@ -91,7 +79,8 @@ export async function addProduct(product: Omit<Product, 'id' | 'createdAt'>): Pr
         category: product.category,
         image_url: product.imageUrl,
         ocasion_sugerida: product.ocasionSugerida,
-        is_featured: product.isFeatured
+        is_featured: product.isFeatured,
+        ...extraCategoriesColumn(product.extraCategories),
       }
     ])
     .select()
@@ -102,17 +91,38 @@ export async function addProduct(product: Omit<Product, 'id' | 'createdAt'>): Pr
     return null
   }
   
-  return {
-    id: data.id,
-    title: data.title,
-    description: data.description,
-    price: data.price,
-    imageUrl: data.image_url,
-    category: data.category,
-    ocasionSugerida: data.ocasion_sugerida,
-    isFeatured: data.is_featured,
-    createdAt: data.created_at
+  return toProduct(data)
+}
+
+// `categorias_extra` solo se envía si hay categorías adicionales: así el panel sigue
+// funcionando aunque la columna todavía no se haya creado en Supabase.
+function extraCategoriesColumn(extra: string[], always = false) {
+  return extra.length > 0 || always ? { categorias_extra: extra.length ? extra.join(',') : null } : {}
+}
+
+export type ProductUpdate = Omit<Product, 'id' | 'createdAt'>
+
+export async function updateProduct(id: string, product: ProductUpdate, hadExtras: boolean): Promise<{ ok: boolean; error?: string }> {
+  const { error } = await supabaseAdmin
+    .from('products')
+    .update({
+      title: product.title,
+      description: product.description,
+      price: product.price,
+      category: product.category,
+      image_url: product.imageUrl,
+      ocasion_sugerida: product.ocasionSugerida ?? null,
+      is_featured: product.isFeatured,
+      // Si antes tenía adicionales y ahora no, hay que vaciar la columna
+      ...extraCategoriesColumn(product.extraCategories, hadExtras),
+    })
+    .eq('id', id)
+
+  if (error) {
+    console.error('Error updating product:', error)
+    return { ok: false, error: error.message }
   }
+  return { ok: true }
 }
 
 export async function deleteProduct(id: string): Promise<boolean> {

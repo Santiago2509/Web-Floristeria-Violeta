@@ -1,51 +1,118 @@
 'use client'
 
 import { useState } from 'react'
-import { Plus, Check } from 'lucide-react'
+import { Plus, Check, Star } from 'lucide-react'
 import { MAX_CATEGORY_LENGTH, normalizeCategory } from '@/lib/catalog'
 
-// Selector de categoría: elige una existente o crea una nueva.
-// Las categorías nuevas se guardan con el producto y aparecen solas en la web.
-export function CategorySelector({ categories }: { categories: string[] }) {
-  const [options, setOptions] = useState(categories)
-  const [selected, setSelected] = useState(categories[0] ?? '')
+const MAX_EXTRA = 6
+
+const same = (a: string, b: string) => a.toLocaleLowerCase('es') === b.toLocaleLowerCase('es')
+
+// Selector de categorías: se pueden marcar varias y una es la principal (★).
+// - La principal es la que se muestra en la etiqueta del producto.
+// - Las adicionales hacen que el producto también aparezca en esas categorías.
+export function CategorySelector({
+  categories,
+  initialPrimary,
+  initialExtra = [],
+}: {
+  categories: string[]
+  initialPrimary?: string
+  initialExtra?: string[]
+}) {
+  const [options, setOptions] = useState(() => {
+    const all = [...categories]
+    for (const c of [initialPrimary, ...initialExtra]) if (c && !all.some(o => same(o, c))) all.push(c)
+    return all
+  })
+  const [primary, setPrimary] = useState(initialPrimary ?? categories[0] ?? '')
+  const [extra, setExtra] = useState<string[]>(initialExtra)
   const [creating, setCreating] = useState(false)
   const [draft, setDraft] = useState('')
+
+  const isSelected = (c: string) => same(c, primary) || extra.some(e => same(e, c))
+
+  // Tocar una categoría: la añade o la quita. Si no hay principal, pasa a serlo.
+  const toggle = (c: string) => {
+    if (same(c, primary)) {
+      // quitar la principal: la primera adicional pasa a principal
+      const [next, ...rest] = extra
+      setPrimary(next ?? '')
+      setExtra(rest)
+    } else if (extra.some(e => same(e, c))) {
+      setExtra(extra.filter(e => !same(e, c)))
+    } else if (!primary) {
+      setPrimary(c)
+    } else if (extra.length < MAX_EXTRA) {
+      setExtra([...extra, c])
+    }
+  }
+
+  const makePrimary = (c: string) => {
+    if (same(c, primary)) return
+    setExtra([...extra.filter(e => !same(e, c)), ...(primary ? [primary] : [])])
+    setPrimary(c)
+  }
 
   const addCategory = () => {
     const name = normalizeCategory(draft)
     if (!name) return
-    const existing = options.find(o => o.toLocaleLowerCase('es') === name.toLocaleLowerCase('es'))
+    const existing = options.find(o => same(o, name))
     if (!existing) setOptions(prev => [...prev, name])
-    setSelected(existing ?? name)
+    const label = existing ?? name
+    if (!isSelected(label)) {
+      if (!primary) setPrimary(label)
+      else if (extra.length < MAX_EXTRA) setExtra([...extra, label])
+    }
     setDraft('')
     setCreating(false)
   }
 
   return (
     <div className="space-y-2">
-      <span className="text-xs text-[var(--theme-text-muted)] font-medium">Categoría</span>
-      <input type="hidden" name="category" value={selected} />
+      <div className="flex items-baseline justify-between gap-2">
+        <span className="text-xs text-[var(--theme-text-muted)] font-medium">Categorías</span>
+        <span className="text-[11px] text-[var(--theme-text-muted)]">Toca para elegir · ★ = principal</span>
+      </div>
+      <input type="hidden" name="category" value={primary} />
+      <input type="hidden" name="extraCategories" value={extra.join(',')} />
 
-      <div className="flex flex-wrap gap-2" role="radiogroup" aria-label="Categoría">
+      <div className="flex flex-wrap gap-2">
         {options.map(option => {
-          const isActive = option === selected
+          const selected = isSelected(option)
+          const main = same(option, primary)
           return (
-            <button
+            <span
               key={option}
-              type="button"
-              role="radio"
-              aria-checked={isActive}
-              onClick={() => setSelected(option)}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-colors ${
-                isActive
+              className={`inline-flex items-center rounded-full text-xs font-medium border transition-colors overflow-hidden ${
+                main
                   ? 'bg-[var(--theme-primary)] border-[var(--theme-primary)] text-white'
-                  : 'border-[var(--theme-border)] text-[var(--theme-text-muted)] hover:border-[var(--theme-primary)] hover:text-[var(--theme-primary)]'
+                  : selected
+                    ? 'bg-[var(--theme-primary)]/10 border-[var(--theme-primary)] text-[var(--theme-primary)]'
+                    : 'border-[var(--theme-border)] text-[var(--theme-text-muted)]'
               }`}
             >
-              {isActive && <Check className="w-3 h-3" />}
-              {option}
-            </button>
+              <button
+                type="button"
+                onClick={() => toggle(option)}
+                aria-pressed={selected}
+                className="inline-flex items-center gap-1.5 pl-3 pr-2 py-1.5 hover:opacity-80"
+              >
+                {selected && <Check className="w-3 h-3" />}
+                {option}
+              </button>
+              {selected && (
+                <button
+                  type="button"
+                  onClick={() => makePrimary(option)}
+                  title={main ? 'Categoría principal' : 'Marcar como principal'}
+                  aria-label={main ? `${option} es la principal` : `Marcar ${option} como principal`}
+                  className={`pr-2.5 pl-1 py-1.5 ${main ? '' : 'opacity-60 hover:opacity-100'}`}
+                >
+                  <Star className="w-3.5 h-3.5" fill={main ? 'currentColor' : 'none'} />
+                </button>
+              )}
+            </span>
           )
         })}
 
@@ -72,7 +139,7 @@ export function CategorySelector({ categories }: { categories: string[] }) {
               if (e.key === 'Enter') { e.preventDefault(); addCategory() }
               if (e.key === 'Escape') { setCreating(false); setDraft('') }
             }}
-            placeholder="Ej: Rosas preservadas"
+            placeholder="Ej: Peluches"
             className="flex-1 px-4 py-2 text-sm rounded-xl bg-[var(--theme-bg)] border border-[var(--theme-border)] focus:outline-none focus:border-[var(--theme-primary)]"
           />
           <button
@@ -85,11 +152,12 @@ export function CategorySelector({ categories }: { categories: string[] }) {
           </button>
         </div>
       )}
-      {creating && (
-        <p className="text-[11px] text-[var(--theme-text-muted)]">
-          La categoría nueva aparecerá en la web en cuanto guardes un producto con ella.
-        </p>
-      )}
+
+      <p className="text-[11px] text-[var(--theme-text-muted)]">
+        {primary
+          ? <>Principal: <strong className="text-[var(--theme-text)]">{primary}</strong>{extra.length > 0 && <> · También en: {extra.join(', ')}</>}</>
+          : 'Elige al menos una categoría.'}
+      </p>
     </div>
   )
 }

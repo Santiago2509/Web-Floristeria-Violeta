@@ -6,7 +6,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Search, X, ShoppingBag, SlidersHorizontal, MessageCircle } from 'lucide-react'
 import type { Product } from '@/types'
-import { getOccasions, getUsedCategories, sameCategory } from '@/lib/catalog'
+import { getOccasions, getUsedCategories, inCategory, sameCategory } from '@/lib/catalog'
 import { indexProducts, normalizeText, searchProducts } from '@/lib/search'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
 
@@ -125,7 +125,7 @@ export function CatalogBrowser({ products, initialQuery = '', initialCategory = 
 
   const filtered = useMemo(() => {
     let list = results
-    if (category) list = list.filter(p => sameCategory(p.category, category))
+    if (category) list = list.filter(p => inCategory(p, category))
     if (occasion) list = list.filter(p => getOccasions(p).some(t => normalizeText(t) === normalizeText(occasion)))
     if (sort === 'precio-asc') list = [...list].sort((a, b) => a.price - b.price)
     if (sort === 'precio-desc') list = [...list].sort((a, b) => b.price - a.price)
@@ -133,7 +133,7 @@ export function CatalogBrowser({ products, initialQuery = '', initialCategory = 
   }, [results, category, occasion, sort])
 
   // Conteo por categoría según la búsqueda actual
-  const countFor = (cat: string) => results.filter(p => sameCategory(p.category, cat)).length
+  const countFor = (cat: string) => results.filter(p => inCategory(p, cat)).length
 
   // Mantiene la búsqueda en la URL (se puede compartir o volver atrás)
   useEffect(() => {

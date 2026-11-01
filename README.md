@@ -53,6 +53,16 @@ Entra en `/admin` con la contraseña de `ADMIN_PASSWORD`. La sesión dura 7 día
 
 **Seguridad en Supabase:** configura `SUPABASE_SERVICE_ROLE_KEY` y activa Row Level Security en las tablas `products`, `gallery` y `ocasiones_guardadas`, permitiendo a la clave pública (`anon`) **solo lectura**. Así nadie puede modificar datos desde fuera del panel.
 
+## Categorías múltiples y catálogo PDF
+
+Cada producto tiene una **categoría principal** (★) y puede tener **categorías adicionales**; aparece en todas ellas (web, filtros y PDF). Para guardar las adicionales, crea una vez esta columna en Supabase → SQL Editor:
+
+```sql
+alter table products add column if not exists categorias_extra text;
+```
+
+El **catálogo PDF** se genera en `/catalogo/pdf` con los productos actuales, ordenado por categorías. Desde el panel (Catálogo → «Crear catálogo PDF») se eligen las categorías y el título de la portada. Parámetros: `categorias`, `titulo`, `subtitulo`, `descargar=1`.
+
 ## Datos del negocio
 
 Teléfono, correo, dirección, horario, redes y mapa se editan en un único lugar: `lib/site-config.ts`.

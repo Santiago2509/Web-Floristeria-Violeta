@@ -4,7 +4,8 @@ export interface Product {
   description: string
   price: number
   imageUrl: string
-  category: string // categorías base en lib/catalog.ts; desde el panel se pueden crear más
+  category: string // categoría principal (base en lib/catalog.ts; desde el panel se pueden crear más)
+  extraCategories: string[] // categorías adicionales: el producto también aparece en ellas
   ocasionSugerida?: string // Ej: "Ideal para cumpleaños" (Fase 3)
   isFeatured: boolean
   createdAt: string

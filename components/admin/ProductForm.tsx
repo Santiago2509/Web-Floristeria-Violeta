@@ -2,18 +2,22 @@
 
 import { useActionState, useState } from 'react'
 import { CheckCircle2, AlertCircle } from 'lucide-react'
-import { adminAddProduct, type ProductFormState } from '@/lib/actions'
+import { adminAddProduct, adminUpdateProduct, type ProductFormState } from '@/lib/actions'
+import type { Product } from '@/types'
+import { getOccasions } from '@/lib/catalog'
 import { ImageUploader } from '@/components/ui/ImageUploader'
 import { OccasionSelector } from '@/components/admin/OccasionSelector'
 import { CategorySelector } from '@/components/admin/CategorySelector'
 
 const inputClass = 'w-full px-4 py-2 rounded-xl bg-[var(--theme-bg)] border border-[var(--theme-border)] focus:outline-none focus:border-[var(--theme-primary)]'
 
-export function ProductForm({ categories, savedOccasions }: { categories: string[]; savedOccasions: string[] }) {
-  // Tras guardar con éxito, cambiamos la "versión" del formulario para vaciarlo
+// Sin `product`: crea un producto nuevo. Con `product`: edita ese producto.
+export function ProductForm({ categories, savedOccasions, product }: { categories: string[]; savedOccasions: string[]; product?: Product }) {
+  // Tras crear con éxito, cambiamos la "versión" del formulario para vaciarlo
   const [version, setVersion] = useState(0)
   const [state, formAction, isPending] = useActionState<ProductFormState, FormData>(
     async (prev, formData) => {
+      if (product) return adminUpdateProduct(product.id, prev, formData)
       const result = await adminAddProduct(prev, formData)
       if (result.ok) setVersion(v => v + 1)
       return result
@@ -25,31 +29,31 @@ export function ProductForm({ categories, savedOccasions }: { categories: string
     <form key={version} action={formAction} className="space-y-4">
       <div className="space-y-1">
         <label htmlFor="title" className="text-xs text-[var(--theme-text-muted)] font-medium">Nombre del Arreglo</label>
-        <input id="title" name="title" required className={inputClass} placeholder="Ej. Ramo de Rosas" />
+        <input id="title" name="title" required defaultValue={product?.title} className={inputClass} placeholder="Ej. Ramo de Rosas" />
       </div>
 
       <div className="space-y-1">
         <label htmlFor="description" className="text-xs text-[var(--theme-text-muted)] font-medium">Descripción</label>
-        <textarea id="description" name="description" required rows={2} className={`${inputClass} resize-none`} placeholder="Breve descripción…" />
+        <textarea id="description" name="description" required rows={product ? 4 : 2} defaultValue={product?.description} className={`${inputClass} resize-none`} placeholder="Breve descripción…" />
         <p className="text-[11px] text-[var(--theme-text-muted)]">Menciona flores, colores y ocasión: el buscador del catálogo usa este texto.</p>
       </div>
 
       <div className="space-y-1">
         <label htmlFor="price" className="text-xs text-[var(--theme-text-muted)] font-medium">Precio (COP)</label>
-        <input id="price" name="price" type="number" min={0} required className={inputClass} placeholder="120000" />
+        <input id="price" name="price" type="number" min={0} required defaultValue={product?.price} className={inputClass} placeholder="120000" />
       </div>
 
-      <CategorySelector categories={categories} />
+      <CategorySelector categories={categories} initialPrimary={product?.category} initialExtra={product?.extraCategories} />
 
       <div className="space-y-1">
         <span className="text-xs text-[var(--theme-text-muted)] font-medium">Foto del Producto</span>
-        <ImageUploader name="imageUrl" />
+        <ImageUploader name="imageUrl" defaultValue={product?.imageUrl} />
       </div>
 
-      <OccasionSelector savedOccasions={savedOccasions} />
+      <OccasionSelector savedOccasions={savedOccasions} initialSelected={product ? getOccasions(product) : []} />
 
       <div className="flex items-center gap-2 pt-2 pb-2">
-        <input type="checkbox" id="isFeatured" name="isFeatured" className="w-4 h-4 rounded border-[var(--theme-border)] text-[var(--theme-primary)] focus:ring-[var(--theme-primary)]" />
+        <input type="checkbox" id="isFeatured" name="isFeatured" defaultChecked={product?.isFeatured} className="w-4 h-4 rounded border-[var(--theme-border)] text-[var(--theme-primary)] focus:ring-[var(--theme-primary)]" />
         <label htmlFor="isFeatured" className="text-sm text-[var(--theme-text)] font-medium cursor-pointer">
           Destacar en la página de inicio
         </label>
@@ -73,7 +77,7 @@ export function ProductForm({ categories, savedOccasions }: { categories: string
         disabled={isPending}
         className="w-full py-3 mt-2 rounded-xl bg-[var(--theme-primary)] text-white font-medium hover:bg-[var(--theme-primary-dark)] transition-colors shadow-md disabled:opacity-60"
       >
-        {isPending ? 'Guardando…' : 'Crear Producto'}
+        {isPending ? 'Guardando…' : product ? 'Guardar cambios' : 'Crear Producto'}
       </button>
     </form>
   )

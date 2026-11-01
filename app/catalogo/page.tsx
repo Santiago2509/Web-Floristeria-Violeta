@@ -1,4 +1,5 @@
 import { getProducts } from '@/lib/db'
+import { FileDown } from 'lucide-react'
 import { CatalogBrowser } from '@/components/catalog/CatalogBrowser'
 
 export const metadata = {
@@ -26,6 +27,15 @@ export default async function CatalogoPage({ searchParams }: Props) {
           <h1 className="font-playfair text-5xl md:text-6xl text-[var(--theme-text)] leading-[1.05]">
             Catálogo <span className="italic text-gradient-violet">exclusivo</span>
           </h1>
+          <a
+            href="/catalogo/pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-5 inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-[var(--theme-border)] bg-[var(--theme-bg-card)] font-inter text-sm text-[var(--theme-primary)] hover:border-[var(--theme-primary)] transition-colors"
+          >
+            <FileDown className="w-4 h-4" />
+            Descargar catálogo en PDF
+          </a>
         </div>
 
         <CatalogBrowser

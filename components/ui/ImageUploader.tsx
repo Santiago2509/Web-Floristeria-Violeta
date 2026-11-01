@@ -7,10 +7,11 @@ import Image from 'next/image'
 
 interface ImageUploaderProps {
   name: string
+  defaultValue?: string
 }
 
-export function ImageUploader({ name }: ImageUploaderProps) {
-  const [imageUrl, setImageUrl] = useState<string>('')
+export function ImageUploader({ name, defaultValue = '' }: ImageUploaderProps) {
+  const [imageUrl, setImageUrl] = useState<string>(defaultValue)
 
   return (
     <div className="space-y-2">

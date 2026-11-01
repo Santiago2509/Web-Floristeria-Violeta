@@ -1,5 +1,5 @@
 import type { Product } from '@/types'
-import { getOccasions } from './catalog'
+import { getOccasions, productCategories } from './catalog'
 
 // ============================================================================
 // BÚSQUEDA INTELIGENTE DEL CATÁLOGO (en el navegador, sin servicios externos)
@@ -104,7 +104,7 @@ export function indexProducts(products: Product[]): Indexed[] {
   return products.map(product => ({
     product,
     title: tokenize(product.title),
-    meta: tokenize([product.category, ...getOccasions(product)].join(' ')),
+    meta: tokenize([...productCategories(product), ...getOccasions(product)].join(' ')),
     body: tokenize(product.description ?? ''),
   }))
 }

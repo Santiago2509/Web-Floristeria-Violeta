@@ -16,7 +16,7 @@ const slideVariants = {
 import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/types'
-import { getUsedCategories, sameCategory } from '@/lib/catalog'
+import { getUsedCategories, inCategory } from '@/lib/catalog'
 
 // Variante del contenedor padre para escalonar los hijos
 const containerVariants = {
@@ -178,7 +178,7 @@ export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
   // Filtrado de productos (tolerante a mayúsculas/minúsculas)
   const filteredProducts = activeCategory === 'Todos' 
     ? products 
-    : products.filter(p => sameCategory(p.category ?? '', activeCategory))
+    : products.filter(p => inCategory(p, activeCategory))
 
   // Dividimos los productos visibles en chunks de 4
   const displayProducts = filteredProducts.slice(0, visibleCount)
