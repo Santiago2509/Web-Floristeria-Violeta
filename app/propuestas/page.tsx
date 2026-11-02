@@ -17,14 +17,14 @@ export default function PropuestasIndex() {
         <p className="font-inter text-[11px] uppercase tracking-[0.35em] text-[var(--theme-primary)] font-semibold mb-3">Para revisar con el cliente</p>
         <h1 className="font-playfair text-4xl md:text-5xl text-[var(--theme-text)] mb-3">Propuestas de inicio</h1>
         <p className="font-inter text-[var(--theme-text-muted)] max-w-2xl mb-10">
-          Cinco portadas distintas con las letras doradas retroiluminadas. Cada una muestra el resto del inicio debajo. La página principal no cambia hasta que elijas una.
+          Cinco portadas con el letrero retroiluminado: letras oscuras con luz cálida detrás. Cada una muestra el resto del inicio debajo. La página principal no cambia hasta que elijas una.
         </p>
         <div className="grid sm:grid-cols-2 gap-5">
           {PROPUESTAS.map((p, i) => (
             <Link key={p.n} href={`/propuestas/${p.n}`} className="group rounded-3xl overflow-hidden border border-[var(--theme-border)] bg-[var(--theme-bg-card)] hover:shadow-xl transition-shadow">
               <div className={`relative h-44 flex items-center justify-center ${PREVIEW_BG[i]}`}>
                 {i === 1 && <div className="absolute inset-0 bg-black/40" />}
-                <span className="relative gold-text gold-glow text-5xl tracking-[0.08em]" style={{ fontFamily: 'var(--font-jost), sans-serif' }}>VIOLETA</span>
+                <span className="relative halo-text text-5xl tracking-[0.08em]" style={{ fontFamily: 'var(--font-jost), sans-serif' }}>VIOLETA</span>
               </div>
               <div className="p-5 flex items-start gap-4">
                 <span className="font-playfair italic text-3xl text-[var(--theme-primary)] leading-none">{p.n}</span>

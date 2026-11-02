@@ -4,7 +4,7 @@ import { GoldButtons } from './shared'
 
 const JOST = { fontFamily: 'var(--font-jost), sans-serif' }
 
-// PROPUESTA 1 — "Letrero de luz": pared clara con luz cálida, letras doradas que se encienden
+// PROPUESTA 1 — "Letrero de luz": pared clara, letras oscuras con luz cálida detrás que se encienden
 export function Hero1Letrero() {
   return (
     <section className="relative min-h-[100svh] overflow-hidden bg-[linear-gradient(180deg,#F2ECE2_0%,#FBF8F2_38%,#F6F0E6_100%)] text-[#3A2A12]">
@@ -47,7 +47,7 @@ export function Hero1Letrero() {
           transition={{ delay: 1.2, duration: 1.4, times: [0, 0.3, 0.45, 1] }}
         />
         <h1
-          className="relative gold-text-deep gold-glow-wall sign-on leading-none select-none"
+          className="relative halo-text halo-on leading-none select-none"
           style={{ ...JOST, fontWeight: 500, fontSize: 'clamp(3.6rem, 14vw, 9.5rem)', letterSpacing: '0.06em', animationDelay: '1.2s' }}
         >
           VIOLETA<sup className="text-[0.16em] align-top ml-1">®</sup>
@@ -63,7 +63,7 @@ export function Hero1Letrero() {
         </motion.p>
       </div>
 
-      {/* "Mostrador" con luz inferior y frase dorada */}
+      {/* "Mostrador" con luz inferior y frase retroiluminada */}
       <motion.div
         className="absolute inset-x-0 bottom-0 z-10 h-[34svh] bg-[linear-gradient(180deg,#FFFFFF_0%,#F7F2EA_100%)] border-t border-[#E9E1D2] flex flex-col items-center justify-center px-6"
         initial={{ y: 40, opacity: 0 }}
@@ -72,7 +72,7 @@ export function Hero1Letrero() {
       >
         <div className="absolute inset-x-0 top-6 h-[2px] bg-[#FFD48A] shadow-[0_0_18px_6px_rgba(255,196,110,0.55)]" />
         <p
-          className="gold-text-deep gold-glow-soft text-center uppercase mt-4"
+          className="halo-text halo-on text-center uppercase mt-4"
           style={{ ...JOST, fontWeight: 600, letterSpacing: '0.08em', fontSize: 'clamp(1rem, 4.6vw, 2rem)', transform: 'perspective(600px) rotateX(12deg)' }}
         >
           Cada flor cuenta una historia
