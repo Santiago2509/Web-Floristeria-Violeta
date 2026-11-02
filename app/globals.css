@@ -302,3 +302,41 @@
   36%, 100% { text-shadow: 0 0 1px rgba(255,214,140,.95), 0 0 8px rgba(255,190,80,.9), 0 0 22px rgba(255,170,55,.75), 0 0 48px rgba(255,150,40,.5); }
 }
 .halo-on { animation: halo-on 2.4s ease-out both; }
+
+/* Letrero con LUZ VIOLETA (propuesta 2). Cambia con el tema:
+   claro  → letra violeta oscuro + luz violeta detrás
+   oscuro → letra lavanda clara + resplandor violeta/fucsia más intenso */
+.halo-violet {
+  --hv-letter: #1E0B3A;
+  --hv-1: rgba(237, 228, 255, 0.95);
+  --hv-2: rgba(167, 139, 250, 0.9);
+  --hv-3: rgba(124, 58, 237, 0.65);
+  --hv-4: rgba(192, 38, 211, 0.35);
+  color: var(--hv-letter);
+  text-shadow: 0 0 1px var(--hv-1), 0 0 10px var(--hv-2), 0 0 26px var(--hv-3), 0 0 56px var(--hv-4);
+  animation: halo-violet-on 2.4s ease-out both, halo-violet-breathe 7s ease-in-out 2.4s infinite;
+}
+.dark .halo-violet {
+  --hv-letter: #F7F1FF;
+  --hv-1: rgba(255, 255, 255, 0.95);
+  --hv-2: rgba(196, 160, 255, 0.95);
+  --hv-3: rgba(139, 92, 246, 0.85);
+  --hv-4: rgba(192, 38, 211, 0.6);
+}
+/* Encendido con parpadeo */
+@keyframes halo-violet-on {
+  0% { text-shadow: none; }
+  10% { text-shadow: 0 0 1px var(--hv-1), 0 0 10px var(--hv-2), 0 0 26px var(--hv-3), 0 0 56px var(--hv-4); }
+  14% { text-shadow: none; }
+  22% { text-shadow: 0 0 1px var(--hv-1), 0 0 10px var(--hv-2), 0 0 26px var(--hv-3), 0 0 56px var(--hv-4); }
+  26% { text-shadow: 0 0 1px var(--hv-1), 0 0 4px var(--hv-2); }
+  36%, 100% { text-shadow: 0 0 1px var(--hv-1), 0 0 10px var(--hv-2), 0 0 26px var(--hv-3), 0 0 56px var(--hv-4); }
+}
+/* La luz "respira" y vira suavemente de violeta a fucsia */
+@keyframes halo-violet-breathe {
+  0%, 100% { text-shadow: 0 0 1px var(--hv-1), 0 0 10px var(--hv-2), 0 0 26px var(--hv-3), 0 0 56px var(--hv-4); filter: hue-rotate(0deg); }
+  50% { text-shadow: 0 0 1px var(--hv-1), 0 0 14px var(--hv-2), 0 0 36px var(--hv-3), 0 0 84px var(--hv-4); filter: hue-rotate(28deg); }
+}
+/* Textos pequeños legibles sobre el video sin oscurecerlo */
+.hv-sub { color: #3B0764; text-shadow: 0 0 10px rgba(255, 255, 255, 0.9), 0 0 2px rgba(255, 255, 255, 0.9); }
+.dark .hv-sub { color: #FFFFFF; text-shadow: 0 0 12px rgba(139, 92, 246, 0.9), 0 1px 2px rgba(0, 0, 0, 0.5); }
