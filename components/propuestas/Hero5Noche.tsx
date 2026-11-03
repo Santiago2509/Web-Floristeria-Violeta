@@ -5,14 +5,6 @@ import { CircleText, GoldButtons } from './shared'
 
 const JOST = { fontFamily: 'var(--font-jost), sans-serif' }
 
-// Letra clara con resplandor violeta/fucsia (igual en tema claro y oscuro: el fondo siempre es noche)
-const VIOLET_NEON = {
-  '--hv-letter': '#F7F1FF',
-  '--hv-1': 'rgba(255,255,255,0.95)',
-  '--hv-2': 'rgba(196,160,255,0.95)',
-  '--hv-3': 'rgba(139,92,246,0.85)',
-  '--hv-4': 'rgba(192,38,211,0.6)',
-} as React.CSSProperties
 
 // Partículas de luz (posiciones fijas para que el servidor y el navegador coincidan)
 const SPARKS = Array.from({ length: 26 }, (_, i) => ({
@@ -31,7 +23,7 @@ export function Hero5Noche() {
 
   return (
     <section
-      className="relative min-h-[100svh] overflow-hidden bg-[radial-gradient(ellipse_at_50%_42%,#4A1D7A_0%,#24103F_45%,#0E0619_100%)] text-white flex items-center justify-center [perspective:1200px]"
+      className="relative min-h-[100svh] overflow-hidden bg-[#F3EAFF] dark:bg-[#130A2A] flex items-center justify-center [perspective:1200px]"
       onPointerMove={e => {
         const r = e.currentTarget.getBoundingClientRect()
         mx.set((e.clientX - r.left) / r.width - 0.5)
@@ -42,14 +34,14 @@ export function Hero5Noche() {
       <video autoPlay loop muted playsInline preload="metadata" poster="/assets/hero_poster.webp" aria-hidden="true" className="absolute inset-0 w-full h-full object-cover">
         <source src="/assets/heroprincipal.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-[#24103F]/55 mix-blend-multiply" />
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_60%_at_50%_50%,rgba(20,8,40,0.55)_0%,rgba(20,8,40,0.35)_55%,rgba(14,6,25,0.75)_100%)]" />
+      <div className="absolute inset-0 bg-[#F3E8FF]/25 dark:bg-[#24103F]/40 dark:mix-blend-multiply" />
+      <div className="absolute inset-0 bg-[radial-gradient(ellipse_55%_55%_at_50%_50%,rgba(255,255,255,0.55)_0%,rgba(255,255,255,0.15)_60%,transparent_100%)] dark:bg-[radial-gradient(ellipse_65%_60%_at_50%_50%,rgba(20,8,40,0.45)_0%,rgba(20,8,40,0.2)_60%,rgba(14,6,25,0.5)_100%)]" />
 
       {/* Partículas de luz cálida */}
       {SPARKS.map((s, i) => (
         <span
           key={i}
-          className="absolute bottom-[-10px] rounded-full bg-[#FFE3A3]"
+          className="absolute bottom-[-10px] rounded-full bg-[#A78BFA] dark:bg-[#FFE3A3] opacity-80"
           style={{
             left: `${s.left}%`,
             width: s.size,
@@ -63,22 +55,23 @@ export function Hero5Noche() {
       <motion.div style={{ rotateX: rx, rotateY: ry }} className="relative flex flex-col items-center text-center px-6 pt-20 pb-10">
         {/* Rosa + anillos */}
         <div className="relative w-[78vw] max-w-[380px] aspect-square flex items-center justify-center mb-2">
-          <div className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgba(36,16,63,0.75)_0%,rgba(36,16,63,0.35)_60%,transparent_72%)] backdrop-blur-[2px]" />
-          <CircleText text="FLORISTERÍA VIOLETA · CALI · FLORES QUE DICEN LO QUE SIENTES · " size={420} className="absolute inset-0 w-full h-full [filter:drop-shadow(0_1px_6px_rgba(20,8,40,0.9))]" />
-          <div className="absolute inset-[13%] rounded-full border border-white/35" />
-          <div className="absolute inset-[14%] flex items-center justify-center" style={{ ['--color-primary' as string]: '#F3E8FF' }}>
+          <div className="absolute inset-[8%] rounded-full bg-[radial-gradient(circle,rgba(255,255,255,0.8)_0%,rgba(255,255,255,0.4)_60%,transparent_72%)] dark:bg-[radial-gradient(circle,rgba(36,16,63,0.7)_0%,rgba(36,16,63,0.3)_60%,transparent_72%)] backdrop-blur-[2px]" />
+          <CircleText text="FLORISTERÍA VIOLETA · CALI · FLORES QUE DICEN LO QUE SIENTES · " size={420} color="currentColor" className="absolute inset-0 w-full h-full text-[#4C1D95] dark:text-[#F3E8FF] [filter:drop-shadow(0_0_6px_rgba(255,255,255,0.9))] dark:[filter:drop-shadow(0_1px_6px_rgba(20,8,40,0.9))]" />
+          <div className="absolute inset-[13%] rounded-full border border-[#6D28D9]/35 dark:border-white/35" />
+          <div className="absolute inset-[14%] flex items-center justify-center [--color-primary:#5B21B6] dark:[--color-primary:#F3E8FF]">
             <AnimatedRose className="w-full scale-125" />
           </div>
         </div>
 
-        <h1 className="relative halo-violet leading-none" style={{ ...VIOLET_NEON, ...JOST, fontWeight: 500, fontSize: 'clamp(3.8rem, 16vw, 9.5rem)', letterSpacing: '0.12em', animationDelay: '1.4s, 3.8s' }}>
+        <h1 className="relative halo-violet leading-none" style={{ ...JOST, fontWeight: 500, fontSize: 'clamp(3.8rem, 16vw, 9.5rem)', letterSpacing: '0.12em', animationDelay: '1.4s, 3.8s' }}>
           VIOLETA
         </h1>
-        <motion.p className="font-playfair italic text-lg md:text-2xl text-white mt-4 mb-9 [text-shadow:0_2px_12px_rgba(20,8,40,0.9)]" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.4, duration: 0.9 }}>
+        <motion.p className="hv-sub font-playfair italic text-lg md:text-2xl mt-4 mb-9" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.4, duration: 0.9 }}>
           Flores que dicen lo que sientes
         </motion.p>
         <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 2.7, duration: 0.9 }}>
-          <GoldButtons />
+          <GoldButtons dark={false} className="dark:hidden" />
+          <GoldButtons className="hidden dark:flex" />
         </motion.div>
       </motion.div>
       <div className="absolute inset-x-0 bottom-0 h-24 bg-gradient-to-t from-[var(--theme-bg)] to-transparent" />

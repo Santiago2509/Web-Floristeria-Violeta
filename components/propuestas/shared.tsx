@@ -19,7 +19,7 @@ export function GoldButtons({ dark = true, className = '' }: { dark?: boolean; c
         href={generarLinkWhatsApp()}
         target="_blank"
         rel="noopener noreferrer"
-        className={`px-8 py-3.5 rounded-full font-inter text-sm font-medium tracking-wide border transition-colors ${dark ? 'border-white/60 text-white hover:bg-white/10' : 'border-[#6D28D9]/50 text-[#5B21B6] hover:bg-[#6D28D9]/10'}`}
+        className={`px-8 py-3.5 rounded-full font-inter text-sm font-medium tracking-wide border transition-colors ${dark ? 'border-white/60 text-white hover:bg-white/10' : 'bg-white/85 backdrop-blur-md border-white text-[#3B0764] font-semibold shadow-[0_8px_24px_-12px_rgba(59,7,100,0.5)] hover:bg-white'}`}
       >
         Pedir por WhatsApp
       </a>
