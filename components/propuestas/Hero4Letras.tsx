@@ -35,8 +35,8 @@ export function Hero4Letras() {
         <motion.div
           className="absolute inset-0 bg-black mix-blend-screen flex items-center justify-center pointer-events-none"
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 1, 0.35, 1] }}
-          transition={{ delay: 1, duration: 1.6, times: [0, 0.3, 0.45, 1] }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1, duration: 1.6 }}
         >
           <div className="grid place-items-center">
             <span aria-hidden="true" className={`${size} col-start-1 row-start-1 text-center select-none`} style={{ ...TITLE, color: '#FFB547', filter: 'blur(14px)', opacity: 0.85 }}>{title}</span>

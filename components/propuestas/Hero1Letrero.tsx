@@ -43,8 +43,8 @@ export function Hero1Letrero() {
         <motion.div
           className="absolute left-1/2 top-[27svh] -translate-x-1/2 -translate-y-[22%] w-[115vw] max-w-[1100px] h-[30svh] rounded-[50%] bg-[radial-gradient(ellipse_at_center,rgba(255,190,100,0.55)_0%,rgba(255,200,130,0.22)_45%,transparent_72%)] blur-xl pointer-events-none"
           initial={{ opacity: 0 }}
-          animate={{ opacity: [0, 0.8, 0.3, 1] }}
-          transition={{ delay: 1.2, duration: 1.4, times: [0, 0.3, 0.45, 1] }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 1.2, duration: 1.4 }}
         />
         <h1
           className="relative halo-text halo-on leading-none select-none"
