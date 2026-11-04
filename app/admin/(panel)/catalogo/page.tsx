@@ -1,6 +1,7 @@
 import { getProducts, getSavedOccasions } from '@/lib/db'
 import { adminDeleteProduct, adminToggleFeatured } from '@/lib/actions'
-import { getCategories } from '@/lib/catalog'
+import { getCategories, getUsedCategories, inCategory, sameCategory } from '@/lib/catalog'
+import { CategoryManager } from '@/components/admin/CategoryManager'
 import { ProductForm } from '@/components/admin/ProductForm'
 import { Star, Trash2, Plus, Pencil, FileText } from 'lucide-react'
 import Link from 'next/link'
@@ -10,6 +11,12 @@ export const dynamic = 'force-dynamic'
 
 export default async function AdminCatalogoPage() {
   const [products, savedOccasions] = await Promise.all([getProducts(), getSavedOccasions()])
+  const categoryStats = getUsedCategories(products).map(name => ({
+    name,
+    count: products.filter(p => inCategory(p, name)).length,
+    // productos que quedarían sin categoría si se elimina
+    onlyHere: products.filter(p => sameCategory(p.category, name) && p.extraCategories.every(c => sameCategory(c, name))).length,
+  }))
 
   return (
     <div className="font-inter">
@@ -38,8 +45,9 @@ export default async function AdminCatalogoPage() {
           </div>
         </div>
 
-        {/* Lista de Productos */}
-        <div className="xl:col-span-2">
+        {/* Categorías + Lista de Productos */}
+        <div className="xl:col-span-2 space-y-8">
+          <CategoryManager categories={categoryStats} allNames={getCategories(products)} />
           <div className="bg-[var(--theme-bg-card)] border border-[var(--theme-border)] rounded-2xl shadow-sm overflow-hidden">
             <div className="p-6 border-b border-[var(--theme-border)]">
               <h2 className="font-semibold text-lg text-[var(--theme-text)]">Productos Actuales ({products.length})</h2>
