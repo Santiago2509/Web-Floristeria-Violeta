@@ -1,15 +1,22 @@
 // Pétalos que caen girando y se desvanecen (CSS puro; con "reducir movimiento" no se animan).
 // Posiciones fijas para que el servidor y el navegador coincidan.
-const PETALS = Array.from({ length: 16 }, (_, i) => ({
-  left: (i * 41 + 7) % 100,
-  size: 10 + ((i * 7) % 12),
-  delay: (i * 0.85) % 11,
-  duration: 7 + ((i * 3) % 6),
-  drift: ((i % 2 ? 1 : -1) * (20 + ((i * 13) % 50))),
-  color: ['#C4B5FD', '#F0ABFC', '#DDD6FE', '#E9D5FF', '#A78BFA'][i % 5],
-}))
+const COLORS = ['#C4B5FD', '#F0ABFC', '#DDD6FE', '#E9D5FF', '#A78BFA']
 
-export function FallingPetals({ className = '' }: { className?: string }) {
+function makePetals(count: number) {
+  return Array.from({ length: count }, (_, i) => ({
+    left: (i * 41 + 7) % 100,
+    size: 10 + ((i * 7) % 12),
+    delay: (i * 0.85) % 11,
+    duration: 7 + ((i * 3) % 6),
+    drift: ((i % 2 ? 1 : -1) * (20 + ((i * 13) % 50))),
+    color: COLORS[i % COLORS.length],
+  }))
+}
+const DEFAULT_PETALS = makePetals(16)
+
+/** `count`: cuántos pétalos · `fall`: distancia de caída (CSS, ej. '340px' o '110vh') */
+export function FallingPetals({ className = '', count = 16, fall = '340px' }: { className?: string; count?: number; fall?: string }) {
+  const PETALS = count === 16 ? DEFAULT_PETALS : makePetals(count)
   return (
     <div className={`pointer-events-none absolute inset-0 overflow-hidden ${className}`} aria-hidden="true">
       {PETALS.map((p, i) => (
@@ -23,6 +30,7 @@ export function FallingPetals({ className = '' }: { className?: string }) {
             animationDuration: `${p.duration}s`,
             animationDelay: `${p.delay}s`,
             ['--drift' as string]: `${p.drift}px`,
+            ['--fall' as string]: fall,
           }}
         >
           <svg viewBox="0 0 24 30" className="w-full h-full">

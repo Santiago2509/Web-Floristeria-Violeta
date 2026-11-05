@@ -336,7 +336,15 @@
   0% { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
   10% { opacity: 0.9; }
   60% { opacity: 0.7; }
-  100% { transform: translate3d(var(--drift, 30px), 340px, 0) rotate(300deg); opacity: 0; }
+  100% { transform: translate3d(var(--drift, 30px), var(--fall, 340px), 0) rotate(300deg); opacity: 0; }
 }
 .falling-petal { opacity: 0; animation-name: petal-fall; animation-timing-function: ease-in; animation-iteration-count: infinite; }
 @media (prefers-reduced-motion: reduce) { .falling-petal { display: none; } }
+
+/* Polaroids que se mecen suavemente (como colgadas) */
+@keyframes polaroid-sway {
+  0%, 100% { transform: rotate(0deg) translateY(0); }
+  50% { transform: rotate(1.6deg) translateY(-4px); }
+}
+.polaroid-sway { animation: polaroid-sway 6s ease-in-out infinite; transform-origin: 50% 0; }
+@media (prefers-reduced-motion: reduce) { .polaroid-sway { animation: none; } }

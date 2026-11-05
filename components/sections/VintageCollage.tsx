@@ -2,6 +2,8 @@
 import { useId } from 'react'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import { SideScroll, TitleFlourish } from '@/components/ui/Flourishes'
+import { FallingPetals } from '@/components/ui/FallingPetals'
 
 // ============================================================================
 // COLLAGE VINTAGE — portada de "Nuestra Historia": polaroids con fotos reales de la
@@ -45,6 +47,7 @@ function Polaroid({ photo, slot, index }: { photo: CollagePhoto; slot: (typeof D
       animate={{ opacity: 1, y: 0, rotate: slot.rot, scale: 1 }}
       transition={{ duration: 0.9, delay: 0.25 + index * 0.12, ease: [0.22, 1, 0.36, 1] }}
     >
+      <div className="polaroid-sway" style={{ animationDelay: `${1.4 + index * 0.7}s`, animationDuration: `${5.5 + (index % 3)}s` }}>
       {/* cinta adhesiva */}
       <span
         aria-hidden="true"
@@ -66,6 +69,7 @@ function Polaroid({ photo, slot, index }: { photo: CollagePhoto; slot: (typeof D
         <figcaption className="absolute bottom-2 sm:bottom-3 inset-x-2 text-center font-playfair italic text-[13px] sm:text-[15px] text-[#4A3A2A] truncate">
           {photo.caption}
         </figcaption>
+      </div>
       </div>
     </motion.figure>
   )
@@ -138,6 +142,9 @@ export function VintageCollage({ photos = [], variant = 'desktop' }: { photos?: 
       {/* líneas de cuaderno muy suaves */}
       <div className="absolute inset-0 opacity-[0.07] bg-[repeating-linear-gradient(0deg,#6B4A2A_0,#6B4A2A_1px,transparent_1px,transparent_34px)] dark:opacity-[0.05] dark:bg-[repeating-linear-gradient(0deg,#E9D5FF_0,#E9D5FF_1px,transparent_1px,transparent_34px)]" />
 
+      {/* lluvia de pétalos */}
+      <FallingPetals count={variant === 'desktop' ? 28 : 16} fall="105vh" className="z-[5]" />
+
       {/* polaroids */}
       {slots.map((slot, i) => (
         <Polaroid key={i} photo={source[i]} slot={slot} index={i} />
@@ -149,6 +156,7 @@ export function VintageCollage({ photos = [], variant = 'desktop' }: { photos?: 
 
       {/* título central */}
       <div className="absolute inset-0 flex flex-col items-center justify-center text-center px-6 pointer-events-none">
+        <TitleFlourish className="w-[58vw] sm:w-[86vw] max-w-[640px] mb-3 text-[#6D28D9]/80 dark:text-[#C4B5FD]/85" delay={0.6} />
         <motion.span
           className="font-inter uppercase tracking-[0.45em] text-xs sm:text-sm text-[#7A5B3A] dark:text-[#C4B5FD] mb-4"
           initial={{ opacity: 0 }}
@@ -164,9 +172,15 @@ export function VintageCollage({ photos = [], variant = 'desktop' }: { photos?: 
           transition={{ delay: 0.4, duration: 1, ease: [0.22, 1, 0.36, 1] }}
         >
           Nuestra <span className="italic text-[#6D28D9] dark:text-[#C4A1FF]">Historia</span>
+          {variant === 'desktop' && (
+            <>
+              <SideScroll className="absolute right-full top-1/2 -translate-y-1/2 mr-2 w-[16vw] max-w-[250px] text-[#6D28D9]/75 dark:text-[#C4B5FD]/80" delay={0.9} />
+              <SideScroll className="absolute left-full top-1/2 -translate-y-1/2 ml-2 w-[16vw] max-w-[250px] text-[#6D28D9]/75 dark:text-[#C4B5FD]/80" delay={0.9} mirror />
+            </>
+          )}
           {/* sello de tinta sobre el título */}
           <motion.span
-            className="absolute -right-4 top-[38%] w-16 sm:right-auto sm:-left-20 sm:-top-20 sm:w-32 text-[#6D28D9]/70 dark:text-[#C4A1FF]/70 mix-blend-multiply dark:mix-blend-screen"
+            className="absolute -right-4 top-[38%] w-16 sm:-right-14 sm:-top-24 sm:w-28 text-[#6D28D9]/70 dark:text-[#C4A1FF]/70 mix-blend-multiply dark:mix-blend-screen"
             initial={{ opacity: 0, scale: 1.6, rotate: -30 }}
             animate={{ opacity: 1, scale: 1, rotate: -16 }}
             transition={{ delay: 1.2, duration: 0.35, ease: 'easeOut' }}
@@ -182,6 +196,7 @@ export function VintageCollage({ photos = [], variant = 'desktop' }: { photos?: 
         >
           Un álbum de flores, manos y momentos — desde el primer ramo en Cali.
         </motion.p>
+        <TitleFlourish className="w-[48vw] sm:w-[70vw] max-w-[460px] mt-4 text-[#6D28D9]/70 dark:text-[#C4B5FD]/75" delay={1.4} flip />
       </div>
     </div>
   )
