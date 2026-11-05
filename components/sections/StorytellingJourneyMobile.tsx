@@ -2,32 +2,14 @@
 import { motion } from 'framer-motion'
 import Image from 'next/image'
 import { Heart, Star, Clock } from 'lucide-react'
+import { VintageCollage, type CollagePhoto } from './VintageCollage'
 
-export function StorytellingJourneyMobile() {
+export function StorytellingJourneyMobile({ photos = [] }: { photos?: CollagePhoto[] }) {
   return (
     <div className="w-full bg-[var(--theme-bg)] pb-20 overflow-hidden">
       {/* HERO SECTION - MOBILE */}
-      <section className="relative h-[80vh] w-full mb-16">
-        <Image src="/assets/about_hero_bg_colombia_v2.webp" alt="Hero" fill className="object-cover" priority />
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
-        <div className="absolute inset-0 flex flex-col items-center justify-center text-white pt-20 px-6 text-center">
-          <motion.span 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 0.8, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="font-inter uppercase tracking-[0.4em] text-sm mb-4"
-          >
-            El Comienzo
-          </motion.span>
-          <motion.h1 
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 1, delay: 0.2 }}
-            className="font-playfair text-5xl md:text-6xl drop-shadow-2xl"
-          >
-            Nuestra Historia
-          </motion.h1>
-        </div>
+      <section className="relative h-[85svh] w-full mb-16">
+        <VintageCollage photos={photos} variant="mobile" />
       </section>
 
       {/* CHAPTER 1: LA SEMILLA */}

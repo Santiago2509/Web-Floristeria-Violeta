@@ -130,6 +130,7 @@ export async function adminAddGalleryImages(
   revalidatePath('/galeria')
   revalidatePath('/admin/galeria')
   revalidatePath('/') // El Inicio muestra una selección de la galería
+  revalidatePath('/nosotros') // y el collage de Nosotros
   return { ok: true }
 }
 
@@ -139,6 +140,7 @@ export async function adminDeleteGalleryImage(id: string) {
   revalidatePath('/galeria')
   revalidatePath('/admin/galeria')
   revalidatePath('/')
+  revalidatePath('/nosotros')
 }
 
 export async function adminSaveOccasion(nombre: string) {

@@ -3,8 +3,9 @@ import { motion, useScroll, useTransform } from 'framer-motion'
 import { useRef } from 'react'
 import Image from 'next/image'
 import { Heart, Star, Clock } from 'lucide-react'
+import { VintageCollage, type CollagePhoto } from './VintageCollage'
 
-export function StorytellingJourneyDesktop() {
+export function StorytellingJourneyDesktop({ photos = [] }: { photos?: CollagePhoto[] }) {
   const containerRef = useRef<HTMLDivElement>(null)
   
   // Track scroll of the entire 500vh container
@@ -68,12 +69,7 @@ export function StorytellingJourneyDesktop() {
             style={{ x: leftDoorX, clipPath: 'inset(0 50% 0 0)', opacity: doorsOpacity, scale: doorsScale }} 
             className="absolute inset-0"
           >
-             <Image src="/assets/about_hero_bg_colombia_v2.webp" alt="Hero" fill className="object-cover" priority />
-             <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
-             <div className="absolute inset-0 flex flex-col items-center justify-center text-white pt-20">
-                <span className="font-inter uppercase tracking-[0.4em] text-sm md:text-base mb-6 opacity-80">El Comienzo</span>
-                <h1 className="font-playfair text-6xl md:text-7xl lg:text-9xl drop-shadow-2xl">Nuestra Historia</h1>
-             </div>
+             <VintageCollage photos={photos} variant="desktop" />
           </motion.div>
 
           {/* Right Door */}
@@ -81,24 +77,19 @@ export function StorytellingJourneyDesktop() {
             style={{ x: rightDoorX, clipPath: 'inset(0 0 0 50%)', opacity: doorsOpacity, scale: doorsScale }} 
             className="absolute inset-0"
           >
-             <Image src="/assets/about_hero_bg_colombia_v2.webp" alt="Hero" fill className="object-cover" priority />
-             <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px]" />
-             <div className="absolute inset-0 flex flex-col items-center justify-center text-white pt-20">
-                <span className="font-inter uppercase tracking-[0.4em] text-sm md:text-base mb-6 opacity-80">El Comienzo</span>
-                <h1 className="font-playfair text-6xl md:text-7xl lg:text-9xl drop-shadow-2xl">Nuestra Historia</h1>
-             </div>
+             <VintageCollage photos={photos} variant="desktop" />
           </motion.div>
           
           {/* Scroll Indicator */}
           <motion.div 
             style={{ opacity: doorsOpacity }}
-            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-white/70"
+            className="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-3 text-[#7A5B3A] dark:text-white/70"
           >
             <span className="font-inter text-xs tracking-widest uppercase">Descubrir</span>
             <motion.div 
               animate={{ y: [0, 10, 0] }}
               transition={{ repeat: Infinity, duration: 2, ease: "easeInOut" }}
-              className="w-[1px] h-12 bg-gradient-to-b from-white to-transparent"
+              className="w-[1px] h-12 bg-gradient-to-b from-current to-transparent"
             />
           </motion.div>
         </div>

@@ -1,6 +1,7 @@
 import { getProducts } from '@/lib/db'
 import { FileDown } from 'lucide-react'
 import { CatalogBrowser } from '@/components/catalog/CatalogBrowser'
+import { FallingPetals } from '@/components/ui/FallingPetals'
 
 export const metadata = {
   title: 'Catálogo',
@@ -18,7 +19,8 @@ export default async function CatalogoPage({ searchParams }: Props) {
   return (
     <main className="min-h-screen pt-28 md:pt-36 pb-24 bg-[var(--theme-bg)]">
       <div className="container mx-auto">
-        <div className="text-center mb-10">
+        <div className="relative text-center mb-10 pt-4">
+          <FallingPetals className="-top-10 -bottom-6 left-[8%] right-[8%]" />
           <span className="inline-flex items-center gap-3 font-inter text-[11px] uppercase tracking-[0.35em] text-[var(--theme-primary)] font-semibold mb-4">
             <span className="w-8 h-px bg-[var(--theme-primary)]" />
             Nuestras creaciones
