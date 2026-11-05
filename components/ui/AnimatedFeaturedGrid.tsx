@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect, useRef, useMemo, useSyncExternalStore } from 'react'
+import { useState, useEffect, useRef, useMemo } from 'react'
 import { motion, AnimatePresence, useInView } from 'framer-motion'
 import { ArrowRight, Truck, Flower2, HandHeart } from 'lucide-react'
 
@@ -17,30 +17,10 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Product } from '@/types'
 import { getUsedCategories, inCategory } from '@/lib/catalog'
+import { seededShuffle, usePageSeed } from '@/lib/random'
 
 const MAX_CATEGORY_CHIPS = 3
 
-// Semilla aleatoria fija durante toda la visita (cambia al recargar la página)
-let pageSeed = 0
-const getPageSeed = () => (pageSeed ||= 1 + Math.floor(Math.random() * 2 ** 31))
-const noopSubscribe = () => () => {}
-
-function seededShuffle<T>(items: T[], seed: number): T[] {
-  const out = [...items]
-  let s = seed >>> 0
-  // mulberry32: generador pseudoaleatorio de 32 bits (sin pérdida de precisión)
-  const rand = () => {
-    s = (s + 0x6D2B79F5) >>> 0
-    let t = Math.imul(s ^ (s >>> 15), 1 | s)
-    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t
-    return ((t ^ (t >>> 14)) >>> 0) / 4294967296
-  }
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(rand() * (i + 1))
-    ;[out[i], out[j]] = [out[j], out[i]]
-  }
-  return out
-}
 
 // Variante del contenedor padre para escalonar los hijos
 const containerVariants = {
@@ -170,7 +150,7 @@ function BentoChunk({ products, showCTA, isFirstChunk }: { products: Product[], 
 export function AnimatedFeaturedGrid({ products }: { products: Product[] }) {
   // 3 categorías al azar (de las que tienen productos) cada vez que se carga la página.
   // El sorteo se hace en el navegador tras cargar, para que coincida con el HTML del servidor.
-  const seed = useSyncExternalStore(noopSubscribe, getPageSeed, () => 0)
+  const seed = usePageSeed()
   const categories = useMemo(() => {
     const used = getUsedCategories(products)
     return ['Todos', ...(seed ? seededShuffle(used, seed) : used).slice(0, MAX_CATEGORY_CHIPS)]

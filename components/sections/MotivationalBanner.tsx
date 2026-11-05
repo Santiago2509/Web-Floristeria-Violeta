@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { motion, AnimatePresence } from 'framer-motion'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
 import { MessageCircle } from 'lucide-react'
+import { usePageSeed } from '@/lib/random'
 
 const FRASES = [
   "El lenguaje más puro del amor se escribe con flores.",
@@ -20,7 +21,12 @@ const FRASES = [
 
 const INTERVALO_MS = 9000
 
-export function MotivationalBanner() {
+const FALLBACK_PHOTO = '/assets/about_story_img.webp'
+
+export function MotivationalBanner({ photos = [] }: { photos?: { src: string; alt: string }[] }) {
+  // Una foto al azar de la galería en cada carga (respaldo: foto propia)
+  const seed = usePageSeed()
+  const photo = seed && photos.length ? photos[seed % photos.length] : null
   const whatsappUrl = generarLinkWhatsApp('¡Hola! Me gustaría recibir asesoría para elegir el arreglo floral perfecto.')
   const [fraseIndex, setFraseIndex] = useState(0)
 
@@ -117,13 +123,20 @@ export function MotivationalBanner() {
               <div className="relative w-[260px] h-[340px] lg:w-[320px] lg:h-[420px]">
                 <span className="absolute inset-0 translate-x-4 translate-y-4 rounded-t-full rounded-b-3xl border border-white/25" />
                 <div className="relative w-full h-full rounded-t-full rounded-b-3xl overflow-hidden shadow-2xl">
-                  <Image
-                    src="/assets/about_story_img.webp"
-                    alt="Florista preparando un arreglo"
-                    fill
-                    sizes="(min-width: 1024px) 320px, 260px"
-                    className="object-cover"
-                  />
+                  {photos.length > 0 && !photo ? (
+                    // Mientras se elige la foto al azar: fondo suave (evita mostrar otra foto un instante)
+                    <div className="absolute inset-0 bg-white/10 animate-pulse" />
+                  ) : (
+                    <motion.div key={photo?.src ?? FALLBACK_PHOTO} className="absolute inset-0" initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
+                      <Image
+                        src={photo?.src ?? FALLBACK_PHOTO}
+                        alt={photo?.alt || 'Arreglo floral de Floristería Violeta'}
+                        fill
+                        sizes="(min-width: 1024px) 320px, 260px"
+                        className="object-cover"
+                      />
+                    </motion.div>
+                  )}
                 </div>
                 <div className="absolute -left-8 bottom-10 bg-white text-[#3B0764] rounded-2xl px-4 py-3 shadow-xl">
                   <p className="font-playfair text-2xl leading-none">100%</p>

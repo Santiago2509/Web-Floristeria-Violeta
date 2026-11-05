@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { motion, useMotionValue, useSpring, useTransform, useInView } from 'framer-motion'
-import { MessageCircle, Sparkles, Droplets, Leaf, ChevronLeft, ChevronRight } from 'lucide-react'
+import { MessageCircle, ChevronLeft, ChevronRight } from 'lucide-react'
 import { generarLinkWhatsApp } from '@/lib/whatsapp'
 import { FloralArch } from '@/components/ui/FloralArch'
 
@@ -70,11 +70,21 @@ function circularOffset(index: number, active: number, total: number) {
   return offset
 }
 
-const FEATURES = [
-  { icon: Sparkles, text: 'Duran años' },
-  { icon: Droplets, text: 'Sin agua ni cuidados' },
-  { icon: Leaf, text: 'Rosas 100% naturales' },
-]
+const FEATURES = ['Duran años', 'Sin agua ni cuidados', 'Rosas 100% naturales']
+
+// Pequeña violeta como separador (en lugar de íconos genéricos)
+function TinyViolet() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 60 60" aria-hidden="true" className="shrink-0">
+      <ellipse cx="22" cy="20" rx="9" ry="13" transform="rotate(-28 22 20)" fill="var(--theme-primary)" />
+      <ellipse cx="38" cy="20" rx="9" ry="13" transform="rotate(28 38 20)" fill="var(--theme-primary)" />
+      <ellipse cx="16" cy="33" rx="12" ry="8" transform="rotate(-12 16 33)" fill="var(--theme-lilac)" />
+      <ellipse cx="44" cy="33" rx="12" ry="8" transform="rotate(12 44 33)" fill="var(--theme-lilac)" />
+      <ellipse cx="30" cy="42" rx="11" ry="12" fill="var(--theme-lilac)" />
+      <circle cx="30" cy="31" r="4" fill="#FACC15" />
+    </svg>
+  )
+}
 
 // Destellos fijos alrededor de la pieza (posiciones en % del escenario)
 const SPARKLES = [
@@ -193,14 +203,14 @@ export function PreservedRoses() {
           <p className="font-inter text-base lg:text-lg text-[var(--theme-text-muted)] leading-relaxed max-w-lg mb-8">
             Rosas naturales preservadas: conservan su color y su textura por años, sin agua ni cuidados, protegidas en piezas de cristal. Un regalo que no se marchita.
           </p>
-          <ul className="flex flex-wrap gap-2">
-            {FEATURES.map(({ icon: Icon, text }) => (
-              <li key={text} className="inline-flex items-center gap-2 rounded-full border border-[var(--theme-border)] bg-[var(--theme-bg-card)] px-4 py-2 font-inter text-sm text-[var(--theme-text)]">
-                <Icon className="w-4 h-4 text-[var(--theme-primary)]" />
+          <p className="flex flex-wrap items-center gap-x-3 gap-y-1 font-playfair italic text-lg text-[var(--theme-text)]">
+            {FEATURES.map((text, i) => (
+              <span key={text} className="inline-flex items-center gap-3">
+                {i > 0 && <TinyViolet />}
                 {text}
-              </li>
+              </span>
             ))}
-          </ul>
+          </p>
         </div>
 
         {/* Escenario */}
@@ -314,38 +324,43 @@ export function PreservedRoses() {
 
         {/* Selector de modelos + llamada a la acción */}
         <div className="lg:col-start-1 lg:row-start-2">
-          <div className="grid gap-2 mb-8" role="tablist" aria-label="Modelos de rosas preservadas">
+          <ol className="mb-9 border-t border-[var(--theme-border)]" role="tablist" aria-label="Modelos de rosas preservadas">
             {PIECES.map((p, i) => {
               const isActive = i === active
               return (
-                <button
-                  key={p.id}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => choose(i)}
-                  className={`relative overflow-hidden text-left flex items-center gap-4 rounded-2xl px-5 py-4 border transition-colors duration-300 ${isActive ? 'bg-[var(--theme-bg-card)] border-[var(--theme-primary)]/40 shadow-[0_20px_40px_-30px_rgba(59,7,100,0.55)]' : 'bg-transparent border-[var(--theme-border)] hover:bg-[var(--theme-bg-card)]'}`}
-                >
-                  <span className="relative w-12 h-12 shrink-0 rounded-full bg-[var(--theme-blush)] overflow-hidden">
-                    <Image src={p.image} alt="" fill sizes="48px" className="object-contain p-1" />
-                  </span>
-                  <span className="flex-1">
-                    <span className="block font-playfair text-xl leading-tight">{p.name}</span>
-                    <span className="block font-inter text-sm text-[var(--theme-text-muted)]">{p.tagline}</span>
-                  </span>
-                  <span className="w-2.5 h-2.5 rounded-full shrink-0 transition-transform duration-300" style={{ background: p.glow, transform: isActive ? 'scale(1)' : 'scale(0.5)', boxShadow: isActive ? `0 0 14px ${p.glow}` : 'none' }} />
-                  {isActive && !isHovering && inView && (
+                <li key={p.id} className="relative border-b border-[var(--theme-border)]">
+                  <button
+                    role="tab"
+                    aria-selected={isActive}
+                    onClick={() => choose(i)}
+                    className="group w-full text-left flex items-baseline gap-5 py-4 focus:outline-none focus-visible:ring-2 focus-visible:ring-[var(--theme-primary)] rounded-sm"
+                  >
+                    <span className={`font-playfair italic text-2xl w-9 shrink-0 transition-colors duration-500 ${isActive ? 'text-gradient-violet' : 'text-[var(--theme-text-muted)]/50'}`}>
+                      {String(i + 1).padStart(2, '0')}
+                    </span>
+                    <span className="flex-1 min-w-0">
+                      <span className={`block font-playfair text-2xl lg:text-[1.7rem] leading-tight transition-colors duration-500 ${isActive ? 'text-[var(--theme-text)]' : 'text-[var(--theme-text-muted)] group-hover:text-[var(--theme-text)]'}`}>
+                        {p.name}
+                      </span>
+                      <span className={`block font-inter text-sm text-[var(--theme-text-muted)] overflow-hidden transition-all duration-500 ${isActive ? 'max-h-10 opacity-100 mt-1' : 'max-h-0 opacity-0'}`}>
+                        {p.tagline}
+                      </span>
+                    </span>
+                  </button>
+                  {/* línea que crece mientras la pieza está en pantalla */}
+                  {isActive && (
                     <motion.span
-                      key={`progress-${active}`}
-                      className="absolute left-0 bottom-0 h-[2px] bg-[var(--theme-primary)]"
+                      key={`progress-${active}-${isHovering}`}
+                      className="absolute left-0 -bottom-px h-px bg-[var(--theme-primary)]"
                       initial={{ width: '0%' }}
-                      animate={{ width: '100%' }}
-                      transition={{ duration: AUTOPLAY_MS / 1000, ease: 'linear' }}
+                      animate={{ width: !isHovering && inView ? '100%' : '0%' }}
+                      transition={{ duration: !isHovering && inView ? AUTOPLAY_MS / 1000 : 0.3, ease: 'linear' }}
                     />
                   )}
-                </button>
+                </li>
               )
             })}
-          </div>
+          </ol>
 
           <div className="flex flex-col sm:flex-row sm:items-center gap-4">
             <a

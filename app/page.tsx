@@ -46,7 +46,7 @@ export default async function Home() {
           {featured.length > 0 && <FeaturedProducts featuredProducts={featured} />}
           <PreservedRoses />
           <AboutPreview photos={about} />
-          <MotivationalBanner />
+          <MotivationalBanner photos={gallery.map(g => ({ src: g.imageUrl, alt: g.title }))} />
           <ServicesPreview />
           {showcase.length > 0 && <GalleryPreview galleryImages={showcase} />}
           <Contact />
