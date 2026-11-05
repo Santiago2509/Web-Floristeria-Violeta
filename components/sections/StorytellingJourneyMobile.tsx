@@ -79,12 +79,8 @@ export function StorytellingJourneyMobile({ photos = [] }: { photos?: CollagePho
           className="relative h-[400px] w-full rounded-t-[10rem] rounded-b-[2rem] overflow-hidden shadow-2xl border-[4px] border-white/30 dark:border-white/10"
           style={{ clipPath: 'inset(0px round 10rem 10rem 2rem 2rem)' }}
         >
-           <Image src="/assets/services_hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
-           <div className="absolute inset-0 bg-black/20" />
-           {/* Imagen secundaria insertada estilo revista */}
-           <div className="absolute w-[70%] h-[40%] left-1/2 -translate-x-1/2 bottom-8 rounded-xl overflow-hidden border-2 border-white/50 shadow-2xl">
-               <Image src="/assets/about_story_img.webp" alt="Flor 2" fill className="object-cover" />
-           </div>
+           <Image src="/assets/nosotros_tallo.webp" alt="Sorpresa romántica con cajas de rosas rojas, globos de corazón y camino de pétalos" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover object-[50%_55%]" />
+           <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
         </motion.div>
       </section>
 

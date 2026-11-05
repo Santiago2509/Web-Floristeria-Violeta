@@ -239,13 +239,8 @@ export function StorytellingJourneyDesktop({ photos = [] }: { photos?: CollagePh
                     className="relative w-[80%] h-[90%] lg:h-[100%] rounded-t-[15rem] rounded-b-[2rem] overflow-hidden border-[6px] border-white/30 dark:border-white/10 shadow-[0_30px_60px_rgba(0,0,0,0.4)] z-10"
                     style={{ clipPath: 'inset(0px round 15rem 15rem 2rem 2rem)' }}
                   >
-                      <Image src="/assets/services_hero_bg.webp" alt="Flor" fill className="object-cover opacity-80 mix-blend-overlay dark:mix-blend-normal" />
-                      <div className="absolute inset-0 bg-black/20" />
-                      
-                      {/* Imagen secundaria insertada estilo revista */}
-                      <div className="absolute w-[60%] h-[40%] left-1/2 -translate-x-1/2 bottom-10 rounded-2xl overflow-hidden border-2 border-white/50 shadow-2xl">
-                          <Image src="/assets/about_story_img.webp" alt="Flor 2" fill className="object-cover" />
-                      </div>
+                      <Image src="/assets/nosotros_tallo.webp" alt="Sorpresa romántica con cajas de rosas rojas, globos de corazón y camino de pétalos" fill sizes="(min-width: 1024px) 40vw, 100vw" className="object-cover object-[50%_55%]" />
+                      <div className="absolute inset-0 bg-gradient-to-t from-black/15 to-transparent" />
                   </motion.div>
 
                   {/* Anillo orbital decorativo */}
