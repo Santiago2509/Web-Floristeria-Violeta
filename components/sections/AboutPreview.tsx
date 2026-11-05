@@ -1,6 +1,6 @@
 'use client'
 import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion } from 'framer-motion'
 import Image from 'next/image'
 import Link from 'next/link'
 
@@ -38,21 +38,40 @@ function RotatingSquareCard({
   rotation?: string
   alt?: string
 }) {
-  const [index, setIndex] = useState(0)
+  // Capas: anterior (debajo, sigue visible), actual (encima, aparece) y siguiente (escondida, precargándose).
+  // Solo se cambia cuando la siguiente ya terminó de cargar: el recuadro nunca queda vacío.
+  const [current, setCurrent] = useState(0)
+  const [previous, setPrevious] = useState<number | null>(null)
+  const [loaded, setLoaded] = useState<Record<string, boolean>>({})
+  const [readyToAdvance, setReadyToAdvance] = useState(false)
+  const total = images.length
+  const upcoming = total > 1 ? (current + 1) % total : current
+  const upcomingReady = Boolean(loaded[images[upcoming]])
 
   useEffect(() => {
-    let timer: NodeJS.Timeout
-    const startTimeout = setTimeout(() => {
-      timer = setInterval(() => {
-        setIndex((prev) => (prev + 1) % images.length)
-      }, interval)
+    if (total < 2) return
+    let tick: ReturnType<typeof setInterval> | undefined
+    const start = setTimeout(() => {
+      tick = setInterval(() => setReadyToAdvance(true), interval)
     }, initialDelay)
-
     return () => {
-      clearTimeout(startTimeout)
-      if (timer) clearInterval(timer)
+      clearTimeout(start)
+      if (tick) clearInterval(tick)
     }
-  }, [images.length, interval, initialDelay])
+  }, [total, interval, initialDelay])
+
+  // Turno de cambiar + la siguiente cargada → avanzar
+  useEffect(() => {
+    if (!readyToAdvance || !upcomingReady) return
+    const t = setTimeout(() => {
+      setPrevious(current)
+      setCurrent(upcoming)
+      setReadyToAdvance(false)
+    }, 0)
+    return () => clearTimeout(t)
+  }, [readyToAdvance, upcomingReady, current, upcoming])
+
+  const layers = [...new Set([previous, current, upcoming].filter((v): v is number => v !== null))]
 
   return (
     <motion.div
@@ -60,24 +79,37 @@ function RotatingSquareCard({
       transition={{ duration: 0.4, ease: "easeOut" }}
       className={`relative aspect-square rounded-2xl overflow-hidden bg-[var(--theme-bg-section)] border-[6px] border-white dark:border-[var(--theme-bg-card)] shadow-[0_25px_50px_-15px_rgba(59,7,100,0.45)] cursor-pointer ${rotation} ${className}`}
     >
-      <AnimatePresence mode="wait">
-        <motion.div
-          key={images[index]}
-          initial={{ opacity: 0, scale: 1.12 }}
-          animate={{ opacity: 1, scale: 1 }}
-          exit={{ opacity: 0, scale: 0.95 }}
-          transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
-          className="relative w-full h-full"
-        >
-          <Image
-            src={images[index]}
-            alt={alt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 768px) 70vw, 35vw"
-          />
-        </motion.div>
-      </AnimatePresence>
+      {/* Solo en la primera carga: brillo suave mientras llega la primera foto */}
+      {!loaded[images[current]] && previous === null && (
+        <div className="absolute inset-0 bg-[linear-gradient(110deg,var(--theme-bg-section)_30%,var(--theme-blush)_50%,var(--theme-bg-section)_70%)] bg-[length:200%_100%] animate-[shimmer_1.6s_linear_infinite]" aria-hidden="true" />
+      )}
+      {layers.map(idx => {
+        const src = images[idx]
+        const isCurrent = idx === current
+        const isPrevious = idx === previous
+        return (
+          <div
+            key={src}
+            aria-hidden={!isCurrent}
+            className="absolute inset-0 transition-[opacity,transform] duration-[900ms] ease-[cubic-bezier(0.22,1,0.36,1)]"
+            style={{
+              // la actual encima; la anterior debajo sigue visible hasta que la cubre la nueva
+              zIndex: isCurrent ? 2 : isPrevious ? 1 : 0,
+              opacity: isCurrent ? (loaded[src] ? 1 : 0) : isPrevious ? 1 : 0,
+              transform: isCurrent && loaded[src] ? 'scale(1)' : 'scale(1.08)',
+            }}
+          >
+            <Image
+              src={src}
+              alt={isCurrent ? alt : ''}
+              fill
+              className="object-cover"
+              sizes="(max-width: 768px) 70vw, 35vw"
+              onLoad={() => setLoaded(prev => (prev[src] ? prev : { ...prev, [src]: true }))}
+            />
+          </div>
+        )
+      })}
     </motion.div>
   )
 }
