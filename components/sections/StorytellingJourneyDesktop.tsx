@@ -175,7 +175,7 @@ export function StorytellingJourneyDesktop({ photos = [] }: { photos?: CollagePh
                   transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
                   className="absolute inset-0 rounded-[2rem] lg:rounded-[3rem] overflow-hidden shadow-[0_20px_50px_rgba(0,0,0,0.3)] dark:shadow-[0_20px_50px_rgba(0,0,0,0.5)] border-4 border-white/20 dark:border-white/10"
                 >
-                  <Image src="/assets/about_story_img.webp" alt="Taller" fill className="object-cover" />
+                  <Image src="/assets/nosotros_semilla.webp" alt="Rosas preservadas bajo cúpula frente al logo de Violeta Floristería" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover object-[50%_47%]" />
                   <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
                   <div className="absolute bottom-8 left-8 lg:bottom-12 lg:left-12 text-white">
                      <h3 className="font-playfair text-5xl lg:text-7xl mb-2 drop-shadow-lg">01</h3>

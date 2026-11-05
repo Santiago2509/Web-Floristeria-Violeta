@@ -21,7 +21,7 @@ export function StorytellingJourneyMobile({ photos = [] }: { photos?: CollagePho
              viewport={{ once: true }}
              className="relative h-[400px] w-full rounded-3xl overflow-hidden shadow-2xl border-2 border-white/20 dark:border-white/10"
            >
-             <Image src="/assets/about_story_img.webp" alt="Taller" fill className="object-cover" />
+             <Image src="/assets/nosotros_semilla.webp" alt="Rosas preservadas bajo cúpula frente al logo de Violeta Floristería" fill sizes="(min-width: 1024px) 50vw, 100vw" className="object-cover object-[50%_47%]" />
              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
              <div className="absolute bottom-6 left-6 text-white">
                 <h3 className="font-playfair text-5xl mb-1 drop-shadow-lg">01</h3>
