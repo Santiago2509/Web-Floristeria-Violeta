@@ -6,7 +6,7 @@ import { motion, useScroll, useSpring, useTransform, useReducedMotion, useMotion
 // ENREDADERAS FLORALES — dos tallos que recorren los márgenes de la página y
 // crecen con el scroll; a su paso brotan violetas, hojas de corazón, capullos
 // y zarcillos. Se adaptan al margen libre de cada pantalla para no tapar el
-// contenido (si el margen es muy estrecho, no se muestran).
+// contenido. En celular (margen estrecho) se dibujan en miniatura, pegadas al borde.
 // ============================================================================
 
 const CONTAINER_MAX = 1280 // max-width del .container
@@ -36,11 +36,11 @@ function seeded(seed: number) {
   }
 }
 
-function buildVine(height: number, width: number, seed: number) {
+function buildVine(height: number, width: number, seed: number, step = STEP) {
   const rand = seeded(seed)
-  const count = Math.max(2, Math.floor((height - 80) / STEP))
+  const count = Math.max(2, Math.floor((height - 80) / step))
   const points = Array.from({ length: count + 1 }, (_, i) => {
-    const y = 30 + i * STEP + (rand() - 0.5) * 36
+    const y = 30 + i * step + (rand() - 0.5) * 36
     const x = width * (0.34 + 0.16 * Math.sin(i * 0.9 + seed) + (rand() - 0.5) * 0.08)
     return { x, y: Math.min(y, height - 20) }
   })
@@ -186,15 +186,22 @@ function Tendril({ node, progress }: { node: VineNode; progress: MotionValue<num
   )
 }
 
-function Vine({ height, width, seed, progress, side }: { height: number; width: number; seed: number; progress: MotionValue<number>; side: 'left' | 'right' }) {
-  const { d, d2, nodes } = useMemo(() => buildVine(height, width, seed), [height, width, seed])
+function Vine({ height, width, seed, progress, side, scale = 1, step = STEP }: { height: number; width: number; seed: number; progress: MotionValue<number>; side: 'left' | 'right'; scale?: number; step?: number }) {
+  // `scale` < 1: se dibuja a tamaño normal en un lienzo más alto y se reduce (versión miniatura para celular)
+  const logicalHeight = Math.round(height / scale)
+  const { d, d2, nodes } = useMemo(() => buildVine(logicalHeight, width, seed, step), [logicalHeight, width, seed, step])
 
   return (
     <svg
       width={width}
-      height={height}
-      viewBox={`0 0 ${width} ${height}`}
-      className={`absolute top-0 overflow-visible ${side === 'left' ? 'left-0' : 'right-0 -scale-x-100'}`}
+      height={logicalHeight}
+      viewBox={`0 0 ${width} ${logicalHeight}`}
+      className={`absolute top-0 overflow-visible ${side === 'left' ? 'left-0' : 'right-0'}`}
+      style={{
+        transform: `scale(${scale})`,
+        transformOrigin: side === 'left' ? 'top left' : 'top right',
+        ...(scale < 1 ? { [side]: -4 } : null),
+      }}
     >
       <defs>
         <linearGradient id={`vine-stem-${side}`} x1="0" y1="0" x2="0" y2="1">
@@ -209,6 +216,8 @@ function Vine({ height, width, seed, progress, side }: { height: number; width: 
           </radialGradient>
         ))}
       </defs>
+      {/* el lado derecho es el espejo del izquierdo */}
+      <g transform={side === 'right' ? `translate(${width} 0) scale(-1 1)` : undefined}>
       <motion.path
         d={d2}
         fill="none"
@@ -239,6 +248,7 @@ function Vine({ height, width, seed, progress, side }: { height: number; width: 
         if (node.kind === 'bud') return [leaves, <Bud key={key} node={node} progress={progress} />]
         return [leaves, <Tendril key={key} node={node} progress={progress} />]
       })}
+      </g>
     </svg>
   )
 }
@@ -273,16 +283,20 @@ export function FloralVines() {
   const full = useMotionValue(1)
   const progress = reduceMotion ? full : smooth
 
-  // Ancho de cada enredadera: el margen disponible (máx. 190px). Si no cabe, no se muestran.
-  const width = Math.min(size.gutter, 190)
-  const visible = size.height > 0 && width >= 90
+  // Ancho de cada enredadera: el margen disponible (máx. 190px).
+  // Si no cabe (celular), se dibuja en miniatura: lienzo de 110px reducido a la mitad, con nudos más espaciados.
+  const roomy = size.gutter >= 90
+  const width = roomy ? Math.min(size.gutter, 190) : 110
+  const scale = roomy ? 1 : 0.5
+  const step = roomy ? STEP : 270
+  const visible = size.height > 0
 
   return (
     <div ref={ref} aria-hidden="true" className="floral-vines absolute inset-0 pointer-events-none z-0 overflow-hidden">
       {visible && (
         <>
-          <Vine side="left" seed={3} height={size.height} width={width} progress={progress} />
-          <Vine side="right" seed={6} height={size.height} width={width} progress={progress} />
+          <Vine side="left" seed={3} height={size.height} width={width} progress={progress} scale={scale} step={step} />
+          <Vine side="right" seed={6} height={size.height} width={width} progress={progress} scale={scale} step={step} />
         </>
       )}
     </div>
