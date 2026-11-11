@@ -1,4 +1,5 @@
-import { Hero } from '@/components/sections/Hero'
+import { Hero2Video } from '@/components/propuestas/Hero2Video'
+import { jost } from '@/app/fonts/jost'
 import { getFeaturedProducts, getGalleryImages } from '@/lib/db'
 import { FloralVines } from '@/components/ui/FloralVines'
 import dynamic from 'next/dynamic'
@@ -34,8 +35,9 @@ export default async function Home() {
   const { showcase, about } = splitGallery(gallery)
 
   return (
-    <div className="flex flex-col relative w-full">
-      <Hero />
+    <div className={`${jost.variable} flex flex-col relative w-full`}>
+      {/* Portada elegida por el cliente: propuesta 2 (video + letrero de luz violeta) */}
+      <Hero2Video />
 
       {/* Desde aquí hasta el final, las enredaderas florales crecen por los márgenes con el scroll */}
       <div className="relative w-full">

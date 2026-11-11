@@ -20,7 +20,7 @@ type Piece = {
   width: number
   height: number
   glow: string        // color del halo detrás de la pieza
-  kind: 'dome' | 'plain'
+  kind: 'dome' | 'bag' | 'plain'
   sizeClass: string   // ancho de la pieza en el escenario
 }
 
@@ -45,18 +45,40 @@ const PIECES: Piece[] = [
     width: 607, height: 330,
     glow: '#F43F5E',
     kind: 'plain',
-    sizeClass: 'w-[300px] sm:w-[400px] lg:w-[470px]',
+    sizeClass: 'w-[280px] sm:w-[360px] lg:w-[410px]',
   },
   {
     id: 'corazon',
-    name: 'Bolso Corazón Dorado',
+    name: 'Bolso Corazón Rojo',
     article: 'el',
-    tagline: 'Corazón de rosas amarillas en bolso de cristal',
-    image: '/assets/preservadas/bolso-corazon.webp',
-    width: 442, height: 599,
-    glow: '#FACC15',
+    tagline: 'Corazón de rosas rojas en bolso de cristal',
+    image: '/assets/preservadas/corazon-rojo.webp',
+    width: 182, height: 210,
+    glow: '#E11D48',
+    kind: 'bag',
+    sizeClass: 'w-[220px] sm:w-[260px] lg:w-[300px]',
+  },
+  {
+    id: 'rosada',
+    name: 'Caja Cristal Rosada',
+    article: 'la',
+    tagline: 'Rosas rosadas en caja de cristal con asa',
+    image: '/assets/preservadas/caja-cristal-rosada.webp',
+    width: 557, height: 366,
+    glow: '#F9A8D4',
     kind: 'plain',
-    sizeClass: 'w-[230px] sm:w-[270px] lg:w-[310px]',
+    sizeClass: 'w-[260px] sm:w-[330px] lg:w-[370px]',
+  },
+  {
+    id: 'cofre',
+    name: 'Cofre de Rosas',
+    article: 'el',
+    tagline: 'Rosas rojas en cofre de cristal con broches plateados',
+    image: '/assets/preservadas/cofre-rosas.webp',
+    width: 1184, height: 858,
+    glow: '#DC2626',
+    kind: 'plain',
+    sizeClass: 'w-[250px] sm:w-[320px] lg:w-[360px]',
   },
 ]
 
@@ -136,8 +158,51 @@ function GlassDome({ piece }: { piece: Piece }) {
   )
 }
 
+// Bolso de cristal dibujado en SVG (asa de cuentas plateadas) con el corazón de rosas dentro
+function GlassBag({ piece }: { piece: Piece }) {
+  const beads = Array.from({ length: 13 }, (_, i) => {
+    const t = Math.PI * (i / 12)
+    return { x: Math.round((150 - Math.cos(t) * 62) * 10) / 10, y: Math.round((112 - Math.sin(t) * 84) * 10) / 10 }
+  })
+  return (
+    <div className={`relative ${piece.sizeClass} aspect-[300/380]`}>
+      <svg viewBox="0 0 300 380" className="absolute inset-0 w-full h-full overflow-visible" aria-hidden="true">
+        <defs>
+          <linearGradient id="bag-glass" x1="0" x2="1" y1="0" y2="1">
+            <stop offset="0%" stopColor="var(--v-glass-tint)" stopOpacity="0.24" />
+            <stop offset="45%" stopColor="#fff" stopOpacity="0.06" />
+            <stop offset="100%" stopColor="var(--v-glass-tint)" stopOpacity="0.18" />
+          </linearGradient>
+          <radialGradient id="bag-bead" cx="35%" cy="30%" r="70%">
+            <stop offset="0%" stopColor="#ffffff" />
+            <stop offset="45%" stopColor="#c9c6cf" />
+            <stop offset="100%" stopColor="#5d5866" />
+          </radialGradient>
+        </defs>
+        {/* asa: argollas + cuentas */}
+        {[88, 212].map(x => <ellipse key={x} cx={x} cy={118} rx={7} ry={11} fill="none" stroke="#b9b5c2" strokeWidth={3} />)}
+        {beads.map((b, i) => <circle key={i} cx={b.x} cy={b.y} r={10} fill="url(#bag-bead)" />)}
+        {/* parte trasera del cristal */}
+        <rect x="22" y="126" width="256" height="240" rx="34" fill="url(#bag-glass)" />
+      </svg>
+      <div className="absolute left-[13%] right-[13%] top-[37%] bottom-[6%]">
+        <Image src={piece.image} alt={piece.name} fill sizes="220px" className="object-contain drop-shadow-[0_12px_18px_rgba(0,0,0,0.35)]" />
+      </div>
+      <svg viewBox="0 0 300 380" className="absolute inset-0 w-full h-full overflow-visible" aria-hidden="true">
+        {/* frente del cristal: borde y reflejos */}
+        <rect x="22" y="126" width="256" height="240" rx="34" fill="none" stroke="var(--v-glass-edge)" strokeWidth="2.5" />
+        <rect x="30" y="134" width="240" height="224" rx="28" fill="none" stroke="var(--v-glass-edge)" strokeOpacity="0.45" strokeWidth="1.2" />
+        <path d="M44 330 L44 170 C44 152 52 144 66 142" stroke="var(--v-glass-hi)" strokeOpacity="0.8" strokeWidth="7" strokeLinecap="round" fill="none" />
+        <path d="M60 300 L60 250" stroke="var(--v-glass-hi)" strokeOpacity="0.5" strokeWidth="3.5" strokeLinecap="round" />
+        <path d="M258 196 C258 168 252 152 236 146" stroke="var(--v-glass-hi)" strokeOpacity="0.45" strokeWidth="3" strokeLinecap="round" fill="none" />
+      </svg>
+    </div>
+  )
+}
+
 function PieceView({ piece }: { piece: Piece }) {
   if (piece.kind === 'dome') return <GlassDome piece={piece} />
+  if (piece.kind === 'bag') return <GlassBag piece={piece} />
   return (
     <div className={`relative ${piece.sizeClass}`} style={{ aspectRatio: `${piece.width} / ${piece.height}` }}>
       <Image src={piece.image} alt={piece.name} fill sizes="(min-width: 1024px) 470px, 300px" className="object-contain drop-shadow-[0_30px_40px_rgba(0,0,0,0.45)]" />
@@ -272,22 +337,24 @@ export function PreservedRoses() {
             {PIECES.map((p, i) => {
               const offset = circularOffset(i, active, PIECES.length)
               const isCenter = offset === 0
+              const hidden = Math.abs(offset) > 1
               return (
-                <div key={p.id} className="absolute inset-0 flex items-end justify-center pointer-events-none" style={{ zIndex: isCenter ? 3 : 1 }}>
+                <div key={p.id} className="absolute inset-0 flex items-end justify-center pointer-events-none" style={{ zIndex: isCenter ? 3 : hidden ? 0 : 1 }}>
                   <motion.div
                     className="pointer-events-auto origin-bottom"
                     initial={false}
                     animate={{
-                      x: offset * stageWidth * 0.47,
-                      scale: isCenter ? 1 : 0.38,
-                      opacity: isCenter ? 1 : 0.55,
+                      x: hidden ? 0 : offset * stageWidth * 0.47,
+                      scale: isCenter ? 1 : hidden ? 0.2 : 0.38,
+                      opacity: isCenter ? 1 : hidden ? 0 : 0.55,
                       filter: isCenter ? 'brightness(1) blur(0px)' : 'brightness(0.7) blur(1px)',
                     }}
                     transition={{ duration: 0.8, ease: [0.22, 1, 0.36, 1] }}
-                    onClick={() => !isCenter && choose(i)}
-                    role={isCenter ? undefined : 'button'}
+                    onClick={() => !isCenter && !hidden && choose(i)}
+                    aria-hidden={hidden || undefined}
+                    role={isCenter || hidden ? undefined : 'button'}
                     aria-label={isCenter ? undefined : `Ver ${p.name}`}
-                    style={{ cursor: isCenter ? 'inherit' : 'pointer' }}
+                    style={{ cursor: isCenter ? 'inherit' : 'pointer', pointerEvents: hidden ? 'none' : undefined }}
                   >
                     <motion.div style={isCenter ? { rotateX, rotateY } : undefined}>
                       <motion.div
